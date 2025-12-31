@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.teamcode.pedroPathing.Constants.createFollower;
 
+import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
@@ -9,6 +10,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @TeleOp
 public class Drivetrain extends LinearOpMode {
@@ -33,10 +38,11 @@ public class Drivetrain extends LinearOpMode {
         follower = createFollower(hardwareMap);
         follower.setPose(new Pose(0,0,0));
 
+        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
+
         waitForStart();
 
-        while (opModeIsActive()) {
-
+        while(opModeIsActive()) {
             double move = -gamepad1.left_stick_y;
             double turn = gamepad1.right_stick_x;
             double strafe = gamepad1.left_stick_x;
@@ -55,10 +61,9 @@ public class Drivetrain extends LinearOpMode {
 
             follower.update();
 
-            telemetryM.debug("X:" + follower.getPose().getX());
-            telemetryM.debug("Y:" + follower.getPose().getY());
-            telemetryM.debug("Heading:" + follower.getPose().getHeading());
-            telemetryM.debug("Total Heading:" + follower.getTotalHeading());
+            telemetryM.debug("X: " + follower.getPose().getX());
+            telemetryM.debug("Y: " + follower.getPose().getY());
+            telemetryM.debug("Heading: " + follower.getPose().getHeading());
             telemetryM.update(telemetry);
         }
     }
