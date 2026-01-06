@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Scoring;
+package Subsystem.Shooter.Hood;
 
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
@@ -7,21 +7,18 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @TeleOp
-public class Navigation_system extends LinearOpMode {
-    private CRServo navigation = null;
-    private AnalogInput potentiometer = null;
+public class Hood extends LinearOpMode {
+    public CRServo hood = null;
+    public AnalogInput potentiometer = null;
     private TelemetryManager telemetryM = null;
 
     public void runOpMode() {
-        navigation = hardwareMap.get(CRServo.class, "navigation");
+        hood = hardwareMap.get(CRServo.class, "hood");
         potentiometer = hardwareMap.get(AnalogInput.class, "potentiometer");
 
-        navigation.setDirection(CRServo.Direction.REVERSE);
+        hood.setDirection(CRServo.Direction.REVERSE);
 
         telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
 
@@ -33,13 +30,13 @@ public class Navigation_system extends LinearOpMode {
             double y = x * 81.8 + 25;
 
             if (gamepad1.left_trigger > 0.1) {
-                navigation.setDirection(CRServo.Direction.REVERSE);
-                navigation.setPower(power);
+                hood.setDirection(CRServo.Direction.REVERSE);
+                hood.setPower(power);
             } else if (gamepad1.right_trigger > 0.1) {
-                navigation.setDirection(DcMotorSimple.Direction.FORWARD);
-                navigation.setPower(power);
+                hood.setDirection(DcMotorSimple.Direction.FORWARD);
+                hood.setPower(power);
             } else {
-                navigation.setPower(0);
+                hood.setPower(0);
             }
 
             telemetryM.debug("vol:" + x);

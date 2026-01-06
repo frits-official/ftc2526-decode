@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Scoring.Scoring_ShootingPID;
+package Subsystem.Shooter.PID;
 
 import dev.nextftc.control.KineticState;
 import dev.nextftc.control.feedforward.FeedforwardElement;

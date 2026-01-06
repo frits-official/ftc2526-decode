@@ -1,34 +1,42 @@
-package org.firstinspires.ftc.teamcode.Scoring;
+package Subsystem.Shooter;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.Scoring.Scoring_ShootingPID.Shooting;
-import org.firstinspires.ftc.teamcode.Scoring.Scoring_ShootingPID.ShootingPID;
+import Subsystem.Shooter.Motion_system.Outtake_door;
+import Subsystem.Shooter.Shooting_system.Shooting;
+import Subsystem.Shooter.Shooting_system.ShootingPID;
 
 @TeleOp
-public class Scoring_System extends LinearOpMode {
+public class Shooter_System extends LinearOpMode {
     Shooting shooting = new Shooting();
     ShootingPID shootingPID = new ShootingPID();
+    Outtake_door outtakeDoor = new Outtake_door();
 
     public void runOpMode() {
         shooting.init(hardwareMap);
         shootingPID.init();
+        outtakeDoor.init(hardwareMap);
 
         waitForStart();
 
         while (opModeIsActive()) {
+            //Shooting
             if (gamepad1.a) {
                 shootingPID.update(shooting, 2000);
-            } else if (gamepad1.b) {
-                shooting.intake.setPower(1.0);
             } else if (gamepad1.x) {
                 shooting.shoot1.setPower(0);
                 shooting.shoot2.setPower(0);
-                shooting.intake.setPower(0);
             }
+
+            //Outtake_door
+            if (gamepad1.dpad_up) {
+                outtakeDoor.door.setPosition(0.4);
+            } else if (gamepad1.dpad_down) {
+                outtakeDoor.door.setPosition(0);
+            }
+
+
         }
     }
 }

@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode;
+package Subsystem.Drivetrain;
 
-import static org.firstinspires.ftc.teamcode.pedroPathing.Constants.createFollower;
+import static Subsystem.Drivetrain.pedroPathing.Constants.createFollower;
 
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
@@ -10,10 +10,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @TeleOp
 public class Drivetrain extends LinearOpMode {
