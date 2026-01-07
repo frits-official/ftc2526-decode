@@ -18,20 +18,11 @@ public class Turret {
     }
 
     public void update (Gamepad gamepad1) {
-        int turn_spin = 0;
         if (gamepad1.right_bumper) {
-            if (turn_spin == 0) {
-                turning.setDirection(DcMotorEx.Direction.FORWARD);
-                turning.setPower(0.5);
-                turn_spin = 1;
-            } else if (turn_spin == 1) {
-                turning.setDirection(DcMotorEx.Direction.REVERSE);
-                turning.setPower(0.5);
-                turn_spin = 0;
-            }
+            turning.setDirection(DcMotorEx.Direction.FORWARD);
+            turning.setPower(0.5);
         } else if (gamepad1.left_bumper) {
             turning.setPower(0);
-            turn_spin = 0;
         }
     }
 }

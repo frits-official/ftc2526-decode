@@ -1,16 +1,14 @@
 package Subsystem.Shooter.Motion_system.Turret;
 
+import Subsystem.ConstantFTC;
 import dev.nextftc.control.ControlSystem;
 import dev.nextftc.control.KineticState;
 import dev.nextftc.control.feedback.PIDCoefficients;
 
 public class TurretPID {
     private Turret turret = new Turret();
-    private static double p = 0.01;
-    private static double i = 0;
-    private static double d = 0;
     private ControlSystem controlSystem;
-    private PIDCoefficients coefficients = new PIDCoefficients(p, i, d);
+    private PIDCoefficients coefficients = new PIDCoefficients(ConstantFTC.TURRET.p, ConstantFTC.TURRET.i, ConstantFTC.TURRET.d);
 
     public void init() {
         controlSystem = ControlSystem.builder()
@@ -18,7 +16,7 @@ public class TurretPID {
                 .build();
     }
 
-    public double calculate(double a) {
+    public boolean calculate(boolean a) {
         return a;
     }
 
@@ -30,14 +28,15 @@ public class TurretPID {
         this.y = y;
 
         if (change) {
-            //if (calculate(target > TURRET.MAX)) {
-            //controlSystem.setGoal(new KineticState(TURRET.MAX));
-            // } else if (calculate(target < TURRET.MIN)) {
-            //controlSystem.setGoal(new KineticState(TURRET.MIN));
-        } else {
-            controlSystem.setGoal(new KineticState(target));
+            if (calculate(target > ConstantFTC.TURRET.TURRETMAX)) {
+                controlSystem.setGoal(new KineticState(ConstantFTC.TURRET.TURRETMAX));
+            } else if (calculate(target < ConstantFTC.TURRET.TURRETMIN)) {
+                controlSystem.setGoal(new KineticState(ConstantFTC.TURRET.TURRETMIN));
+            } else {
+                controlSystem.setGoal(new KineticState(target));
+            }
         }
-    }
 
-    //turret.turning.setPower(controlSystem.calculate(new KineticState(turret.turning.getCurrentPosition())));
+        turret.turning.setPower(controlSystem.calculate(new KineticState(turret.turning.getCurrentPosition())));
+    }
 }

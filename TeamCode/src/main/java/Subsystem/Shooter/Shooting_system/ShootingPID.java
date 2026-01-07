@@ -1,31 +1,35 @@
 package Subsystem.Shooter.Shooting_system;
 
+import Subsystem.ConstantFTC;
 import dev.nextftc.control.ControlSystem;
 import dev.nextftc.control.KineticState;
-import dev.nextftc.control.feedback.AngleType;
 import dev.nextftc.control.feedback.PIDCoefficients;
 
 public class ShootingPID {
-    private static double p = 0.01;
-    private static double i = 0;
-    private static double d = 0;
+    public double target = 0;
     private ControlSystem controlSystem;
-    private PIDCoefficients coefficients = new PIDCoefficients(p, i, d);
     public void init() {
-
+        PIDCoefficients coefficients = new PIDCoefficients(ConstantFTC.SHOOTER.p, ConstantFTC.SHOOTER.i, ConstantFTC.SHOOTER.d);
         controlSystem = ControlSystem.builder()
                 .velPid(coefficients)
-                .velSquID(coefficients)
-                .angular(AngleType.DEGREES, fb -> fb.velPid(coefficients))
                 .build();
     }
 
-    public double target = 0;
-
-    public void update(Shooting shoot, int i) {
+    public void setTarget(double velocity) {
+        this.target = velocity;
         controlSystem.setGoal(new KineticState(0, target));
+    }
+
+    public void update(Shooting shoot) {
+        if (target <= 0) {
+            shoot.shoot1.setPower(0);
+            shoot.shoot2.setPower(0);
+            return;
+        }
 
         double vel = controlSystem.calculate(new KineticState(0, shoot.shoot1.getVelocity()));
+
+        vel = Math.max(-1.0, Math.min(1.0, vel));
 
         shoot.shoot1.setPower(vel);
         shoot.shoot2.setPower(vel);

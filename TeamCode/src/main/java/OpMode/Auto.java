@@ -1,4 +1,4 @@
-package Subsystem.Drivetrain;
+package OpMode;
 
 import static Subsystem.Drivetrain.pedroPathing.Constants.createFollower;
 
@@ -42,5 +42,17 @@ public class Auto extends OpMode {
         telemetryM.debug("Y:" + follower.getPose().getY());
         telemetryM.debug("Heading:" + follower.getPose().getHeading());
         telemetryM.debug("Total Heading:" + follower.getTotalHeading());
+    }
+
+    //public double getVelocity() {
+       // return follower.getVelocity();
+    //}
+
+    public double getAngle() {
+        return follower.getPose().getHeading();
+    }
+
+    public double getTurretHeading() {
+        return 0;
     }
 }
