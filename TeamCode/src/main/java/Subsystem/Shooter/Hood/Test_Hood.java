@@ -14,7 +14,7 @@ public class Test_Hood extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            hood.update(gamepad1);
+            hood.update();
             hood.updateTelemetry(telemetry);
         }
     }

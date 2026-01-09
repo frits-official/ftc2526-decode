@@ -1,9 +1,9 @@
-package Subsystem.Shooter.PID;
+package Subsystem.PID;
 
 import dev.nextftc.control.KineticState;
-import dev.nextftc.control.feedback.FeedbackElement;
+import dev.nextftc.control.feedforward.FeedforwardElement;
 
-public class FullPowerFeedbackElement implements FeedbackElement {
+public class FullPowerFeedforwardElement implements FeedforwardElement {
     @Override
     public double calculate(KineticState error) {
         return 1;

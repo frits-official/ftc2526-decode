@@ -19,7 +19,7 @@ public class Intake_Funnel {
             intake.setPower(0.45);
         } else if (gamepad1.x) {
             intake.setPower(0);
-        } else if (gamepad1.y) {
+        } else if (gamepad1.right_trigger > 0) {
             intake.setPower(0.7);
         }
     }
