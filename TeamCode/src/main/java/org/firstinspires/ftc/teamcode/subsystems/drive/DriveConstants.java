@@ -1,4 +1,4 @@
-package Subsystem.Drivetrain.pedroPathing;
+package org.firstinspires.ftc.teamcode.subsystems.drive;
 
 import com.pedropathing.control.FilteredPIDFCoefficients;
 import com.pedropathing.control.PIDFCoefficients;
@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-public class Constants {
+public class DriveConstants {
     public static FollowerConstants followerConstants = new FollowerConstants()
             .mass(13.0)
             .forwardZeroPowerAcceleration(-45.98)

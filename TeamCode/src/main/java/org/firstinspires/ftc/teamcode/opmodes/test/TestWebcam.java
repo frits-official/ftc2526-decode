@@ -1,4 +1,4 @@
-package Subsystem;
+package org.firstinspires.ftc.teamcode.opmodes.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -8,8 +8,8 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagLibrary;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
-@TeleOp
-public class Cammera extends LinearOpMode {
+@TeleOp(group = "test")
+public class TestWebcam extends LinearOpMode {
 
     private VisionPortal myVisionPortal;
     private AprilTagProcessor myAprilTagProcessor;

@@ -1,20 +1,15 @@
-package Subsystem.Shooter.Shooting_system;
+package org.firstinspires.ftc.teamcode.subsystems.shooter;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
-import Subsystem.ConstantFTC;
+import org.firstinspires.ftc.teamcode.Constants;
 import dev.nextftc.control.ControlSystem;
 import dev.nextftc.control.KineticState;
 import dev.nextftc.control.feedback.PIDCoefficients;
 
 
-public class Shooting {
-    public double target = 0;
+public class Shooter {
     private ControlSystem controlSystem;
     public DcMotorEx shoot1 = null;
     public DcMotorEx shoot2 = null;
@@ -30,15 +25,18 @@ public class Shooting {
         shoot1.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         shoot2.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
-        PIDCoefficients coefficients = new PIDCoefficients(ConstantFTC.SHOOTER.p, ConstantFTC.SHOOTER.i, ConstantFTC.SHOOTER.d);
+        PIDCoefficients coefficients = new PIDCoefficients(Constants.SHOOTER.p, Constants.SHOOTER.i, Constants.SHOOTER.d);
         controlSystem = ControlSystem.builder()
                 .velPid(coefficients)
                 .build();
     }
 
     public void setTarget(double velocity) {
-        this.target = velocity;
-        controlSystem.setGoal(new KineticState(0, target));
+        controlSystem.setGoal(new KineticState(0, velocity));
+    }
+
+    public double getTarget() {
+        return controlSystem.getGoal().getVelocity();
     }
 
     public void update() {
@@ -47,16 +45,13 @@ public class Shooting {
         shoot1.setPower(vel);
         shoot2.setPower(vel);
 
-        if (target <= 0) {
+        if (getTarget() <= 0) {
             shoot1.setPower(0);
             shoot2.setPower(0);
-            return;
         }
     }
 
-    public double getVelocity() { //m/s
-        double tick = shoot1.getVelocity();
-        double rpm = tick / 28;
-        return rpm * 0.09 * Math.PI;
+    public double getVelocity() { //tick
+        return shoot1.getVelocity();
     }
 }

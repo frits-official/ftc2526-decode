@@ -1,6 +1,6 @@
-package OpMode;
+package org.firstinspires.ftc.teamcode.opmodes.auto;
 
-import static Subsystem.Drivetrain.pedroPathing.Constants.createFollower;
+import static org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants.createFollower;
 
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
@@ -11,7 +11,7 @@ import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-@Autonomous
+@Autonomous(group = "auto")
 public class Auto extends OpMode {
     private Follower follower = null;
     private TelemetryManager telemetryM = null;
