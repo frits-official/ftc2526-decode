@@ -1,7 +1,7 @@
 package Subsystem.Shooter.Motion_system.Turret;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.bylazar.telemetry.PanelsTelemetry;
+import com.bylazar.telemetry.TelemetryManager;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -18,7 +18,9 @@ import dev.nextftc.control.feedback.PIDCoefficients;
 public class Turret {
     public ControlSystem controlSystem;
     private PIDCoefficients coefficients = new PIDCoefficients(ConstantFTC.TURRET.p, ConstantFTC.TURRET.i, ConstantFTC.TURRET.d);
-    public DcMotorEx turning = null;
+    public DcMotorEx turning;
+
+    private TelemetryManager telemetryM;
 
     public void init(HardwareMap hardwareMap) {
         controlSystem = ControlSystem.builder()
@@ -31,6 +33,7 @@ public class Turret {
         turning.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         turning.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
     }
 
     public double getDegree(double pos) {
@@ -46,12 +49,21 @@ public class Turret {
             finalTarget = ConstantFTC.TURRET.TURRETMIN;
         }
 
-        controlSystem.setGoal(new KineticState(getDegree(finalTarget)));
+        controlSystem.setGoal(new KineticState(finalTarget));
     }
 
     public void update() {
         double power = controlSystem.calculate(new KineticState(getDegree(turning.getCurrentPosition())));
 
+        double limitedpower = Range.clip(power, -0.6, 0.6);
+
         turning.setPower(power);
+
+    }
+
+    public void updateTelemetry(Telemetry telemetry) {
+        telemetryM.debug("Position: " + getDegree(turning.getCurrentPosition()));
+        telemetryM.debug("Tick: " + turning.getCurrentPosition());
+        telemetryM.update(telemetry);
     }
 }

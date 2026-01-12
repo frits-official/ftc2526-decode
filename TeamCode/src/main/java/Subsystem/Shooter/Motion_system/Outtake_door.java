@@ -31,15 +31,10 @@ public class Outtake_door {
         if (running) {
             double sencond = time.seconds();
 
-            if (sencond < 0.3) {
-                intakeFunnel.intake.setPower(0.7);
-                door.setPosition(0.3);
-            } else if (sencond < 2.5) {
-                intakeFunnel.intake.setPower(0.7);
+            if (sencond < 2.5) {
                 door.setPosition(0);
             } else {
                 door.setPosition(0.3);
-                intakeFunnel.intake.setPower(0.3);
                 running = false;
             }
         }

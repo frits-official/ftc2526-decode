@@ -12,7 +12,14 @@ public class Test_Turret extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
+            if (gamepad1.a) {
+                turret.setTarget(0);
+            } else if (gamepad1.y) {
+                turret.setTarget(180);
+            }
+
             turret.update();
+            turret.updateTelemetry(telemetry);
         }
     }
 }
