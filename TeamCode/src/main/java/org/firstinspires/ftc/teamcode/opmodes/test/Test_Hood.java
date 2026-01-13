@@ -13,7 +13,7 @@ public class Test_Hood extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        robot.init(this);
+        robot.init(this, Constants.ALLIANCE.BLUE);
 
         robot.hood.setTargetAngle(Constants.HOOD.minAngle);
 
@@ -21,7 +21,7 @@ public class Test_Hood extends LinearOpMode {
 
         while (opModeIsActive()) {
             robot.update();
-            robot.updateTelemetry(false, true, false);
+            robot.updateTelemetry(false, true, false, false);
         }
     }
 }

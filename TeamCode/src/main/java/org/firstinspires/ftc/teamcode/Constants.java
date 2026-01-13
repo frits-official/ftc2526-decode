@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.bylazar.configurables.annotations.Configurable;
 
 public class Constants {
+    public static enum ALLIANCE { BLUE, RED };
     @Configurable
     public static class SHOOTER {
         public static double p = 0.01;
@@ -31,7 +32,7 @@ public class Constants {
 
     @Configurable
     public static class DOOR {
-        public static double block = 0.3;
+        public static double block = 0.25;
         public static double unblock = 0;
         public static double delayTime = 2.8;
         public static double openTime = 2.5;

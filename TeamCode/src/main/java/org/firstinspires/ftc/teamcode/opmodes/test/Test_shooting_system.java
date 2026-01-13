@@ -4,6 +4,7 @@ import com.bylazar.configurables.annotations.Configurable;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.subsystems.intake.IntakeRoller;
 import org.firstinspires.ftc.teamcode.subsystems.shooter.Hood;
@@ -19,7 +20,7 @@ public class Test_shooting_system extends LinearOpMode {
     public static double vel, angle;
 
     public void runOpMode() {
-        robot.init(this);
+        robot.init(this, Constants.ALLIANCE.BLUE);
 
         waitForStart();
 
@@ -30,7 +31,7 @@ public class Test_shooting_system extends LinearOpMode {
 
             robot.update();
 
-            robot.updateTelemetry(false, true, false);
+            robot.updateTelemetry(false, true, false, true);
         }
     }
 }

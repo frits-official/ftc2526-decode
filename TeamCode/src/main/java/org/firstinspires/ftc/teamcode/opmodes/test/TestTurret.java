@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes.test;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.subsystems.shooter.Turret;
 
@@ -11,7 +12,7 @@ public class TestTurret extends LinearOpMode {
     Robot robot = new Robot();
 
     public void runOpMode() {
-        robot.init(this);
+        robot.init(this, Constants.ALLIANCE.BLUE);
 
         waitForStart();
 
@@ -23,7 +24,7 @@ public class TestTurret extends LinearOpMode {
             }
 
             robot.update();
-            robot.updateTelemetry(false, true, false);
+            robot.updateTelemetry(false, true, false, false);
         }
     }
 }

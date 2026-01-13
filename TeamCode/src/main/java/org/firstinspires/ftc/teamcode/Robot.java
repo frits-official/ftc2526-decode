@@ -4,10 +4,12 @@ import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
+import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.subsystems.Camera;
 import org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.subsystems.intake.IntakeRoller;
 import org.firstinspires.ftc.teamcode.subsystems.intake.OuttakeDoor;
@@ -29,8 +31,9 @@ public class Robot {
     private DcMotor lf = null;
     private DcMotor lr = null;
     private boolean isFieldCentric;
+    private Camera camera = new Camera();
 
-    public void init(LinearOpMode _opmode) {
+    public void init(LinearOpMode _opmode, Constants.ALLIANCE alliance) {
         opMode = _opmode;
 
         follower = DriveConstants.createFollower(opMode.hardwareMap);
@@ -52,21 +55,9 @@ public class Robot {
         outtakeDoor.init(opMode.hardwareMap);
         intakeRoller.init(opMode.hardwareMap);
 
-        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
-    }
+        camera.init(opMode.hardwareMap, alliance);
 
-    public void init(LinearOpMode _opmode, Pose startingPose) {
-        opMode = _opmode;
-
-        follower = DriveConstants.createFollower(opMode.hardwareMap);
-        follower.setStartingPose(startingPose);
-
-        shooter.init(opMode.hardwareMap);
-        hood.init(opMode.hardwareMap);
-        turret.init(opMode.hardwareMap);
-
-        outtakeDoor.init(opMode.hardwareMap);
-        intakeRoller.init(opMode.hardwareMap);
+        opMode.telemetry.setMsTransmissionInterval(11);
 
         telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
     }
@@ -85,7 +76,7 @@ public class Robot {
         setPose(newP);
     }
 
-    public void updateTelemetry(boolean getDrive, boolean getShooter, boolean getIntake) {
+    public void updateTelemetry(boolean getDrive, boolean getShooter, boolean getIntake, boolean getCamera) {
         if (getShooter) {
             //shooter
             telemetryM.debug("shoot velocity:" + shooter.getVelocity());
@@ -101,6 +92,7 @@ public class Robot {
             telemetryM.debug("turret tick: " + turret.getCurrentPosition());
             telemetryM.debug("turret target: " + turret.getTarget());
             telemetryM.debug("turret power: " + turret.getPower());
+            telemetryM.addLine("");
         }
 
         if (getIntake) {
@@ -111,6 +103,7 @@ public class Robot {
 
             //door
             telemetryM.debug("door is block:" + outtakeDoor.isBlocked());
+            telemetryM.addLine("");
         }
 
         //drivetrain
@@ -119,9 +112,22 @@ public class Robot {
             telemetryM.debug("drive Y:" + follower.getPose().getY());
             telemetryM.debug("drive Heading:" + follower.getPose().getHeading());
             telemetryM.debug("drive is field centric:" + isFieldCentric);
+            telemetryM.addLine("");
         }
 
-        //setup
+        //camera
+        if (getCamera) {
+            LLResult result = camera.getLastestValidResult();
+            if (result != null) {
+                telemetryM.debug("tx:" + camera.getLastestValidResult().getTx());
+                telemetryM.debug("ty:" + camera.getLastestValidResult().getTy());
+                telemetryM.debug("distance from target (cm): " + camera.getDistanceFromGoalTagCM());
+
+                telemetryM.addData("Botpose", camera.getLastestValidResult().getBotpose().toString());
+            }
+            telemetryM.addLine("");
+        }
+
         telemetryM.update(opMode.telemetry);
     }
 
@@ -172,6 +178,10 @@ public class Robot {
         lr.setPower(backLeftPower);
         rf.setPower(frontRightPower);
         rr.setPower(backRightPower);
+    }
+
+    public void stop() {
+        camera.stop();
     }
 }
 

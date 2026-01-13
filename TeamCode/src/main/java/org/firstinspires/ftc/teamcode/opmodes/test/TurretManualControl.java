@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.subsystems.shooter.Turret;
 
@@ -13,7 +14,7 @@ public class TurretManualControl extends LinearOpMode {
     Robot robot = new Robot();
 
     public void runOpMode() {
-        robot.init(this);
+        robot.init(this, Constants.ALLIANCE.BLUE);
 
         waitForStart();
 
@@ -24,7 +25,7 @@ public class TurretManualControl extends LinearOpMode {
 
             robot.turret.turret.setPower(limitedPower);
 
-            robot.updateTelemetry(false, true,false);
+            robot.updateTelemetry(false, true,false, false);
         }
     }
 }

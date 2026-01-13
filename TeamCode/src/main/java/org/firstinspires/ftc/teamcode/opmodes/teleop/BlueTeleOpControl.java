@@ -1,31 +1,26 @@
 package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
-import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
-import org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants;
-import org.firstinspires.ftc.teamcode.subsystems.shooter.Hood;
-import org.firstinspires.ftc.teamcode.subsystems.intake.OuttakeDoor;
-import org.firstinspires.ftc.teamcode.subsystems.shooter.Turret;
-import org.firstinspires.ftc.teamcode.subsystems.intake.IntakeRoller;
-import org.firstinspires.ftc.teamcode.subsystems.shooter.Shooter;
 
-@TeleOp(group = "teleop")
-public class TeleOpControl extends LinearOpMode {
+@TeleOp(group = "a-teleop")
+public class BlueTeleOpControl extends LinearOpMode {
     Robot robot = new Robot();
     boolean isFieldCentric = true;
 
     @Override
     public void runOpMode() {
         //Telemetry
-        robot.init(this);
+        robot.init(this, Constants.ALLIANCE.BLUE);
         robot.setPose(new Pose(0, 0, 0));
         robot.setShooterTargetManual(0, 25, 0);
+
+        telemetry.addLine("This program will open test TELEOP program of BLUE ALLIANCE, which will only track AprilTag 20 (BLUE GOAL AprilTag).");
+        telemetry.update();
 
         waitForStart();
 
@@ -58,7 +53,7 @@ public class TeleOpControl extends LinearOpMode {
                 robot.update();
 
                 //Telemetry
-                robot.updateTelemetry(true, true, true);
+                robot.updateTelemetry(true, true, true, true);
             }
         }
     }
