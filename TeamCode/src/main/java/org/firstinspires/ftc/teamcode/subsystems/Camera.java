@@ -44,6 +44,7 @@ public class Camera {
     /** in centimeters **/
     public double getDistanceFromGoalTagCM() {
         // d = (h2 - h1) / tan(a1 + a2)
-        return 44 / (Math.tan(6.33 + getLastestValidResult().getTx()) * (Math.PI / 180.0)) - 3.54;
+        //return 44 / Math.tan((17.5 - getLastestValidResult().getTx()) * (Math.PI / 180.0)) - 3.54;
+        return 44 / Math.tan((3.6 - getLastestValidResult().getTx()) * (Math.PI / 180.0)) - 2.7;
     }
 }
