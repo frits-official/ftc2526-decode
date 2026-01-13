@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems.shooter;
 
-import com.bylazar.telemetry.PanelsTelemetry;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
