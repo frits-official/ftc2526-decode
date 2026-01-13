@@ -5,6 +5,8 @@ import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.subsystems.intake.IntakeRoller;
@@ -22,11 +24,26 @@ public class Robot {
     public Hood hood = new Hood();
     public Turret turret = new Turret();
     public TelemetryManager telemetryM;
+    private DcMotor rf = null;
+    private DcMotor rr = null;
+    private DcMotor lf = null;
+    private DcMotor lr = null;
+    private boolean isFieldCentric;
 
     public void init(LinearOpMode _opmode) {
         opMode = _opmode;
 
         follower = DriveConstants.createFollower(opMode.hardwareMap);
+
+        lf = opMode.hardwareMap.get(DcMotor.class, "lf");
+        lr = opMode.hardwareMap.get(DcMotor.class, "lr");
+        rf = opMode.hardwareMap.get(DcMotor.class, "rf");
+        rr = opMode.hardwareMap.get(DcMotor.class, "rr");
+
+        lf.setDirection(DcMotorSimple.Direction.FORWARD);
+        lr.setDirection(DcMotorSimple.Direction.FORWARD);
+        rf.setDirection(DcMotorSimple.Direction.REVERSE);
+        rr.setDirection(DcMotorSimple.Direction.REVERSE);
 
         shooter.init(opMode.hardwareMap);
         hood.init(opMode.hardwareMap);
@@ -72,7 +89,7 @@ public class Robot {
         if (getShooter) {
             //shooter
             telemetryM.debug("shoot velocity:" + shooter.getVelocity());
-            telemetryM.debug("shoot target" + shooter.getTarget());
+            telemetryM.debug("shoot target:" + shooter.getTarget());
 
             //hood
             telemetryM.debug("hood angle:" + hood.getAngle());
@@ -90,10 +107,10 @@ public class Robot {
             //intake
             telemetryM.debug("intake velocity:" + intakeRoller.getVelocity());
             telemetryM.debug("intake power:" + intakeRoller.getPower());
-            telemetryM.debug("is intake" + intakeRoller.isIntake());
+            telemetryM.debug("is intake:" + intakeRoller.isIntake());
 
             //door
-            telemetryM.debug("door is block" + outtakeDoor.isBlocked());
+            telemetryM.debug("door is block:" + outtakeDoor.isBlocked());
         }
 
         //drivetrain
@@ -101,6 +118,7 @@ public class Robot {
             telemetryM.debug("drive X:" + follower.getPose().getX());
             telemetryM.debug("drive Y:" + follower.getPose().getY());
             telemetryM.debug("drive Heading:" + follower.getPose().getHeading());
+            telemetryM.debug("drive is field centric:" + isFieldCentric);
         }
 
         //setup
@@ -127,6 +145,33 @@ public class Robot {
     public void intakeFunnelTeleOpControl() {
         intakeRoller.teleOpControl(opMode.gamepad1);
         outtakeDoor.teleOpControl(opMode.gamepad1);
+    }
+
+    public void driveTeleOpControl(double straight, double strafe, double rotate, boolean isFieldCentric) {
+        this.isFieldCentric = isFieldCentric;
+
+        double rotX = strafe, rotY = straight;
+
+        if (isFieldCentric) {
+            double botHeading = follower.getPose().getHeading();
+
+            rotX = strafe * Math.cos(-botHeading) - straight * Math.sin(-botHeading);
+            rotY = strafe * Math.sin(-botHeading) + straight * Math.cos(-botHeading);
+        }
+
+        rotX = rotX * 1.1;
+
+        double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rotate), 1);
+        double frontLeftPower = (rotY + rotX + rotate) / denominator;
+        double backLeftPower = (rotY - rotX + rotate) / denominator;
+        double frontRightPower = (rotY - rotX - rotate) / denominator;
+        double backRightPower = (rotY + rotX - rotate) / denominator;
+
+
+        lf.setPower(frontLeftPower);
+        lr.setPower(backLeftPower);
+        rf.setPower(frontRightPower);
+        rr.setPower(backRightPower);
     }
 }
 

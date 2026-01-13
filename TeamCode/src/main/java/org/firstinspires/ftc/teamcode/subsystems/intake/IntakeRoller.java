@@ -41,7 +41,7 @@ public class IntakeRoller {
 
     public void teleOpControl(Gamepad gamepad1) {
         if (gamepad1.b) {
-            setIntakeState(true);
+            setIntakeState(true); 
         } else if (gamepad1.x) {
             setIntakeState(false);
         }
