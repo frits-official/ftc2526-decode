@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Constants;
 public class OuttakeDoor {
     private ElapsedTime time = new ElapsedTime();
     private boolean running = false;
-    private Servo door;
+    public Servo door;
 
     public void init(HardwareMap hardwareMap) {
         door = hardwareMap.get(Servo.class, "door");
@@ -41,7 +41,9 @@ public class OuttakeDoor {
         if (running) {
             double seconds = time.seconds();
 
-            if (seconds < Constants.DOOR.delayTime) {
+            if (seconds < Math.abs(Constants.DOOR.delayTime - Constants.DOOR.openTime)) {
+                block(true);
+            } else if (seconds < Constants.DOOR.delayTime) {
                 block(false);
             } else {
                 block(true);

@@ -8,9 +8,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Constants;
 
 public class IntakeRoller {
+    OuttakeDoor outtakeDoor = new OuttakeDoor();
     private DcMotorEx intake;
     boolean running = false;
     private ElapsedTime time = new ElapsedTime();
+    private double block = Constants.DOOR.block;
+    private double unblock = Constants.DOOR.unblock;
 
     public void init (HardwareMap hardwareMap) {
         intake = hardwareMap.get(DcMotorEx.class, "intake");
@@ -31,12 +34,12 @@ public class IntakeRoller {
     }
 
     public void setIntakeState(boolean isIntake) {
-        if (isIntake) setPower(.7);
+        if (isIntake) setPower(0.7);
         else setPower(0);
     }
 
     public boolean isIntake() {
-        return getPower() == .7;
+        return getPower() == 0.7;
     }
 
     public void teleOpControl(Gamepad gamepad1) {
@@ -54,7 +57,9 @@ public class IntakeRoller {
         if (running) {
             double seconds = time.seconds();
 
-            if (seconds < Constants.DOOR.delayTime) {
+            if (seconds < Math.abs(Constants.DOOR.delayTime - Constants.DOOR.openTime)) {
+                setPower(1);
+            } else if (seconds < Constants.DOOR.delayTime){
                 setPower(1);
             } else {
                 setPower(.7);

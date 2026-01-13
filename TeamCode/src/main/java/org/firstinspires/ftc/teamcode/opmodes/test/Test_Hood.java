@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes.test;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.subsystems.shooter.Hood;
 
@@ -14,7 +15,7 @@ public class Test_Hood extends LinearOpMode {
     public void runOpMode() {
         robot.init(this);
 
-        robot.hood.setTargetAngle(45);
+        robot.hood.setTargetAngle(Constants.HOOD.minAngle);
 
         waitForStart();
 

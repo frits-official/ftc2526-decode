@@ -17,7 +17,7 @@ public class Constants {
         public static double d = 0;
         public static double changeFormulaDistanceThreshold = 2.65;
         public static double maxAngle = 45.5;
-        public static double minAngle = 25.1;
+        public static double minAngle = 25.6;
     }
 
     @Configurable
@@ -33,6 +33,7 @@ public class Constants {
     public static class DOOR {
         public static double block = 0.3;
         public static double unblock = 0;
-        public static double delayTime = 2.5;
+        public static double delayTime = 2.8;
+        public static double openTime = 2.5;
     }
 }
