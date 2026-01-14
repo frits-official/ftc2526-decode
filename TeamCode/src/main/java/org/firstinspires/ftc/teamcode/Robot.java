@@ -5,6 +5,7 @@ import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.limelightvision.LLResult;
+import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -117,14 +118,17 @@ public class Robot {
 
         //camera
         if (getCamera) {
-            LLResult result = camera.getLastestValidResult();
+            LLStatus status = camera.getStatus();
+            telemetryM.debug("pipeline number: " + status.getPipelineIndex());
+            telemetryM.debug("temp: " + status.getTemp() + "; fps: " + (int)status.getFps());
+            LLResult result = camera.getLastestResult();
             if (result != null) {
-                telemetryM.debug("tx:" + camera.getLastestValidResult().getTx());
-                telemetryM.debug("ty:" + camera.getLastestValidResult().getTy());
+                telemetryM.debug("tx:" + camera.getLastestResult().getTx());
+                telemetryM.debug("ty:" + camera.getLastestResult().getTy());
                 telemetryM.debug("distance from target (cm): " + camera.getDistanceFromGoalTagCM());
 
-                telemetryM.addData("Botpose", camera.getLastestValidResult().getBotpose().toString());
-            }
+                telemetryM.addData("Botpose", camera.getLastestResult().getBotpose().toString());
+            } else telemetryM.addLine("detect nothing from camera");
             telemetryM.addLine("");
         }
 
