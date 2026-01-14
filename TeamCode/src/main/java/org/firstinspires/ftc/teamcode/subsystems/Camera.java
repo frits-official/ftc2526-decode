@@ -10,7 +10,6 @@ import org.firstinspires.ftc.teamcode.Constants;
 public class Camera {
     HardwareMap hardwareMap;
     Limelight3A limelight;
-    LLResult result;
 
     public void init(HardwareMap _hardwareMap, Constants.ALLIANCE alliance) {
         hardwareMap = _hardwareMap;
@@ -25,12 +24,11 @@ public class Camera {
         else if (alliance == Constants.ALLIANCE.RED) limelight.pipelineSwitch(1);
     }
 
-    public LLResult getLastestValidResult() {
-        LLResult preResult = limelight.getLatestResult();
-        if (preResult != null && preResult.isValid()) {
-            result = preResult;
-        }
-        return result;
+    public LLResult getLastestResult() {
+        LLResult result = limelight.getLatestResult();
+        if (result != null && result.isValid()) {
+            return result;
+        } else return null;
     }
 
     public LLStatus getStatus() {
@@ -41,10 +39,9 @@ public class Camera {
         limelight.stop();
     }
 
-    /** in centimeters **/
+    /** in centimeters, 4 number behind dot **/
     public double getDistanceFromGoalTagCM() {
         // d = (h2 - h1) / tan(a1 + a2)
-        //return 44 / Math.tan((17.5 - getLastestValidResult().getTx()) * (Math.PI / 180.0)) - 3.54;
-        return 44 / Math.tan((3.6 - getLastestValidResult().getTx()) * (Math.PI / 180.0)) - 2.7;
+        return Math.round((44 / Math.tan((17.5 + Math.abs(getLastestResult().getTx())) * (Math.PI / 180.0)) - 3.54) * 10000.0) / 10000.0;
     }
 }
