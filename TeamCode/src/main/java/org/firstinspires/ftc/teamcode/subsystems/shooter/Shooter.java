@@ -14,6 +14,7 @@ public class Shooter {
     private ControlSystem controlSystem;
     public DcMotorEx shoot1 = null;
     public DcMotorEx shoot2 = null;
+    public double power = 0.0;
 
     public void init(HardwareMap hardwareMap) {
         shoot1 = hardwareMap.get(DcMotorEx.class, "shoot1");
@@ -41,10 +42,10 @@ public class Shooter {
     }
 
     public void update() {
-        double vel = controlSystem.calculate(new KineticState(0, shoot1.getVelocity()));
-        vel = Math.max(-1.0, Math.min(1.0, vel));
-        shoot1.setPower(vel);
-        shoot2.setPower(vel);
+        power = controlSystem.calculate(new KineticState(0, shoot1.getVelocity()));
+        power = Math.max(-1.0, Math.min(1.0, power));
+        shoot1.setPower(power);
+        shoot2.setPower(power);
 
         if (getTarget() <= 0) {
             shoot1.setPower(0);

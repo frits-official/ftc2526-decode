@@ -37,4 +37,14 @@ public class Constants {
         public static double delayTime = 2.8;
         public static double openTime = 2.5;
     }
+
+    public static class SHOOTER_CALCULATION {
+        // https://docs.google.com/spreadsheets/d/1fzLwaEBuZ9TpgEnR5Y467lHZ0Rm3B78DA-xSx2ID6B4/edit?gid=0#gid=0
+        // please!!! after testing all, sort the distance column in google sheet
+        // and copy it into array WITHOUT changing the order
+        // only get lower bound of distanceThresh and then get target velocity and angle from the returned index
+        public static final double distanceThresh[] = {};
+        public static final double targetVelocity[] = {};
+        public static final double targetAngle[] = {};
+    }
 }
