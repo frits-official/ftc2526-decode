@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.command.ShooterAim;
 import org.firstinspires.ftc.teamcode.subsystems.Camera;
 import org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.subsystems.intake.IntakeRoller;
@@ -32,10 +33,12 @@ public class Robot {
     private DcMotor lf = null;
     private DcMotor lr = null;
     private boolean isFieldCentric;
-    private Camera camera = new Camera();
+    public Camera camera = new Camera();
+    private Constants.ALLIANCE alliance;
 
     public void init(LinearOpMode _opmode, Constants.ALLIANCE alliance) {
         opMode = _opmode;
+        this.alliance = alliance;
 
         follower = DriveConstants.createFollower(opMode.hardwareMap);
 
@@ -128,7 +131,7 @@ public class Robot {
                 telemetryM.debug("ty:" + camera.getLastestResult().getTy());
                 telemetryM.debug("distance from target (cm): " + camera.getDistanceFromGoalTagCM());
 
-                telemetryM.addData("Botpose", camera.getLastestResult().getBotpose_MT2().toString());
+                telemetryM.addData("Botpose", camera.getRobotPose().toString());
             } else telemetryM.addLine("detect nothing from camera");
             telemetryM.addLine("");
         }
@@ -142,11 +145,17 @@ public class Robot {
         turret.setTarget(turretHeading);
     }
 
+    public void aimShoot() {
+        ShooterAim.ShooterState shooterState = ShooterAim.calcShoot(camera.getDistanceFromGoalTagCM(), follower.getPose(), alliance);
+        double heading = ShooterAim.calcTurretHeadingFromOdometry(follower.getPose(), alliance);
+        setShooterTarget(shooterState.getVelocity(), shooterState.getAngle(), heading);
+    }
+
     public void update() {
         follower.update();;
         shooter.update();
-        turret.update();
         hood.update();
+        turret.update();
     }
 
     public void intakeFunnelTeleOpControl() {

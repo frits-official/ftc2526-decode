@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.pedropathing.ftc.FTCCoordinates;
+import com.pedropathing.geometry.PedroCoordinates;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.Constants;
 
@@ -46,7 +49,18 @@ public class Camera {
         // d = (h2 - h1) / tan(a1 + a2)
         LLResult result = getLastestResult();
         if (result != null)
-            return Math.round((44 / Math.tan((17.5 + Math.abs(result.getTx())) * (Math.PI / 180.0)) + (3.54 + 13.7)) * 10000.0) / 10000.0;
+            return Math.round((44 / Math.tan((17.5 - result.getTx()) * (Math.PI / 180.0)) + (3.54 + 13.7)) * 10000.0) / 10000.0;
         else return 0.0;
+    }
+
+    public Pose getRobotPose() {
+        LLResult result = getLastestResult();
+        if (result != null) {
+            Pose3D camPose = result.getBotpose_MT2();
+            return new Pose(camPose.getPosition().x, camPose.getPosition().y, camPose.getOrientation().getYaw(AngleUnit.RADIANS),
+                    FTCCoordinates.INSTANCE).getAsCoordinateSystem(PedroCoordinates.INSTANCE);
+        } else {
+            return null;
+        }
     }
 }
