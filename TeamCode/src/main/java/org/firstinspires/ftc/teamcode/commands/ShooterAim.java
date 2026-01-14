@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.command;
+package org.firstinspires.ftc.teamcode.commands;
 
 import static org.firstinspires.ftc.teamcode.Constants.SHOOTER_CALCULATION.*;
 
