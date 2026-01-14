@@ -6,7 +6,7 @@ public class Constants {
     public static enum ALLIANCE { BLUE, RED };
     @Configurable
     public static class SHOOTER {
-        public static double p = 0.01;
+        public static double p = 0.005;
         public static double i = 0;
         public static double d = 0;
     }
