@@ -127,7 +127,7 @@ public class Robot {
                 telemetryM.debug("ty:" + camera.getLastestResult().getTy());
                 telemetryM.debug("distance from target (cm): " + camera.getDistanceFromGoalTagCM());
 
-                telemetryM.addData("Botpose", camera.getLastestResult().getBotpose().toString());
+                telemetryM.addData("Botpose", camera.getLastestResult().getBotpose_MT2().toString());
             } else telemetryM.addLine("detect nothing from camera");
             telemetryM.addLine("");
         }
