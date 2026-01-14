@@ -18,7 +18,7 @@ public class Constants {
         public static double d = 0;
         public static double changeFormulaDistanceThreshold = 2.65;
         public static double maxAngle = 45.5;
-        public static double minAngle = 25.6;
+        public static double minAngle = 25.5;
     }
 
     @Configurable
