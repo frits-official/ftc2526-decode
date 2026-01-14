@@ -46,7 +46,7 @@ public class Camera {
         // d = (h2 - h1) / tan(a1 + a2)
         LLResult result = getLastestResult();
         if (result != null)
-            return Math.round((44 / Math.tan((17.5 + Math.abs(result.getTx())) * (Math.PI / 180.0)) - (3.54 + 13.7)) * 10000.0) / 10000.0;
+            return Math.round((44 / Math.tan((17.5 + Math.abs(result.getTx())) * (Math.PI / 180.0)) + (3.54 + 13.7)) * 10000.0) / 10000.0;
         else return 0.0;
     }
 }
