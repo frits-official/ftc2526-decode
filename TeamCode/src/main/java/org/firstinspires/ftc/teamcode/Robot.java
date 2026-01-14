@@ -135,14 +135,10 @@ public class Robot {
         telemetryM.update(opMode.telemetry);
     }
 
-    public void setShooterTargetManual(double velocity, double hoodAngle, double turretHeading) {
+    public void setShooterTarget(double velocity, double hoodAngle, double turretHeading) {
         shooter.setTarget(velocity);
         hood.setTargetAngle(hoodAngle);
         turret.setTarget(turretHeading);
-    }
-
-    public void setShooterTarget(double distance) {
-
     }
 
     public void update() {

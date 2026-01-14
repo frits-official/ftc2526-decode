@@ -6,11 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
-import org.firstinspires.ftc.teamcode.subsystems.intake.IntakeRoller;
-import org.firstinspires.ftc.teamcode.subsystems.shooter.Hood;
-import org.firstinspires.ftc.teamcode.subsystems.intake.OuttakeDoor;
-import org.firstinspires.ftc.teamcode.subsystems.shooter.Shooter;
-import org.firstinspires.ftc.teamcode.subsystems.shooter.Turret;
 
 @TeleOp(group = "test")
 @Configurable
@@ -25,7 +20,7 @@ public class Test_shooting_system extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            robot.setShooterTargetManual(vel, angle, 0);
+            robot.setShooterTarget(vel, angle, 0);
 
             robot.intakeFunnelTeleOpControl();
 
