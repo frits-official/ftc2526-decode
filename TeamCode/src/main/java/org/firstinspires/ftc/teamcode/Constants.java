@@ -13,7 +13,7 @@ public class Constants {
 
     @Configurable
     public static class HOOD {
-        public static double p = 0.1;
+        public static double p = 0.15;
         public static double i = 0;
         public static double d = 0;
         public static double changeFormulaDistanceThreshold = 2.65;
