@@ -6,14 +6,14 @@ public class Constants {
     public static enum ALLIANCE { BLUE, RED };
     @Configurable
     public static class SHOOTER {
-        public static double p = 0.01;
+        public static double p = 0.005;
         public static double i = 0;
         public static double d = 0;
     }
 
     @Configurable
     public static class HOOD {
-        public static double p = 0.15;
+        public static double p = 0.1;
         public static double i = 0;
         public static double d = 0;
         public static double changeFormulaDistanceThreshold = 2.65;
