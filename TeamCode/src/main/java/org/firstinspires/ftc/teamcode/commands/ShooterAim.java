@@ -20,14 +20,19 @@ public class ShooterAim {
     }
 
     public static double calcDistanceFromTag(double cm, Pose pose, Constants.ALLIANCE alliance) {
-        double xOff = 0.0;
-        if (alliance == Constants.ALLIANCE.BLUE) xOff = 304.8;
-        else xOff = 3352.8;
         double distance = cm;
         if (cm == 0.0)
-            distance = Math.sqrt(Math.pow(xOff - pose.getX(), 2) + Math.pow(3352.8 - pose.getY(), 2)) / 10.0;
+            distance = calcDistanceFromTagOdometry(pose, alliance);
         return distance;
     }
+
+    public static double calcDistanceFromTagOdometry(Pose pose, Constants.ALLIANCE alliance) {
+        double xOff = 0.0;
+        if (alliance == Constants.ALLIANCE.BLUE) xOff = 12;
+        else xOff = 132;
+        return Math.sqrt(Math.pow(xOff - pose.getX(), 2) + Math.pow(132 - pose.getY(), 2)) * 2.54;
+    }
+
     public static ShooterState calcShoot(double cm, Pose pose, Constants.ALLIANCE alliance) {
         int i = lowerBound(calcDistanceFromTag(cm, pose, alliance));
         return new ShooterState(targetVelocity[i], targetAngle[i]);
@@ -36,9 +41,9 @@ public class ShooterAim {
      * use this for nearly accurate turning, we will use limelight for more accuracy **/
     public static double calcTurretHeadingFromOdometry(Pose pose, Constants.ALLIANCE alliance) {
         double xOff;
-        if (alliance == Constants.ALLIANCE.BLUE) xOff = 304.8;
-        else xOff = 3352.8;
-        double a1 = -Math.atan2(xOff - pose.getX(), 3352.8 - pose.getY());
+        if (alliance == Constants.ALLIANCE.BLUE) xOff = 12;
+        else xOff = 132;
+        double a1 = -Math.atan2(xOff - pose.getX(), 132 - pose.getY());
         double a2 = Math.PI / 2 - pose.getHeading();
         return (a1 + a2) * 180 / Math.PI;
     }

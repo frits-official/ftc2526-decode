@@ -64,6 +64,8 @@ public class Robot {
         opMode.telemetry.setMsTransmissionInterval(11);
 
         telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
+
+        setShooterTarget(0, 0, 0);
     }
 
     public void setPose(Pose pose) {
@@ -131,7 +133,9 @@ public class Robot {
                 telemetryM.debug("ty:" + camera.getLastestResult().getTy());
                 telemetryM.debug("distance from target (cm): " + camera.getDistanceFromGoalTagCM());
 
-                telemetryM.addData("Botpose", camera.getRobotPose().toString());
+                Pose pose = camera.getRobotPose();
+                if (pose != null)
+                    telemetryM.addData("Botpose", pose.toString());
             } else telemetryM.addLine("detect nothing from camera");
             telemetryM.addLine("");
         }

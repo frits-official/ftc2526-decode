@@ -57,8 +57,10 @@ public class Camera {
         LLResult result = getLastestResult();
         if (result != null) {
             Pose3D camPose = result.getBotpose_MT2();
-            return new Pose(camPose.getPosition().x, camPose.getPosition().y, camPose.getOrientation().getYaw(AngleUnit.RADIANS),
+            if (camPose != null)
+                return new Pose(camPose.getPosition().x, camPose.getPosition().y, camPose.getOrientation().getYaw(AngleUnit.RADIANS),
                     FTCCoordinates.INSTANCE).getAsCoordinateSystem(PedroCoordinates.INSTANCE);
+            else return null;
         } else {
             return null;
         }
