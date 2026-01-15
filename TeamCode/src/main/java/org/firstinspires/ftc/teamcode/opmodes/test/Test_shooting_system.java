@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.test;
 
 import com.bylazar.configurables.annotations.Configurable;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -16,6 +17,7 @@ public class Test_shooting_system extends LinearOpMode {
 
     public void runOpMode() {
         robot.init(this, Constants.ALLIANCE.BLUE);
+        robot.setPose(new Pose(72, 72, 0));
 
         waitForStart();
 
