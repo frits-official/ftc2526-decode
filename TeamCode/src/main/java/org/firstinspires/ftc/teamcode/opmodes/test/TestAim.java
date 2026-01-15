@@ -22,8 +22,6 @@ public class TestAim extends LinearOpMode {
         while (opModeIsActive()) {
             robot.update();
 
-            telemetry.addData("turret target: ", ShooterAim.calcTurretHeadingFromOdometry(robot.follower.getPose(), Constants.ALLIANCE.BLUE));
-            telemetry.addData("distance from tag odo: ", ShooterAim.calcDistanceFromTagOdometry(robot.follower.getPose(), Constants.ALLIANCE.BLUE));
             robot.updateTelemetry(true, false,false,true);
         }
     }

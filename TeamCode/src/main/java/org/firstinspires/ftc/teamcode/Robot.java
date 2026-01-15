@@ -119,6 +119,10 @@ public class Robot {
             telemetryM.debug("drive Y:" + follower.getPose().getY());
             telemetryM.debug("drive Heading:" + follower.getPose().getHeading());
             telemetryM.debug("drive is field centric:" + isFieldCentric);
+
+
+            telemetryM.debug("turret target: ", ShooterAim.calcTurretHeadingFromOdometry(follower.getPose(), alliance));
+            telemetryM.debug("distance from tag odo: ", ShooterAim.calcDistanceFromTagOdometry(follower.getPose(), alliance));
             telemetryM.addLine("");
         }
 
