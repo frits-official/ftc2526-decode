@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems.drive;
 
+import com.bylazar.configurables.annotations.Configurable;
 import com.pedropathing.control.FilteredPIDFCoefficients;
 import com.pedropathing.control.PIDFCoefficients;
 import com.pedropathing.follower.Follower;
@@ -14,6 +15,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
+@Configurable
 public class DriveConstants {
     public static FollowerConstants followerConstants = new FollowerConstants()
             .mass(13.0)
@@ -25,8 +27,8 @@ public class DriveConstants {
             .centripetalScaling(0.0015);
 
     public static PinpointConstants localizerConstants = new PinpointConstants()
-            .forwardPodY(-130)
-            .strafePodX(-64)
+            .forwardPodY(-1.889)
+            .strafePodX(3.346)
             .distanceUnit(DistanceUnit.MM)
             .hardwareMapName("pinpoint")
             .encoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
