@@ -33,8 +33,8 @@ public class ShooterAim {
         return Math.sqrt(Math.pow(xOff - pose.getX(), 2) + Math.pow(132 - pose.getY(), 2)) * 2.54;
     }
 
-    public static ShooterState calcShoot(double cm, Pose pose, Constants.ALLIANCE alliance) {
-        int i = lowerBound(calcDistanceFromTag(cm, pose, alliance));
+    public static ShooterState calcShoot(Pose pose, Constants.ALLIANCE alliance) {
+        int i = lowerBound(calcDistanceFromTagOdometryCM(pose, alliance));
         return new ShooterState(targetVelocity[i], targetAngle[i]);
     }
     /** this will return degree with -90deg -> 90deg will run in counterclockwise

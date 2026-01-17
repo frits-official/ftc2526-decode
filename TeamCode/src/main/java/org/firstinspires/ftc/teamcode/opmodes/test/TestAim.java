@@ -20,6 +20,8 @@ public class TestAim extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
+            robot.aimShoot(false, true);
+
             robot.update();
 
             robot.updateTelemetry(true, false,false,true);

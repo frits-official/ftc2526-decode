@@ -9,6 +9,7 @@ import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.commands.ShooterAim;
 import org.firstinspires.ftc.teamcode.subsystems.Camera;
@@ -35,6 +36,8 @@ public class Robot {
     private boolean isFieldCentric;
     public Camera camera = new Camera();
     private Constants.ALLIANCE alliance;
+    private ElapsedTime time = new ElapsedTime();
+    boolean running = false;
 
     public void init(LinearOpMode _opmode, Constants.ALLIANCE alliance) {
         opMode = _opmode;
@@ -106,7 +109,6 @@ public class Robot {
             //intake
             telemetryM.debug("intake velocity:" + intakeRoller.getVelocity());
             telemetryM.debug("intake power:" + intakeRoller.getPower());
-            telemetryM.debug("is intake:" + intakeRoller.isIntake());
 
             //door
             telemetryM.debug("door is block:" + outtakeDoor.isBlocked());
@@ -135,11 +137,11 @@ public class Robot {
             if (result != null) {
                 telemetryM.debug("tx:" + camera.getLastestResult().getTx());
                 telemetryM.debug("ty:" + camera.getLastestResult().getTy());
-                telemetryM.debug("distance from target (cm): " + camera.getDistanceFromGoalTagCM());
+                // telemetryM.debug("distance from target (cm): " + camera.getDistanceFromGoalTagCM());
 
-                Pose pose = camera.getRobotPose();
-                if (pose != null)
-                    telemetryM.addData("Botpose", pose.toString());
+                // Pose pose = camera.getRobotPose();
+                // if (pose != null)
+                //    telemetryM.addData("Botpose", pose.toString());
             } else telemetryM.addLine("detect nothing from camera");
             telemetryM.addLine("");
         }
@@ -153,22 +155,33 @@ public class Robot {
         turret.setTarget(turretHeading);
     }
 
-    public void aimShoot() {
-        ShooterAim.ShooterState shooterState = ShooterAim.calcShoot(camera.getDistanceFromGoalTagCM(), follower.getPose(), alliance);
-        double heading = ShooterAim.calcTurretHeadingFromOdometry(follower.getPose(), alliance);
-        setShooterTarget(shooterState.getVelocity(), shooterState.getAngle(), heading);
+    public void aimShoot(boolean aimVelAndAngle, boolean aimHeading) {
+        double vel = 0, angle = 0, heading = 0;
+        if (aimVelAndAngle) {
+            ShooterAim.ShooterState shooterState = ShooterAim.calcShoot(follower.getPose(), alliance);
+            vel = shooterState.getVelocity();
+            angle = shooterState.getAngle();
+        }
+        if (aimHeading) heading = ShooterAim.calcTurretHeadingFromOdometry(follower.getPose(), alliance);
+        setShooterTarget(vel, angle, heading);
     }
 
     public void update() {
-        follower.update();;
+        follower.update();
+        turret.update();
         shooter.update();
         hood.update();
-        turret.update();
+        updateUnblockAndShoot();
     }
 
     public void intakeFunnelTeleOpControl() {
         intakeRoller.teleOpControl(opMode.gamepad1);
-        outtakeDoor.teleOpControl(opMode.gamepad1);
+        if (opMode.gamepad1.left_bumper && !running) unBlockAndShoot();
+    }
+
+    public void unBlockAndShoot() {
+        running = true;
+        time.reset();
     }
 
     public void driveTeleOpControl(double straight, double strafe, double rotate, boolean isFieldCentric) {
@@ -200,6 +213,24 @@ public class Robot {
 
     public void stop() {
         camera.stop();
+    }
+
+    public void updateUnblockAndShoot() {
+        if (running) {
+            double seconds = time.seconds();
+
+            if (seconds < Math.abs(Constants.DOOR.delayTime - Constants.DOOR.openTime)) {
+                intakeRoller.setPower(1);
+                outtakeDoor.block(true);
+            } else if (seconds < Constants.DOOR.delayTime) {
+                intakeRoller.setPower(1);
+                outtakeDoor.block(false);
+            } else {
+                intakeRoller.setPower(.7);
+                outtakeDoor.block(true);
+                running = false;
+            }
+        }
     }
 }
 

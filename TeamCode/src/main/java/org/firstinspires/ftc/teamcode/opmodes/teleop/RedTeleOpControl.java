@@ -8,18 +8,18 @@ import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 
 @TeleOp(group = "A-teleop")
-public class BlueTeleOpControl extends LinearOpMode {
+public class RedTeleOpControl extends LinearOpMode {
     Robot robot = new Robot();
     boolean isFieldCentric = true;
 
     @Override
     public void runOpMode() {
         //Telemetry
-        robot.init(this, Constants.ALLIANCE.BLUE);
+        robot.init(this, Constants.ALLIANCE.RED);
         robot.setPose(new Pose(72, 72, 0));
         robot.setShooterTarget(0, 25, 0);
 
-        telemetry.addLine("This program will open test TELEOP program of BLUE ALLIANCE, which will only track AprilTag 20 (BLUE GOAL AprilTag).");
+        telemetry.addLine("This program will open test TELEOP program of RED ALLIANCE, which will only track AprilTag 24 (BLUE GOAL AprilTag).");
         telemetry.update();
 
         waitForStart();

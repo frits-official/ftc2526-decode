@@ -8,8 +8,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Constants;
 
 public class OuttakeDoor {
-    private ElapsedTime time = new ElapsedTime();
-    private boolean running = false;
     public Servo door;
 
     public void init(HardwareMap hardwareMap) {
@@ -30,25 +28,5 @@ public class OuttakeDoor {
 
     public boolean isBlocked() {
         return door.getPosition() == Constants.DOOR.block;
-    }
-
-    public void teleOpControl(Gamepad gamepad1) {
-        if (gamepad1.dpad_up && !running) {
-            running = true;
-            time.reset();
-        }
-
-        if (running) {
-            double seconds = time.seconds();
-
-            if (seconds < Math.abs(Constants.DOOR.delayTime - Constants.DOOR.openTime)) {
-                block(true);
-            } else if (seconds < Constants.DOOR.delayTime) {
-                block(false);
-            } else {
-                block(true);
-                running = false;
-            }
-        }
     }
 }
