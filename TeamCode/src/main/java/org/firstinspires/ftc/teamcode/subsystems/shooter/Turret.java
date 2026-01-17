@@ -28,6 +28,12 @@ public class Turret {
         turret.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
+    public void setCoefficients(double p, double i, double d) {
+        controlSystem = ControlSystem.builder()
+                .posPid(new PIDCoefficients(p, i, d))
+                .build();
+    }
+
     public double getDegree(double pos) {
         return pos * (360.0 / 768.0);
     }
