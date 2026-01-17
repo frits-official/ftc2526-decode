@@ -29,7 +29,7 @@ public class Turret {
     }
 
     public double getDegree(double pos) {
-        return pos * (360.0 / 425.0);
+        return pos * (360.0 / 768.0);
     }
 
     public void setTarget(double target1) {
