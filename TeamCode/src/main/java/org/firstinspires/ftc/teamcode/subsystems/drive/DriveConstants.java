@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.Constants;
 
 public class DriveConstants {
     public static FollowerConstants followerConstants = new FollowerConstants()
@@ -25,13 +26,13 @@ public class DriveConstants {
             .centripetalScaling(0.0015);
 
     public static PinpointConstants localizerConstants = new PinpointConstants()
-            .forwardPodY(-130)
-            .strafePodX(-64)
-            .distanceUnit(DistanceUnit.MM)
+            .forwardPodY(-1.88976377952756)
+            .strafePodX(-3.34645669291339)
+            .distanceUnit(DistanceUnit.INCH)
             .hardwareMapName("pinpoint")
             .encoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
-            .forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD)
-            .strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.REVERSED);
+            .forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.REVERSED)
+            .strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD);
 
     public static MecanumConstants driveConstants = new MecanumConstants()
             .maxPower(1)

@@ -22,11 +22,11 @@ public class ShooterAim {
     public static double calcDistanceFromTag(double cm, Pose pose, Constants.ALLIANCE alliance) {
         double distance = cm;
         if (cm == 0.0)
-            distance = calcDistanceFromTagOdometry(pose, alliance);
+            distance = calcDistanceFromTagOdometryCM(pose, alliance);
         return distance;
     }
 
-    public static double calcDistanceFromTagOdometry(Pose pose, Constants.ALLIANCE alliance) {
+    public static double calcDistanceFromTagOdometryCM(Pose pose, Constants.ALLIANCE alliance) {
         double xOff = 0.0;
         if (alliance == Constants.ALLIANCE.BLUE) xOff = 12;
         else xOff = 132;

@@ -35,10 +35,10 @@ public class Turret {
     public void setTarget(double target1) {
         double finalTarget = target1;
         if (target1 > Constants.TURRET.maxAngle) {
-            finalTarget = Constants.TURRET.maxAngle;
+            finalTarget = Constants.TURRET.maxAngle - 360.0;
         }
         if (target1 < Constants.TURRET.minAngle) {
-            finalTarget = Constants.TURRET.minAngle;
+            finalTarget = Constants.TURRET.minAngle + 360.0;
         }
 
         controlSystem.setGoal(new KineticState(finalTarget));

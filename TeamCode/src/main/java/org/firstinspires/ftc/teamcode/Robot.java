@@ -122,7 +122,7 @@ public class Robot {
 
 
             telemetryM.debug("turret target: ", ShooterAim.calcTurretHeadingFromOdometry(follower.getPose(), alliance));
-            telemetryM.debug("distance from tag odo: ", ShooterAim.calcDistanceFromTagOdometry(follower.getPose(), alliance));
+            telemetryM.debug("distance from tag odo: ", ShooterAim.calcDistanceFromTagOdometryCM(follower.getPose(), alliance));
             telemetryM.addLine("");
         }
 

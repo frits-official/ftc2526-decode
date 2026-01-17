@@ -28,7 +28,7 @@ public class Test_shooting_system extends LinearOpMode {
 
             robot.update();
 
-            robot.updateTelemetry(false, true, false, true);
+            robot.updateTelemetry(true, true, false, false);
         }
     }
 }
