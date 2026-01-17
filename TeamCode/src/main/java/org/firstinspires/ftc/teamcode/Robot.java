@@ -20,6 +20,8 @@ import org.firstinspires.ftc.teamcode.subsystems.shooter.Hood;
 import org.firstinspires.ftc.teamcode.subsystems.shooter.Shooter;
 import org.firstinspires.ftc.teamcode.subsystems.shooter.Turret;
 
+import dev.nextftc.control.KineticState;
+
 public class Robot {
     public LinearOpMode opMode;
     public Follower follower;
@@ -99,7 +101,6 @@ public class Robot {
 
             //turret
             telemetryM.debug("turret angle: " + turret.getDegree(turret.getCurrentPosition()));
-            telemetryM.debug("turret tick: " + turret.getCurrentPosition());
             telemetryM.debug("turret target: " + turret.getTarget());
             telemetryM.debug("turret power: " + turret.getPower());
             telemetryM.addLine("");
@@ -121,7 +122,6 @@ public class Robot {
             telemetryM.debug("drive Y:" + follower.getPose().getY());
             telemetryM.debug("drive Heading:" + follower.getPose().getHeading());
             telemetryM.debug("drive is field centric:" + isFieldCentric);
-
 
             telemetryM.debug("turret target: ", ShooterAim.calcTurretHeadingFromOdometry(follower.getPose(), alliance));
             telemetryM.debug("distance from tag odo: ", ShooterAim.calcDistanceFromTagOdometryCM(follower.getPose(), alliance));

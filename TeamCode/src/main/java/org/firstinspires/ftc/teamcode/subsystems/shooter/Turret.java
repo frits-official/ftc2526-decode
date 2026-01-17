@@ -51,9 +51,15 @@ public class Turret {
     }
 
     public void update() {
-        double power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition())));
-
-        turret.setPower(power);
+        double error = getTarget() - getDegree(getCurrentPosition());
+        double direction = Math.signum(error);
+        double power = 0;
+        if (Math.abs(error) > 60) power = 1;
+        else if (Math.abs(error) > 40) power = .5;
+        else if (Math.abs(error) > 20) power = .3;
+        else if (Math.abs(error) > 5) power = .2;
+        else if (Math.abs(error) > 1) power = .1;
+        turret.setPower(power * direction);
     }
 
     public double getCurrentPosition() {
