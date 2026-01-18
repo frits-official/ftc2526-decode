@@ -26,7 +26,7 @@ public class Test_shooting_system extends LinearOpMode {
 
             robot.intakeFunnelTeleOpControl();
 
-            robot.update();
+            robot.update(gamepad1);
 
             robot.updateTelemetry(true, true, false, false);
         }

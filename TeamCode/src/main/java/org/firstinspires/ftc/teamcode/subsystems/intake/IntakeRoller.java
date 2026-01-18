@@ -31,8 +31,6 @@ public class IntakeRoller {
     public void teleOpControl(Gamepad gamepad1) {
         if (gamepad1.right_trigger > 0) {
             setPower(.7);
-        } else if (gamepad1.b || gamepad1.circle) {
-            setPower(0);
         } else if (gamepad1.right_bumper) {
             setPower(-.7);
         }

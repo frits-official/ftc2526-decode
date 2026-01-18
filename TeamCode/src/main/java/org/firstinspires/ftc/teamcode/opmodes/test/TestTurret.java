@@ -27,7 +27,7 @@ public class TestTurret extends LinearOpMode {
                 robot.turret.setTarget(target);
             }
 
-            robot.update();
+            robot.update(gamepad1);
             robot.updateTelemetry(false, true, false, false);
         }
     }

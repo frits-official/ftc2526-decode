@@ -20,7 +20,7 @@ public class Test_Hood extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            robot.update();
+            robot.update(gamepad1);
             robot.updateTelemetry(false, true, false, false);
         }
     }

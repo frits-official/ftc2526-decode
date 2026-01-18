@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes.teleop;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
@@ -36,9 +37,9 @@ public class BlueTeleOpControl extends LinearOpMode {
 
                 robot.intakeFunnelTeleOpControl();
 
-                robot.aimShoot(true, false);
+                //robot.aimShoot(true, false);
 
-                robot.update();
+                robot.update(gamepad1);
 
                 //Telemetry
                 robot.updateTelemetry(true, true, true, true);
