@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
 import com.pedropathing.geometry.Pose;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 
+@Disabled
 @TeleOp(group = "A-teleop")
 public class RedTeleOpControl extends LinearOpMode {
     Robot robot = new Robot();
@@ -38,7 +40,7 @@ public class RedTeleOpControl extends LinearOpMode {
 
                 //robot.aimShoot(true, false);
 
-                robot.update(gamepad1);
+                robot.update();
 
                 //Telemetry
                 robot.updateTelemetry(true, true, true, true);

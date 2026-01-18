@@ -167,19 +167,7 @@ public class Robot {
         setShooterTarget(vel, angle, heading);
     }
 
-    public void update(Gamepad gamepad1) {
-        if (gamepad1.a) {
-            setShooterTarget(1325, 38, 0);
-        }
-        if (gamepad1.x) {
-            setShooterTarget(1700, 39.5, 0);
-        }
-        if (gamepad1.b) {
-            intakeRoller.setPower(0);
-            setShooterTarget(0,0,0);
-
-        }
-
+    public void update() {
         follower.update();
         turret.update();
         shooter.update();
@@ -190,6 +178,15 @@ public class Robot {
     public void intakeFunnelTeleOpControl() {
         intakeRoller.teleOpControl(opMode.gamepad1);
         if (opMode.gamepad1.left_bumper && !running) unBlockAndShoot();
+        if (opMode.gamepad1.a) {
+            setShooterTarget(1325, 38, 0);
+        }
+        if (opMode.gamepad1.x) {
+            setShooterTarget(1700, 39.5, 0);
+        }
+        if (opMode.gamepad1.b) {
+            setShooterTarget(0,0,0);
+        }
     }
 
     public void unBlockAndShoot() {

@@ -35,6 +35,7 @@ public class ShooterAim {
 
     public static ShooterState calcShoot(Pose pose, Constants.ALLIANCE alliance) {
         int i = lowerBound(calcDistanceFromTagOdometryCM(pose, alliance));
+        if (i == -1) i = 0;
         return new ShooterState(targetVelocity[i], targetAngle[i]);
     }
     /** this will return degree with -90deg -> 90deg will run in counterclockwise
@@ -65,6 +66,6 @@ public class ShooterAim {
             low++;
         }
 
-        return low;
+        return low - 1;
     }
 }

@@ -22,7 +22,7 @@ public class TestAim extends LinearOpMode {
         while (opModeIsActive()) {
             robot.aimShoot(false, true);
 
-            robot.update(gamepad1);
+            robot.update();
 
             robot.updateTelemetry(true, true,false,true);
         }
