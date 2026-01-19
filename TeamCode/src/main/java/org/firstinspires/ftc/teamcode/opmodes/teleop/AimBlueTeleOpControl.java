@@ -38,7 +38,7 @@ public class AimBlueTeleOpControl extends LinearOpMode {
 
                 robot.intakeFunnelTeleOpControl();
 
-                robot.aimShoot(true, false);
+                robot.aimShoot(true, true);
 
                 robot.update();
 

@@ -41,6 +41,7 @@ public class Robot {
     private Constants.ALLIANCE alliance;
     private ElapsedTime time = new ElapsedTime();
     boolean running = false;
+    double turretHeadingFromCam = 0.0;
 
     public void init(LinearOpMode _opmode, Constants.ALLIANCE alliance) {
         opMode = _opmode;
@@ -104,6 +105,7 @@ public class Robot {
             telemetryM.debug("turret angle: " + turret.getDegree(turret.getCurrentPosition()));
             telemetryM.debug("turret target: " + turret.getTarget());
             telemetryM.debug("turret power: " + turret.getPower());
+            telemetryM.debug("turret í in tolerance: " + turret.controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance)));
             telemetryM.addLine("");
         }
 
@@ -138,11 +140,6 @@ public class Robot {
             if (result != null) {
                 telemetryM.debug("tx:" + camera.getLastestResult().getTx());
                 telemetryM.debug("ty:" + camera.getLastestResult().getTy());
-                // telemetryM.debug("distance from target (cm): " + camera.getDistanceFromGoalTagCM());
-
-                // Pose pose = camera.getRobotPose();
-                // if (pose != null)
-                //    telemetryM.addData("Botpose", pose.toString());
             } else telemetryM.addLine("detect nothing from camera");
             telemetryM.addLine("");
         }
@@ -169,6 +166,10 @@ public class Robot {
 
     public void update() {
         follower.update();
+        LLResult result = camera.getLastestResult();
+        if (result != null) {
+            turretHeadingFromCam =  camera.getLastestResult().getTy();
+        }
         turret.update();
         shooter.update();
         hood.update();

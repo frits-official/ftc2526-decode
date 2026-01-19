@@ -18,7 +18,6 @@ public class Turret {
     public void init(HardwareMap hardwareMap) {
         controlSystem = ControlSystem.builder()
                 .posPid(coefficients)
-                .basicFF(Constants.TURRET.v, Constants.TURRET.a, Constants.TURRET.s)
                 .build();
 
         turret = hardwareMap.get(DcMotorEx.class, "turning");
@@ -27,12 +26,13 @@ public class Turret {
 
         turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         turret.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        turret.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void setCoefficients(double p, double i, double d, double v, double a, double s) {
+    public void setCoefficients(double p, double i, double d) {
         controlSystem = ControlSystem.builder()
                 .posPid(new PIDCoefficients(p, i, d))
-                .basicFF(Constants.TURRET.v, Constants.TURRET.a, Constants.TURRET.s)
                 .build();
     }
 
@@ -53,15 +53,12 @@ public class Turret {
     }
 
     public void update() {
-        double error = getTarget() - getDegree(getCurrentPosition());
-        double direction = Math.signum(error);
-        double power = 0;
-        if (Math.abs(error) > 60) power = 1;
-        else if (Math.abs(error) > 40) power = .5;
-        else if (Math.abs(error) > 20) power = .3;
-        else if (Math.abs(error) > 5) power = .2;
-        else if (Math.abs(error) > 1) power = .1;
-        turret.setPower(power * direction);
+        double power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition())));
+        if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
+            turret.setPower(power + Constants.TURRET.f * (power > 0 ? 1 : -1));
+        } else {
+            turret.setPower(0);
+        }
     }
 
     public double getCurrentPosition() {
