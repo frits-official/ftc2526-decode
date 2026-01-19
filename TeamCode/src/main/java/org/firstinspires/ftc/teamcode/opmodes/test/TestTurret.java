@@ -20,7 +20,11 @@ public class TestTurret extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            robot.turret.setCoefficients(Constants.TURRET.p, Constants.TURRET.i, Constants.TURRET.d);
+            if (gamepad1.x) {
+                robot.turret.setCoefficients(Constants.TURRET.p, Constants.TURRET.i, Constants.TURRET.d,
+                        Constants.TURRET.v, Constants.TURRET.a, Constants.TURRET.s);
+                robot.turret.setTarget(target);
+            }
             if (gamepad1.a) {
                 robot.turret.setTarget(0);
             } else if (gamepad1.y) {

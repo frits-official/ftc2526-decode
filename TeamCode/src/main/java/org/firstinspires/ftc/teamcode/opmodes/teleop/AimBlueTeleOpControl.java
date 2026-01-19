@@ -10,13 +10,13 @@ import org.firstinspires.ftc.teamcode.Robot;
 @TeleOp(group = "A-teleop")
 public class AimBlueTeleOpControl extends LinearOpMode {
     Robot robot = new Robot();
-    boolean isFieldCentric = true;
+    boolean isFieldCentric = false;
 
     @Override
     public void runOpMode() {
         //Telemetry
         robot.init(this, Constants.ALLIANCE.BLUE);
-        robot.setPose(new Pose(72, 72, 180));
+        robot.setPose(new Pose(72, 72, Math.toRadians(180)));
         robot.setShooterTarget(0, 25, 0);
 
         while (!isStarted()) {
@@ -29,11 +29,11 @@ public class AimBlueTeleOpControl extends LinearOpMode {
         //Drivetrain
         if (opModeIsActive()) {
             while(opModeIsActive()) {
-                if (gamepad1.start || gamepad1.options) {
-                    robot.resetPose(false, false, true);
-                }
+                // if (gamepad1.start || gamepad1.options) {
+                //    robot.resetPose(false, false, true);
+                // }
 
-                if (gamepad1.back || gamepad1.share) isFieldCentric = !isFieldCentric;
+                // if (gamepad1.back || gamepad1.share) isFieldCentric = !isFieldCentric;
                 robot.driveTeleOpControl(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x, isFieldCentric);
 
                 robot.intakeFunnelTeleOpControl();

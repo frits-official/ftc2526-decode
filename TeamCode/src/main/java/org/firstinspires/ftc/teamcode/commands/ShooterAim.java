@@ -46,7 +46,7 @@ public class ShooterAim {
         else xOff = 132;
         double a1 = -Math.atan2(xOff - pose.getX(), 132 - pose.getY());
         double a2 = Math.PI / 2 - pose.getHeading();
-        return ((a1 + a2) * 180 / Math.PI);
+        return Math.toDegrees(a1 + a2);
     }
 
     static int lowerBound(double key) {

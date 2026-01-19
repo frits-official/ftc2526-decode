@@ -178,15 +178,6 @@ public class Robot {
     public void intakeFunnelTeleOpControl() {
         intakeRoller.teleOpControl(opMode.gamepad1);
         if (opMode.gamepad1.left_bumper && !running) unBlockAndShoot();
-        if (opMode.gamepad1.a) {
-            setShooterTarget(1325, 38, 0);
-        }
-        if (opMode.gamepad1.x) {
-            setShooterTarget(1700, 39.5, 0);
-        }
-        if (opMode.gamepad1.b) {
-            setShooterTarget(0,0,0);
-        }
     }
 
     public void unBlockAndShoot() {

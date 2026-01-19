@@ -26,6 +26,9 @@ public class Constants {
         public static double p = 0.01;
         public static double i = 0;
         public static double d = 0;
+        public static double v = 0;
+        public static double a = 0;
+        public static double s = 0;
         public static double maxAngle = 225;
         public static double minAngle = -225;
     }

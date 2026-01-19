@@ -18,6 +18,7 @@ public class Turret {
     public void init(HardwareMap hardwareMap) {
         controlSystem = ControlSystem.builder()
                 .posPid(coefficients)
+                .basicFF(Constants.TURRET.v, Constants.TURRET.a, Constants.TURRET.s)
                 .build();
 
         turret = hardwareMap.get(DcMotorEx.class, "turning");
@@ -28,9 +29,10 @@ public class Turret {
         turret.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
-    public void setCoefficients(double p, double i, double d) {
+    public void setCoefficients(double p, double i, double d, double v, double a, double s) {
         controlSystem = ControlSystem.builder()
                 .posPid(new PIDCoefficients(p, i, d))
+                .basicFF(Constants.TURRET.v, Constants.TURRET.a, Constants.TURRET.s)
                 .build();
     }
 
