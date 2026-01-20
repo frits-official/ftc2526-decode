@@ -16,13 +16,24 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class DriveConstants {
     public static FollowerConstants followerConstants = new FollowerConstants()
+            //Setup
             .mass(13.0)
             .forwardZeroPowerAcceleration(-45.98)
             .lateralZeroPowerAcceleration(-64.33)
-            .translationalPIDFCoefficients(new PIDFCoefficients(0.1,0,0.01,0.03))
-            .headingPIDFCoefficients(new PIDFCoefficients(0.8,0,0.02,0.03))
-            .drivePIDFCoefficients(new FilteredPIDFCoefficients(0.025,0,0.0001 ,0.45,0.001))
-            .centripetalScaling(0.0015);
+            //TranslationPIDF
+            .useSecondaryTranslationalPIDF(true)
+            .translationalPIDFCoefficients(new PIDFCoefficients(0.07,0,0.005,0.02))
+            .secondaryTranslationalPIDFCoefficients(new PIDFCoefficients(0.1,0,0.01,0))
+            //HeadingPIDF
+            .useSecondaryHeadingPIDF(true)
+            .headingPIDFCoefficients(new PIDFCoefficients(1,0,0.01,0.02))
+            .secondaryHeadingPIDFCoefficients(new PIDFCoefficients(0.1,0,0.05,0))
+            //DrivePIDF
+            .useSecondaryDrivePIDF(true)
+            .drivePIDFCoefficients(new FilteredPIDFCoefficients(0.05,0,0.0006 ,0.6,0.01))
+            .secondaryDrivePIDFCoefficients(new FilteredPIDFCoefficients(0.01,0,0.0001,0.6,0.0001))
+            //Centripetal
+            .centripetalScaling(0.0005);
 
     public static PinpointConstants localizerConstants = new PinpointConstants()
             .forwardPodY(-1.88976377952756)
