@@ -28,8 +28,8 @@ public class Constants {
         public static double d = 0;
         public static double f = 0.16;
         public static double tolerance = 0.1;
-        public static double maxAngle = 230;
-        public static double minAngle = -230;
+        public static double maxAngle = 185;
+        public static double minAngle = -185;
     }
 
     @Configurable

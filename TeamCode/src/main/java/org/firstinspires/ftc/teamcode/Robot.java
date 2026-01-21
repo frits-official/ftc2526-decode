@@ -42,6 +42,8 @@ public class Robot {
     private ElapsedTime time = new ElapsedTime();
     boolean running = false;
     double turretHeadingFromCam = 0.0;
+    boolean brake = false;
+    double vel = 0, angle = 0, heading = 0;
 
     public void init(LinearOpMode _opmode, Constants.ALLIANCE alliance) {
         opMode = _opmode;
@@ -154,7 +156,6 @@ public class Robot {
     }
 
     public void aimShoot(boolean aimVelAndAngle, boolean aimHeading) {
-        double vel = 0, angle = 0, heading = 0;
         if (aimVelAndAngle) {
             ShooterAim.ShooterState shooterState = ShooterAim.calcShoot(follower.getPose(), alliance);
             vel = shooterState.getVelocity();
@@ -166,10 +167,10 @@ public class Robot {
 
     public void update() {
         follower.update();
-        LLResult result = camera.getLastestResult();
-        if (result != null) {
-            turretHeadingFromCam =  camera.getLastestResult().getTy();
-        }
+        // LLResult result = camera.getLastestResult();
+        // if (result != null) {
+        //    turretHeadingFromCam =  camera.getLastestResult().getTy();
+        // }
         turret.update();
         shooter.update();
         hood.update();
@@ -178,7 +179,17 @@ public class Robot {
 
     public void intakeFunnelTeleOpControl() {
         intakeRoller.teleOpControl(opMode.gamepad1);
-        if (opMode.gamepad1.left_bumper && !running) unBlockAndShoot();
+    }
+
+    public void outtakeTeleOpControl() {
+        if (opMode.gamepad1.left_trigger > 0) {
+            aimShoot(true, true);
+        } else aimShoot(true, false);
+
+        if (opMode.gamepad1.left_bumper && !running) {
+            brakeDrive(true);
+            unBlockAndShoot();
+        }
     }
 
     public void unBlockAndShoot() {
@@ -187,30 +198,36 @@ public class Robot {
     }
 
     public void driveTeleOpControl(double straight, double strafe, double rotate, boolean isFieldCentric) {
-        this.isFieldCentric = isFieldCentric;
+        if (!brake) {
+            this.isFieldCentric = isFieldCentric;
 
-        double rotX = strafe, rotY = straight;
+            double rotX = strafe, rotY = straight;
 
-        if (isFieldCentric) {
-            double botHeading = follower.getPose().getHeading();
+            if (isFieldCentric) {
+                double botHeading = follower.getPose().getHeading();
 
-            rotX = strafe * Math.cos(-botHeading) - straight * Math.sin(-botHeading);
-            rotY = strafe * Math.sin(-botHeading) + straight * Math.cos(-botHeading);
+                rotX = strafe * Math.cos(-botHeading) - straight * Math.sin(-botHeading);
+                rotY = strafe * Math.sin(-botHeading) + straight * Math.cos(-botHeading);
+            }
+
+            rotX = rotX * 1.1;
+
+            double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rotate), 1);
+            double frontLeftPower = (rotY + rotX + rotate) / denominator;
+            double backLeftPower = (rotY - rotX + rotate) / denominator;
+            double frontRightPower = (rotY - rotX - rotate) / denominator;
+            double backRightPower = (rotY + rotX - rotate) / denominator;
+
+            lf.setPower(frontLeftPower);
+            lr.setPower(backLeftPower);
+            rf.setPower(frontRightPower);
+            rr.setPower(backRightPower);
+        } else {
+            lf.setPower(0);
+            lr.setPower(0);
+            rf.setPower(0);
+            rr.setPower(0);
         }
-
-        rotX = rotX * 1.1;
-
-        double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rotate), 1);
-        double frontLeftPower = (rotY + rotX + rotate) / denominator;
-        double backLeftPower = (rotY - rotX + rotate) / denominator;
-        double frontRightPower = (rotY - rotX - rotate) / denominator;
-        double backRightPower = (rotY + rotX - rotate) / denominator;
-
-
-        lf.setPower(frontLeftPower);
-        lr.setPower(backLeftPower);
-        rf.setPower(frontRightPower);
-        rr.setPower(backRightPower);
     }
 
     public void stop() {
@@ -230,8 +247,24 @@ public class Robot {
             } else {
                 intakeRoller.setPower(.7);
                 outtakeDoor.block(true);
+                brakeDrive(false);
                 running = false;
             }
+        }
+    }
+
+    public void brakeDrive(boolean brake) {
+        this.brake = brake;
+        if (brake) {
+            lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            lr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        } else {
+            lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            lr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
     }
 }

@@ -38,7 +38,7 @@ public class AimRedTeleOpControl extends LinearOpMode {
 
                 robot.intakeFunnelTeleOpControl();
 
-                robot.aimShoot(true, true);
+                robot.outtakeTeleOpControl();
 
                 robot.update();
 
