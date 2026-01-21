@@ -64,6 +64,8 @@ public class Test_Auto extends LinearOpMode {
         opmodeTimer = new Timer();
         opmodeTimer.resetTimer();
 
+        waitForStart();
+
         if (opModeIsActive()) {
             setPathState(0);
             opmodeTimer.resetTimer();
