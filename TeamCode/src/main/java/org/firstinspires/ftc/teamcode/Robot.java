@@ -9,7 +9,6 @@ import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.commands.ShooterAim;
@@ -40,7 +39,7 @@ public class Robot {
     public Camera camera = new Camera();
     private Constants.ALLIANCE alliance;
     private ElapsedTime time = new ElapsedTime();
-    boolean running = false;
+    public boolean running = false;
     double turretHeadingFromCam = 0.0;
     boolean brake = false;
     double vel = 0, angle = 0, heading = 0;
@@ -181,6 +180,13 @@ public class Robot {
         intakeRoller.teleOpControl(opMode.gamepad1);
     }
 
+    public void intakeAuto(boolean active) {
+        if (active) {
+            intakeRoller.setPower(.7);
+        } else {
+            intakeRoller.setPower(0);
+        }
+    }
     public void outtakeTeleOpControl() {
         if (opMode.gamepad1.left_trigger > 0) {
             aimShoot(true, true);
@@ -230,9 +236,9 @@ public class Robot {
         }
     }
 
-    public void stop() {
-        camera.stop();
-    }
+    //public void stop() {
+        //camera.stop();
+    //}
 
     public void updateUnblockAndShoot() {
         if (running) {
