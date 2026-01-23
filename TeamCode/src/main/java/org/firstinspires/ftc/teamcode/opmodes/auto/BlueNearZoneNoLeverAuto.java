@@ -188,7 +188,7 @@ public class BlueNearZoneNoLeverAuto extends LinearOpMode {
             while (opModeIsActive()) {
                 robot.update();
                 autonomousPathUpdate();
-                robot.aimShoot(true, true);
+                robot.aimShoot(true, false);
                 robot.intakeAuto(true);
 
                 robot.updateTelemetry(true, true, true, false);

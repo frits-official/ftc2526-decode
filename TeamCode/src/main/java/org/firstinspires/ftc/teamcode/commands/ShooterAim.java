@@ -44,7 +44,7 @@ public class ShooterAim {
         double xOff;
         if (alliance == Constants.ALLIANCE.BLUE) xOff = 0;
         else xOff = 144;
-        double a1 = -Math.atan2(xOff - pose.getX(), 144 - pose.getY());
+        double a1 = -Math.atan2(xOff - pose.getX(), 132 - pose.getY());
         double heading = pose.getHeading();
         if (heading < -1) heading += 2 * Math.PI;
         double a2 = Math.PI / 2 - heading;

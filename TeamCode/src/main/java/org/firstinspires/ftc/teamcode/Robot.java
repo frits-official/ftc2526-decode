@@ -36,7 +36,7 @@ public class Robot {
     private DcMotor lf = null;
     private DcMotor lr = null;
     private boolean isFieldCentric;
-    public Camera camera = new Camera();
+    //public Camera camera = new Camera();
     private Constants.ALLIANCE alliance;
     private ElapsedTime time = new ElapsedTime();
     public boolean running = false;
@@ -67,7 +67,7 @@ public class Robot {
         outtakeDoor.init(opMode.hardwareMap);
         intakeRoller.init(opMode.hardwareMap);
 
-        camera.init(opMode.hardwareMap, alliance);
+        //camera.init(opMode.hardwareMap, alliance);
 
         opMode.telemetry.setMsTransmissionInterval(11);
 
@@ -132,7 +132,7 @@ public class Robot {
             telemetryM.addLine("");
         }
 
-        //camera
+        /*camera
         if (getCamera) {
             LLStatus status = camera.getStatus();
             telemetryM.debug("pipeline number: " + status.getPipelineIndex());
@@ -144,7 +144,7 @@ public class Robot {
             } else telemetryM.addLine("detect nothing from camera");
             telemetryM.addLine("");
         }
-
+           */
         telemetryM.update(opMode.telemetry);
     }
 
@@ -189,11 +189,11 @@ public class Robot {
     }
     public void outtakeTeleOpControl() {
         if (opMode.gamepad1.left_trigger > 0) {
-            aimShoot(true, true);
+            aimShoot(true, false);
         } else aimShoot(true, false);
 
         if (opMode.gamepad1.left_bumper && !running) {
-            brakeDrive(true);
+            //brakeDrive(true);
             unBlockAndShoot();
         }
     }
