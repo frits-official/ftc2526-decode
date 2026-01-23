@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.teamcode.Constants.SHOOTER_CALCULATION.*;
 import com.pedropathing.geometry.Pose;
 
 import org.firstinspires.ftc.teamcode.Constants;
+import org.firstinspires.ftc.teamcode.utils.Vector2D;
 
 public class ShooterAim {
     public static class ShooterState {
@@ -44,11 +45,13 @@ public class ShooterAim {
         double xOff;
         if (alliance == Constants.ALLIANCE.BLUE) xOff = 0;
         else xOff = 144;
-        double a1 = -Math.atan2(xOff - pose.getX(), 132 - pose.getY());
-        double heading = pose.getHeading();
-        if (heading < -1) heading += 2 * Math.PI;
-        double a2 = Math.PI / 2 - heading;
-        return Math.toDegrees(a1 + a2);
+        double x = pose.getX() * Math.cos(pose.getHeading());
+        double y = pose.getY() * Math.sin(pose.getHeading());
+        Vector2D bot = new Vector2D(x, y);
+        Vector2D perpBot = new Vector2D(-y, x);
+        Vector2D goal = new Vector2D(xOff - pose.getX(), 132 - pose.getY());
+        return Math.toDegrees(Math.acos(Vector2D.dot(bot, goal) / (bot.getLength() * goal.getLength()))
+                                * Math.signum(Vector2D.dot(perpBot, goal)));
     }
 
     static int lowerBound(double key) {

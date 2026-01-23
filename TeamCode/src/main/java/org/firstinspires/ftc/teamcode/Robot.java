@@ -6,6 +6,7 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLStatus;
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -19,6 +20,8 @@ import org.firstinspires.ftc.teamcode.subsystems.intake.OuttakeDoor;
 import org.firstinspires.ftc.teamcode.subsystems.shooter.Hood;
 import org.firstinspires.ftc.teamcode.subsystems.shooter.Shooter;
 import org.firstinspires.ftc.teamcode.subsystems.shooter.Turret;
+
+import java.util.List;
 
 import dev.nextftc.control.KineticState;
 
@@ -43,6 +46,8 @@ public class Robot {
     double turretHeadingFromCam = 0.0;
     boolean brake = false;
     double vel = 0, angle = 0, heading = 0;
+    List<LynxModule> allHubs;
+    ElapsedTime updateTime = new ElapsedTime();
 
     public void init(LinearOpMode _opmode, Constants.ALLIANCE alliance) {
         opMode = _opmode;
@@ -71,6 +76,11 @@ public class Robot {
 
         opMode.telemetry.setMsTransmissionInterval(11);
 
+        allHubs = opMode.hardwareMap.getAll(LynxModule.class);
+        for (LynxModule hub : allHubs) {
+            hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
+        }
+
         telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
 
         setShooterTarget(0, 0, 0);
@@ -91,6 +101,9 @@ public class Robot {
     }
 
     public void updateTelemetry(boolean getDrive, boolean getShooter, boolean getIntake, boolean getCamera) {
+        telemetryM.debug("update time: " + updateTime.milliseconds() + "ms\n");
+        updateTime.reset();
+
         if (getShooter) {
             //shooter
             telemetryM.debug("shoot velocity:" + shooter.getVelocity());
@@ -165,6 +178,9 @@ public class Robot {
     }
 
     public void update() {
+        for (LynxModule hub : allHubs) {
+            hub.clearBulkCache();
+        }
         follower.update();
         // LLResult result = camera.getLastestResult();
         // if (result != null) {

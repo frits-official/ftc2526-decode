@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.subsystems.shooter.Turret;
 
-@Autonomous(group = "auto")
+@Autonomous(group = "test")
 public class Test_Auto extends LinearOpMode {
     Turret turret = new Turret();
     Robot robot = new Robot();
