@@ -182,7 +182,7 @@ public class Robot {
 
     public void intakeAuto(boolean active) {
         if (active) {
-            intakeRoller.setPower(.7);
+            intakeRoller.setPower(.6);
         } else {
             intakeRoller.setPower(0);
         }

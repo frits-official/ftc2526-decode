@@ -36,8 +36,8 @@ public class Constants {
     public static class DOOR {
         public static double block = 0.35;
         public static double unblock = 0;
-        public static double delayTime = 2.5;
-        public static double openTime = 2.5;
+        public static double delayTime = 3;
+        public static double openTime = 3;
     }
 
     public static class SHOOTER_CALCULATION {
