@@ -137,7 +137,7 @@ public class Robot {
             telemetryM.debug("drive Heading:" + follower.getPose().getHeading());
             telemetryM.debug("drive is field centric:" + isFieldCentric);
 
-            telemetryM.debug(" pure turret target: ", ShooterAim.calcTurretHeadingFromOdometry(follower.getPose(), 0, alliance));
+            telemetryM.debug(" pure turret target: ", ShooterAim.calcTurretHeadingFromOdometry(follower.getPose(), alliance));
             telemetryM.debug("distance from tag odo: ", ShooterAim.calcDistanceFromTagOdometryCM(follower.getPose(), alliance));
             telemetryM.addLine("");
         }
@@ -161,6 +161,7 @@ public class Robot {
         shooter.setTarget(velocity);
         hood.setTargetAngle(hoodAngle);
         turret.setTarget(turretHeading);
+        turret.setCamResult(camera.getLastestResult());
     }
 
     public void aimShoot(boolean aimVelAndAngle, boolean aimHeading) {
@@ -169,13 +170,8 @@ public class Robot {
             vel = shooterState.getVelocity();
             angle = shooterState.getAngle();
         }
-        double ty = 0;
         if (aimHeading) {
-            LLResult result = camera.getLastestResult();
-            if (result != null) {
-                ty = result.getTy();
-            }
-            heading = ShooterAim.calcTurretHeadingFromOdometry(follower.getPose(), ty, alliance);
+            heading = ShooterAim.calcTurretHeadingFromOdometry(follower.getPose(), alliance);
         }
         setShooterTarget(vel, angle, heading);
     }
@@ -208,9 +204,7 @@ public class Robot {
         }
     }
     public void outtakeTeleOpControl() {
-        if (opMode.gamepad1.left_trigger > 0) {
-            aimShoot(true, false);
-        } else aimShoot(true, false);
+        aimShoot(true, true);
 
         if (opMode.gamepad1.left_bumper && !running) {
             //brakeDrive(true);

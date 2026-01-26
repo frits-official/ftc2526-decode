@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems.shooter;
 
+import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -14,6 +15,7 @@ public class Turret {
     public ControlSystem controlSystem;
     private PIDCoefficients coefficients = new PIDCoefficients(Constants.TURRET.p, Constants.TURRET.i, Constants.TURRET.d);
     public DcMotorEx turret;
+    LLResult result;
 
     public void init(HardwareMap hardwareMap) {
         controlSystem = ControlSystem.builder()
@@ -52,12 +54,19 @@ public class Turret {
         controlSystem.setGoal(new KineticState(finalTarget));
     }
 
+    public void setCamResult(LLResult result) {
+        this.result = result;
+    }
+
     public void update() {
-        double power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition())));
-        if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
-            turret.setPower(power + Constants.TURRET.f * (power > 0 ? 1 : -1));
+        if (result != null && result.isValid()) {
+            double power = -result.getTy() * Constants.TURRET.pC;
+            turret.setPower(power + Constants.TURRET.f * Math.signum(power));
         } else {
-            turret.setPower(0);
+            double power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition())));
+            if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
+                turret.setPower(power + Constants.TURRET.f * Math.signum(power));
+            }
         }
     }
 
