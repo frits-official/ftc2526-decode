@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.commands;
 import static org.firstinspires.ftc.teamcode.Constants.SHOOTER_CALCULATION.*;
 
 import com.pedropathing.geometry.Pose;
+import com.qualcomm.hardware.limelightvision.LLResult;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.utils.Vector2D;
@@ -41,7 +42,7 @@ public class ShooterAim {
     }
     /** this will return degree with -90deg -> 90deg will run in counterclockwise
      * use this for nearly accurate turning, we will use limelight for more accuracy **/
-    public static double calcTurretHeadingFromOdometry(Pose pose, double offset, Constants.ALLIANCE alliance) {
+    public static double calcTurretHeadingFromOdometry(Pose pose, Constants.ALLIANCE alliance) {
         double xOff;
         if (alliance == Constants.ALLIANCE.BLUE) xOff = 0;
         else xOff = 144;
