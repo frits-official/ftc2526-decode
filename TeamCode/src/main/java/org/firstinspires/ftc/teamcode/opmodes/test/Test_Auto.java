@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
+import org.firstinspires.ftc.teamcode.commands.GlobalPose;
 import org.firstinspires.ftc.teamcode.subsystems.shooter.Turret;
 
 @Autonomous(group = "test")
@@ -17,21 +18,6 @@ public class Test_Auto extends LinearOpMode {
     Robot robot = new Robot();
     private int pathState;
     private Timer pathTimer, opmodeTimer;
-    //Pose Start
-    private final Pose startPose = new Pose(49.64, 137.14, Math.toRadians(180));
-    private final Pose scorePose = new Pose(48.43, 96.54, Math.toRadians(135));
-    //Pose Path1
-    private final Pose pickup1_1 = new Pose(45.88, 84.19, Math.toRadians(180));
-    private final Pose pickup1_2 = new Pose(27.54, 84.52, Math.toRadians(180));
-    //Pose Path2
-    private final Pose pickup2_1 = new Pose(43.84, 60.11, Math.toRadians(180));
-    private final Pose pickup2_2 = new Pose(27.31, 60.12, Math.toRadians(180));
-    //Pose Path3
-    private final Pose pickup3_1 = new Pose(44.25, 37.91, Math.toRadians(180));
-    private final Pose pickup3_2 = new Pose(25.3, 38.54, Math.toRadians(180));
-    //Pose End
-    private final Pose endPose = new Pose(43.61, 72.41, Math.toRadians(180));
-
     public void autonomousPathUpdate() {
         switch (pathState) {
             //Start
@@ -55,7 +41,7 @@ public class Test_Auto extends LinearOpMode {
                 if (!robot.running) {
                     robot.aimShoot(false, false);
                     robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(), pickup1_1))
+                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZoneNoLever.pickup1_1))
                             .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(180))
                             .addPath(new BezierLine(robot.follower.getPose(), pickup1_2))
                             .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
