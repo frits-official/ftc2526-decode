@@ -59,14 +59,14 @@ public class Turret {
     }
 
     public void update() {
+        double power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition())));
         if (result != null && result.isValid()) {
-            double power = -result.getTy() * Constants.TURRET.pC;
+            power = -result.getTy() * Constants.TURRET.pC;
+            turret.setPower(power + Constants.TURRET.f * Math.signum(power));
+        } else if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
             turret.setPower(power + Constants.TURRET.f * Math.signum(power));
         } else {
-            double power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition())));
-            if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
-                turret.setPower(power + Constants.TURRET.f * Math.signum(power));
-            }
+            turret.setPower(0);
         }
     }
 

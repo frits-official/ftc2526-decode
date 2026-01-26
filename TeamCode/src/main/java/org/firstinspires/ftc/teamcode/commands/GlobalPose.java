@@ -5,7 +5,7 @@ import com.pedropathing.geometry.Pose;
 public class GlobalPose {
     public static Pose lastPose = new Pose(0, 0, 0);
     public static final Pose startPoseBlueNearZone = new Pose(49.64, 137.14, Math.toRadians(180));
-    public static final Pose scorePoseBlueNearZone = new Pose(48.43, 96.54, Math.toRadians(135));
+    public static final Pose scorePoseBlueNearZone = new Pose(48.43, 96.54, Math.toRadians(180));
 
     public static class BlueNearZoneNoLever {
         //Pose Path1

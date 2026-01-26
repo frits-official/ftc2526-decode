@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes.test;
 
 import com.pedropathing.geometry.BezierLine;
-import com.pedropathing.geometry.Pose;
-import com.pedropathing.paths.PathChain;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -10,11 +8,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.commands.GlobalPose;
-import org.firstinspires.ftc.teamcode.subsystems.shooter.Turret;
 
 @Autonomous(group = "test")
 public class Test_Auto extends LinearOpMode {
-    Turret turret = new Turret();
     Robot robot = new Robot();
     private int pathState;
     private Timer pathTimer, opmodeTimer;
@@ -23,10 +19,9 @@ public class Test_Auto extends LinearOpMode {
             //Start
             case 0:
                 robot.follower.followPath(robot.follower.pathBuilder()
-                        .addPath(new BezierLine(startPose, scorePose))
-                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(135))
+                        .addPath(new BezierLine(GlobalPose.startPoseBlueNearZone, GlobalPose.scorePoseBlueNearZone))
+                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                         .build());
-                robot.aimShoot(true, false);
                 setPathState(1);
                 break;
             case 1:
@@ -39,11 +34,10 @@ public class Test_Auto extends LinearOpMode {
             //Path1
             case 2:
                 if (!robot.running) {
-                    robot.aimShoot(false, false);
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZoneNoLever.pickup1_1))
-                            .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(180))
-                            .addPath(new BezierLine(robot.follower.getPose(), pickup1_2))
+                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
+                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZoneNoLever.pickup1_2))
                             .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                             .build(), true);
                     setPathState(3);
@@ -52,10 +46,9 @@ public class Test_Auto extends LinearOpMode {
             case 3:
                 if (!robot.follower.isBusy()) {
                     robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(), scorePose))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(135))
+                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.scorePoseBlueNearZone))
+                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                             .build(),true);
-                    robot.aimShoot(true, false);
                     setPathState(4);
                 }
                 break;
@@ -69,11 +62,10 @@ public class Test_Auto extends LinearOpMode {
             //Path2
             case 5:
                 if (!robot.running) {
-                    robot.aimShoot(false, false);
                     robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(), pickup2_1))
-                            .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(180))
-                            .addPath(new BezierLine(robot.follower.getPose(), pickup2_2))
+                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZoneNoLever.pickup2_1))
+                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
+                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZoneNoLever.pickup2_2))
                             .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                             .build(), true);
                     setPathState(6);
@@ -82,10 +74,9 @@ public class Test_Auto extends LinearOpMode {
             case 6:
                 if (!robot.follower.isBusy()) {
                     robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(), scorePose))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(135))
+                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.scorePoseBlueNearZone))
+                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                             .build(), true);
-                    robot.aimShoot(true, false);
                     setPathState(7);
                 }
                 break;
@@ -99,11 +90,10 @@ public class Test_Auto extends LinearOpMode {
             //Path3
             case 8:
                 if (!robot.running) {
-                    robot.aimShoot(false, false);
                     robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(), pickup3_1))
-                            .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(180))
-                            .addPath(new BezierLine(robot.follower.getPose(), pickup3_2))
+                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZoneNoLever.pickup3_1))
+                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
+                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZoneNoLever.pickup3_2))
                             .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                             .build(), true);
                     setPathState(9);
@@ -112,10 +102,9 @@ public class Test_Auto extends LinearOpMode {
             case 9:
                 if (!robot.follower.isBusy()) {
                     robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(), scorePose))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(135))
+                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.scorePoseBlueNearZone))
+                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                             .build(), true);
-                    robot.aimShoot(true, false);
                     setPathState(10);
                 }
                 break;
@@ -129,10 +118,9 @@ public class Test_Auto extends LinearOpMode {
             //End
             case 11:
                 if (!robot.running) {
-                    robot.aimShoot(false, false);
                     robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(), endPose))
-                            .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(180))
+                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZoneNoLever.endPose))
+                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                             .build(), true);
                     setPathState(12);
                 }
@@ -153,7 +141,7 @@ public class Test_Auto extends LinearOpMode {
     @Override
     public void runOpMode() {
         robot.init(this, Constants.ALLIANCE.BLUE);
-        robot.setPose(startPose);
+        robot.setPose(GlobalPose.startPoseBlueNearZone);
         robot.aimShoot(false, false);
 
         pathTimer = new Timer();
@@ -165,6 +153,7 @@ public class Test_Auto extends LinearOpMode {
 
         while (opModeIsActive()) {
             robot.update();
+            robot.aimShoot(true, true);
             robot.intakeAuto(true);
             autonomousPathUpdate();
 
