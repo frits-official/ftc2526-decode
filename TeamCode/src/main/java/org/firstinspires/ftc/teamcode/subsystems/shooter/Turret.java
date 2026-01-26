@@ -65,7 +65,7 @@ public class Turret {
         } else {
             double power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition())));
             if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
-                turret.setPower(power + Constants.TURRET.f * Math.signum(power));
+                turret.setPower(power + Constants.TURRET.fC * Math.signum(power));
             }
         }
     }
