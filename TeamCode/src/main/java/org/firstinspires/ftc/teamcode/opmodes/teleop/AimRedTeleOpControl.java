@@ -17,7 +17,8 @@ public class AimRedTeleOpControl extends LinearOpMode {
     public void runOpMode() {
         //Telemetry
         robot.init(this, Constants.ALLIANCE.RED);
-        robot.setPose(GlobalPose.lastPose);
+        robot.setPose((GlobalPose.lastPose != null) ? GlobalPose.lastPose : new Pose(72, 72, Math.toRadians(180)));
+
         robot.aimShoot(false, false);
 
         while (!isStarted()) {

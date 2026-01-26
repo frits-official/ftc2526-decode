@@ -61,12 +61,18 @@ public class Turret {
     public void update() {
         double power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition())));
         if (result != null && result.isValid()) {
-            power = -result.getTy() * Constants.TURRET.pC;
-            turret.setPower(power + Constants.TURRET.fC * Math.signum(power));
+            power = -result.getTy() * Constants.TURRET.pC + (Math.abs(result.getTy()) > 7 ? 0 : 0.1);
+            turret.setPower(power + (Constants.TURRET.fC * Math.signum(power)));
         } else if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
             turret.setPower(power + Constants.TURRET.f * Math.signum(power));
         } else {
             turret.setPower(0);
+        }
+        if (getDegree(getCurrentPosition()) > Constants.TURRET.maxAngle) {
+            turret.setPower(-0.3);
+        }
+        if (getDegree(getCurrentPosition()) < Constants.TURRET.minAngle) {
+            turret.setPower(0.3);
         }
     }
 

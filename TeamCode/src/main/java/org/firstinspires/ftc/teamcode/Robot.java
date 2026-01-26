@@ -74,7 +74,7 @@ public class Robot {
 
         allHubs = opMode.hardwareMap.getAll(LynxModule.class);
         for (LynxModule hub : allHubs) {
-            hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
+            hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
         telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
@@ -177,9 +177,6 @@ public class Robot {
     }
 
     public void update() {
-        for (LynxModule hub : allHubs) {
-            hub.clearBulkCache();
-        }
         follower.update();
         GlobalPose.lastPose = follower.getPose();
         // LLResult result = camera.getLastestResult();

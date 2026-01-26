@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.commands;
 import com.pedropathing.geometry.Pose;
 
 public class GlobalPose {
-    public static Pose lastPose = new Pose(0, 0, 0);
+    public static Pose lastPose;
 
     public static class BlueNearZonePose {
         //Pose start, score
