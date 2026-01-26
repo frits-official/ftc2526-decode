@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
+import org.firstinspires.ftc.teamcode.commands.GlobalPose;
 
 @TeleOp(group = "A-teleop")
 public class AimRedTeleOpControl extends LinearOpMode {
@@ -16,13 +17,13 @@ public class AimRedTeleOpControl extends LinearOpMode {
     public void runOpMode() {
         //Telemetry
         robot.init(this, Constants.ALLIANCE.RED);
-        robot.setPose(new Pose(72, 72, 0));
-        robot.setShooterTarget(0, 25, 0);
+        robot.setPose(GlobalPose.lastPose);
+        robot.aimShoot(false, false);
 
         while (!isStarted()) {
             telemetry.addLine("This program will open test TELEOP program of RED ALLIANCE, which will only track AprilTag 24 (BLUE GOAL AprilTag).");
 
-            robot.follower.update();
+            robot.update();
             robot.updateTelemetry(true, false, false, false);
         }
 

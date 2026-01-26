@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.commands.GlobalPose;
 import org.firstinspires.ftc.teamcode.commands.ShooterAim;
 import org.firstinspires.ftc.teamcode.subsystems.Camera;
 import org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants;
@@ -34,12 +35,9 @@ public class Robot {
     public Hood hood = new Hood();
     public Turret turret = new Turret();
     public TelemetryManager telemetryM;
-    private DcMotor rf = null;
-    private DcMotor rr = null;
-    private DcMotor lf = null;
-    private DcMotor lr = null;
+    private DcMotor rf, rr, lf, lr;
     private boolean isFieldCentric;
-    //public Camera camera = new Camera();
+    public Camera camera = new Camera();
     private Constants.ALLIANCE alliance;
     private ElapsedTime time = new ElapsedTime();
     public boolean running = false;
@@ -72,9 +70,7 @@ public class Robot {
         outtakeDoor.init(opMode.hardwareMap);
         intakeRoller.init(opMode.hardwareMap);
 
-        //camera.init(opMode.hardwareMap, alliance);
-
-        opMode.telemetry.setMsTransmissionInterval(11);
+        camera.init(opMode.hardwareMap, alliance);
 
         allHubs = opMode.hardwareMap.getAll(LynxModule.class);
         for (LynxModule hub : allHubs) {
@@ -89,6 +85,7 @@ public class Robot {
     public void setPose(Pose pose) {
         follower.setPose(pose);
         follower.update();
+        GlobalPose.lastPose = follower.getPose();
     }
 
     public void resetPose(boolean resetX, boolean resetY, boolean resetHeading) {
@@ -140,24 +137,23 @@ public class Robot {
             telemetryM.debug("drive Heading:" + follower.getPose().getHeading());
             telemetryM.debug("drive is field centric:" + isFieldCentric);
 
-            telemetryM.debug("turret target: ", ShooterAim.calcTurretHeadingFromOdometry(follower.getPose(), alliance));
+            telemetryM.debug(" pure turret target: ", ShooterAim.calcTurretHeadingFromOdometry(follower.getPose(), 0, alliance));
             telemetryM.debug("distance from tag odo: ", ShooterAim.calcDistanceFromTagOdometryCM(follower.getPose(), alliance));
             telemetryM.addLine("");
         }
 
-        /*camera
         if (getCamera) {
             LLStatus status = camera.getStatus();
             telemetryM.debug("pipeline number: " + status.getPipelineIndex());
             telemetryM.debug("temp: " + status.getTemp() + "; fps: " + (int)status.getFps());
             LLResult result = camera.getLastestResult();
             if (result != null) {
-                telemetryM.debug("tx:" + camera.getLastestResult().getTx());
-                telemetryM.debug("ty:" + camera.getLastestResult().getTy());
+                telemetryM.debug("tx:" + result.getTx());
+                telemetryM.debug("ty:" + result.getTy());
             } else telemetryM.addLine("detect nothing from camera");
             telemetryM.addLine("");
         }
-           */
+
         telemetryM.update(opMode.telemetry);
     }
 
@@ -173,7 +169,14 @@ public class Robot {
             vel = shooterState.getVelocity();
             angle = shooterState.getAngle();
         }
-        if (aimHeading) heading = ShooterAim.calcTurretHeadingFromOdometry(follower.getPose(), alliance);
+        double ty = 0;
+        if (aimHeading) {
+            LLResult result = camera.getLastestResult();
+            if (result != null) {
+                ty = result.getTy();
+            }
+            heading = ShooterAim.calcTurretHeadingFromOdometry(follower.getPose(), ty, alliance);
+        }
         setShooterTarget(vel, angle, heading);
     }
 
@@ -182,6 +185,7 @@ public class Robot {
             hub.clearBulkCache();
         }
         follower.update();
+        GlobalPose.lastPose = follower.getPose();
         // LLResult result = camera.getLastestResult();
         // if (result != null) {
         //    turretHeadingFromCam =  camera.getLastestResult().getTy();

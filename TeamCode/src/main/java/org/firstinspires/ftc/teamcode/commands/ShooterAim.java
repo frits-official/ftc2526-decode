@@ -41,7 +41,7 @@ public class ShooterAim {
     }
     /** this will return degree with -90deg -> 90deg will run in counterclockwise
      * use this for nearly accurate turning, we will use limelight for more accuracy **/
-    public static double calcTurretHeadingFromOdometry(Pose pose, Constants.ALLIANCE alliance) {
+    public static double calcTurretHeadingFromOdometry(Pose pose, double offset, Constants.ALLIANCE alliance) {
         double xOff;
         if (alliance == Constants.ALLIANCE.BLUE) xOff = 0;
         else xOff = 144;
@@ -49,7 +49,7 @@ public class ShooterAim {
         double y = pose.getY() * Math.sin(pose.getHeading());
         Vector2D bot = new Vector2D(x, y);
         Vector2D perpBot = new Vector2D(-y, x);
-        Vector2D goal = new Vector2D(xOff - pose.getX(), 132 - pose.getY());
+        Vector2D goal = new Vector2D(xOff - pose.getX(), 144 - pose.getY());
         return Math.toDegrees(Math.acos(Vector2D.dot(bot, goal) / (bot.getLength() * goal.getLength()))
                                 * Math.signum(Vector2D.dot(perpBot, goal)));
     }
