@@ -20,6 +20,8 @@ public class TestAim extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
+            robot.driveTeleOpControl(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x, false);
+
             robot.aimShoot(false, true);
 
             robot.update();
