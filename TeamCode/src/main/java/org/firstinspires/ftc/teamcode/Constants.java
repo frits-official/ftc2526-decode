@@ -23,7 +23,7 @@ public class Constants {
 
     @Configurable
     public static class TURRET {
-        public static double p = 0.01;
+        public static double p = 0.017;
         public static double i = 0;
         public static double d = 0;
         public static double f = 0.16;
