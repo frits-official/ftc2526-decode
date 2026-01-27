@@ -54,7 +54,7 @@ public class Turret {
             finalTarget = target1 + 360.0;
         }
 
-        controlSystem.setGoal(new KineticState(finalTarget));
+        controlSystem.setGoal(new KineticState(0));
     }
 
     public void setCamResult(LLResult result) {
@@ -63,9 +63,9 @@ public class Turret {
 
     public void update() {
         if (getDegree(getCurrentPosition()) > Constants.TURRET.maxAngle) {
-            turret.setPower(-0.3);
+            turret.setPower(0);
         } else  if (getDegree(getCurrentPosition()) < Constants.TURRET.minAngle) {
-            turret.setPower(0.3);
+            turret.setPower(0);
         } else {
             double power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition())));
             if (result != null && result.isValid()) {
