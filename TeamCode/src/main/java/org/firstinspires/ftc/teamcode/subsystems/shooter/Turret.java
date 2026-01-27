@@ -27,10 +27,12 @@ public class Turret {
 
         turret.setDirection(DcMotorEx.Direction.FORWARD);
 
+        turret.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+
+    public void resetEncoder() {
         turretEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         turretEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        turret.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void setCoefficients(double p, double i, double d) {
@@ -67,8 +69,7 @@ public class Turret {
         } else {
             double power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition())));
             if (result != null && result.isValid()) {
-                power = -result.getTy() * Constants.TURRET.pC;
-                power += (Math.abs(result.getTy()) > 7 ? 0 : 0.1) * Math.signum(power);
+                power = -result.getTy() * (Math.abs(result.getTy()) > Constants.TURRET.threshold ? Constants.TURRET.pCU : Constants.TURRET.pCD);
                 turret.setPower(power + (Constants.TURRET.fC * Math.signum(power)));
             } else if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
                 turret.setPower(power + Constants.TURRET.f * Math.signum(power));

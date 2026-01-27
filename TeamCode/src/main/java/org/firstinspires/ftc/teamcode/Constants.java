@@ -24,11 +24,13 @@ public class Constants {
     @Configurable
     public static class TURRET {
         public static double p = 0.017;
-        public static double pC = 0.02;
+        public static double pCU = 0.0065;
+        public static double pCD = 0.003;
+        public static double threshold = 4;
         public static double i = 0;
         public static double d = 0;
         public static double f = 0.16;
-        public static double fC = 0;
+        public static double fC = 0.16;
         public static double tolerance = 1;
         public static double maxAngle = 185;
         public static double minAngle = -185;
