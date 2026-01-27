@@ -20,7 +20,7 @@ public class BlueNearZoneNoLeverAuto extends LinearOpMode {
             case 0:
                 robot.follower.followPath(robot.follower.pathBuilder()
                         .addPath(new BezierLine(GlobalPose.BlueNearZonePose.startPose, GlobalPose.BlueNearZonePose.scorePose))
-                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
+                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(135))
                         .build());
                 setPathState(1);
                 break;
@@ -35,9 +35,9 @@ public class BlueNearZoneNoLeverAuto extends LinearOpMode {
             case 2:
                 if (!robot.running) {
                     robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZonePose.pickup1_1))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZonePose.pickup1_2))
+                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.PICKUP_POSE_BLUE.pickup1_1))
+                            .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(180))
+                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.PICKUP_POSE_BLUE.pickup1_2))
                             .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                             .build(), true);
                     setPathState(3);
@@ -47,7 +47,7 @@ public class BlueNearZoneNoLeverAuto extends LinearOpMode {
                 if (!robot.follower.isBusy()) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZonePose.scorePose))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
+                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(135))
                             .build(),true);
                     setPathState(4);
                 }
@@ -63,9 +63,9 @@ public class BlueNearZoneNoLeverAuto extends LinearOpMode {
             case 5:
                 if (!robot.running) {
                     robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZonePose.pickup2_1))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZonePose.pickup2_2))
+                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.PICKUP_POSE_BLUE.pickup2_1))
+                            .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(180))
+                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.PICKUP_POSE_BLUE.pickup2_2))
                             .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                             .build(), true);
                     setPathState(6);
@@ -75,7 +75,7 @@ public class BlueNearZoneNoLeverAuto extends LinearOpMode {
                 if (!robot.follower.isBusy()) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZonePose.scorePose))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
+                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(135))
                             .build(), true);
                     setPathState(7);
                 }
@@ -91,9 +91,9 @@ public class BlueNearZoneNoLeverAuto extends LinearOpMode {
             case 8:
                 if (!robot.running) {
                     robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZonePose.pickup3_1))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZonePose.pickup3_2))
+                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.PICKUP_POSE_BLUE.pickup3_1))
+                            .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(180))
+                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.PICKUP_POSE_BLUE.pickup3_2))
                             .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                             .build(), true);
                     setPathState(9);
@@ -103,7 +103,7 @@ public class BlueNearZoneNoLeverAuto extends LinearOpMode {
                 if (!robot.follower.isBusy()) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZonePose.scorePose))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
+                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(135))
                             .build(), true);
                     setPathState(10);
                 }
@@ -120,7 +120,7 @@ public class BlueNearZoneNoLeverAuto extends LinearOpMode {
                 if (!robot.running) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZonePose.endPose))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
+                            .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(180))
                             .build(), true);
                     setPathState(12);
                 }

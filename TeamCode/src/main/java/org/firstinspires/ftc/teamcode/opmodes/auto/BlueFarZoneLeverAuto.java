@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto;
 
 import com.pedropathing.geometry.BezierLine;
+import com.pedropathing.geometry.Pose;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -9,8 +10,8 @@ import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.commands.GlobalPose;
 
-@Autonomous(group = "test")
-public class BlueNearZoneLeverAuto extends LinearOpMode {
+@Autonomous
+public class BlueFarZoneLeverAuto extends LinearOpMode {
     Robot robot = new Robot();
     private int pathState;
     private Timer pathTimer, opmodeTimer;

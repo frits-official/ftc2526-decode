@@ -14,7 +14,7 @@ import dev.nextftc.control.feedback.PIDCoefficients;
 public class Turret {
     public ControlSystem controlSystem;
     private PIDCoefficients coefficients = new PIDCoefficients(Constants.TURRET.p, Constants.TURRET.i, Constants.TURRET.d);
-    public DcMotorEx turret;
+    public DcMotorEx turret, turretEncoder;
     LLResult result;
 
     public void init(HardwareMap hardwareMap) {
@@ -23,11 +23,12 @@ public class Turret {
                 .build();
 
         turret = hardwareMap.get(DcMotorEx.class, "turning");
+        turretEncoder = hardwareMap.get(DcMotorEx.class, "lf");
 
         turret.setDirection(DcMotorEx.Direction.FORWARD);
 
-        turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        turret.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        turretEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        turretEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         turret.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
@@ -59,25 +60,26 @@ public class Turret {
     }
 
     public void update() {
-        double power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition())));
-        if (result != null && result.isValid()) {
-            power = -result.getTy() * Constants.TURRET.pC + (Math.abs(result.getTy()) > 7 ? 0 : 0.1);
-            turret.setPower(power + (Constants.TURRET.fC * Math.signum(power)));
-        } else if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
-            turret.setPower(power + Constants.TURRET.f * Math.signum(power));
-        } else {
-            turret.setPower(0);
-        }
         if (getDegree(getCurrentPosition()) > Constants.TURRET.maxAngle) {
             turret.setPower(-0.3);
-        }
-        if (getDegree(getCurrentPosition()) < Constants.TURRET.minAngle) {
+        } else  if (getDegree(getCurrentPosition()) < Constants.TURRET.minAngle) {
             turret.setPower(0.3);
+        } else {
+            double power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition())));
+            if (result != null && result.isValid()) {
+                power = -result.getTy() * Constants.TURRET.pC;
+                power += (Math.abs(result.getTy()) > 7 ? 0 : 0.1) * Math.signum(power);
+                turret.setPower(power + (Constants.TURRET.fC * Math.signum(power)));
+            } else if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
+                turret.setPower(power + Constants.TURRET.f * Math.signum(power));
+            } else {
+                turret.setPower(0);
+            }
         }
     }
 
     public double getCurrentPosition() {
-        return turret.getCurrentPosition();
+        return turretEncoder.getCurrentPosition();
     }
 
     public double getTarget() {

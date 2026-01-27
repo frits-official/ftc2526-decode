@@ -12,20 +12,20 @@ import dev.nextftc.control.feedback.PIDCoefficients;
 
 public class Shooter {
     private ControlSystem controlSystem;
-    public DcMotorEx shoot1 = null;
-    public DcMotorEx shoot2 = null;
+    public DcMotorEx shoot1, shoot2, shootEncoder;
     public double power = 0.0;
 
     public void init(HardwareMap hardwareMap) {
         shoot1 = hardwareMap.get(DcMotorEx.class, "shoot1");
         shoot2 = hardwareMap.get(DcMotorEx.class, "shoot2");
+        shootEncoder = hardwareMap.get(DcMotorEx.class, "rf");
 
         shoot1.setDirection(DcMotorEx.Direction.REVERSE);
         shoot2.setDirection(DcMotorEx.Direction.FORWARD);
+        shootEncoder.setDirection(DcMotorEx.Direction.REVERSE);
 
-        shoot1.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        shoot1.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        shoot2.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        shootEncoder.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        shootEncoder.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
         PIDCoefficients coefficients = new PIDCoefficients(Constants.SHOOTER.p, Constants.SHOOTER.i, Constants.SHOOTER.d);
         controlSystem = ControlSystem.builder()
@@ -54,6 +54,6 @@ public class Shooter {
     }
 
     public double getVelocity() { //tick
-        return shoot1.getVelocity();
+        return shootEncoder.getVelocity();
     }
 }
