@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmodes.auto;
+package org.firstinspires.ftc.teamcode.opmodes.auto.BlueAuto;
 
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.util.Timer;
@@ -9,8 +9,8 @@ import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.commands.GlobalPose;
 
-@Autonomous(group = "test")
-public class BlueNearZoneLeverAuto extends LinearOpMode {
+@Autonomous
+public class BlueNearZoneNoLeverAuto extends LinearOpMode {
     Robot robot = new Robot();
     private int pathState;
     private Timer pathTimer, opmodeTimer;
@@ -67,8 +67,6 @@ public class BlueNearZoneLeverAuto extends LinearOpMode {
                             .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(180))
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.PICKUP_POSE_BLUE.pickup2_2))
                             .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.pushLeverBlue))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(270))
                             .build(), true);
                     setPathState(6);
                 }
@@ -77,7 +75,7 @@ public class BlueNearZoneLeverAuto extends LinearOpMode {
                 if (!robot.follower.isBusy()) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BlueNearZonePose.scorePose))
-                            .setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(135))
+                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(135))
                             .build(), true);
                     setPathState(7);
                 }
