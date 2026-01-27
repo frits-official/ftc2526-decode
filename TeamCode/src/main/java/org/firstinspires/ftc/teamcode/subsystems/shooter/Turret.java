@@ -63,9 +63,9 @@ public class Turret {
 
     public void update() {
         if (getDegree(getCurrentPosition()) > Constants.TURRET.maxAngle) {
-            turret.setPower(0);
+            turret.setPower(-.3);
         } else  if (getDegree(getCurrentPosition()) < Constants.TURRET.minAngle) {
-            turret.setPower(0);
+            turret.setPower(.3);
         } else {
             double power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition())));
             if (result != null && result.isValid()) {

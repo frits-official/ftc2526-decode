@@ -25,6 +25,10 @@ public class Test_shooting_system extends LinearOpMode {
             robot.setShooterTarget(vel, angle, 0);
 
             robot.intakeFunnelTeleOpControl();
+            if (gamepad1.left_bumper && !robot.running) {
+                //brakeDrive(true);
+                robot.unBlockAndShoot();
+            }
 
             robot.update();
 
