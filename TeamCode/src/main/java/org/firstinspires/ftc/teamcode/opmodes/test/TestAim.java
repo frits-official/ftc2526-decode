@@ -15,7 +15,7 @@ public class TestAim extends LinearOpMode {
     @Override
     public void runOpMode() {
         robot.init(this, Constants.ALLIANCE.BLUE);
-        robot.setPose(new Pose(72, 72,0));
+        robot.setPose(new Pose(72, 72, 0));
 
         waitForStart();
 

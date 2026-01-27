@@ -54,7 +54,7 @@ public class Turret {
             finalTarget = target1 + 360.0;
         }
 
-        controlSystem.setGoal(new KineticState(0));
+        controlSystem.setGoal(new KineticState(finalTarget));
     }
 
     public void setCamResult(LLResult result) {
@@ -68,10 +68,10 @@ public class Turret {
             turret.setPower(.3);
         } else {
             double power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition())));
-            if (result != null && result.isValid()) {
+            /*if (result != null && result.isValid()) {
                 power = -result.getTy() * (Math.abs(result.getTy()) > Constants.TURRET.threshold ? Constants.TURRET.pCU : Constants.TURRET.pCD);
                 turret.setPower(power + (Constants.TURRET.fC * Math.signum(power)));
-            } else if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
+            } else */if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
                 turret.setPower(power + Constants.TURRET.f * Math.signum(power));
             } else {
                 turret.setPower(0);

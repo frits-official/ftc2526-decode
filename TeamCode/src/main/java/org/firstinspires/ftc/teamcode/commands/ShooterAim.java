@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.commands;
 import static org.firstinspires.ftc.teamcode.Constants.SHOOTER_CALCULATION.*;
 
 import com.pedropathing.geometry.Pose;
-import com.qualcomm.hardware.limelightvision.LLResult;
+
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.utils.Vector2D;
@@ -46,8 +46,8 @@ public class ShooterAim {
         double xOff;
         if (alliance == Constants.ALLIANCE.BLUE) xOff = 0;
         else xOff = 144;
-        double x = pose.getX() * Math.cos(pose.getHeading());
-        double y = pose.getY() * Math.sin(pose.getHeading());
+        double x = Math.cos(pose.getHeading());
+        double y = Math.sin(pose.getHeading());
         Vector2D bot = new Vector2D(x, y);
         Vector2D perpBot = new Vector2D(-y, x);
         Vector2D goal = new Vector2D(xOff - pose.getX(), 144 - pose.getY());
