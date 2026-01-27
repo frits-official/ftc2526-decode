@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.commands.GlobalPose;
 
 @Autonomous(group = "test")
-public class BlueNearZoneLeverAuto extends LinearOpMode {
+public class BlueNearZoneLeverPath1_2_3Path2Ball12NoIndulge extends LinearOpMode {
     Robot robot = new Robot();
     private int pathState;
     private Timer pathTimer, opmodeTimer;

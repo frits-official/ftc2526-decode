@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.commands.GlobalPose;
 
 @Autonomous
-public class BlueFarZoneLeverAuto extends LinearOpMode {
+public class BlueFarZoneLeverPath3_2_1Path2Ball12NoIndulge extends LinearOpMode {
     Robot robot = new Robot();
     private int pathState;
     private Timer pathTimer, opmodeTimer;
@@ -148,18 +148,18 @@ public class BlueFarZoneLeverAuto extends LinearOpMode {
         if (opModeIsActive()) {
             double seconds = time.seconds();
 
-            if (seconds < 2) {
+            while (seconds < 2) {
                 robot.update();
                 robot.aimShoot(true, true);
-            } else {
-                while (opModeIsActive()) {
-                    robot.update();
-                    robot.aimShoot(true, true);
-                    robot.intakeAuto(true);
-                    autonomousPathUpdate();
+                seconds = time.seconds();
+            }
+            while (opModeIsActive()) {
+                robot.update();
+                robot.aimShoot(true, true);
+                robot.intakeAuto(true);
+                autonomousPathUpdate();
 
-                    robot.updateTelemetry(true, true, true, true);
-                }
+                robot.updateTelemetry(true, true, true, true);
             }
         }
     }
