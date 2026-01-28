@@ -46,6 +46,7 @@ public class Robot {
     double vel = 0, angle = 0, heading = 0;
     List<LynxModule> allHubs;
     ElapsedTime updateTime = new ElapsedTime();
+    double turretOffset = 0;
 
     public void init(LinearOpMode _opmode, Constants.ALLIANCE alliance) {
         opMode = _opmode;
@@ -173,7 +174,7 @@ public class Robot {
         if (aimHeading) {
             heading = ShooterAim.calcTurretHeadingFromOdometry(follower.getPose(), alliance);
         }
-        setShooterTarget(vel, angle, heading);
+        setShooterTarget(vel, angle, heading + turretOffset);
     }
 
     public void init_loop() {
@@ -207,6 +208,15 @@ public class Robot {
     }
     public void outtakeTeleOpControl() {
         aimShoot(true, true);
+
+        //if (opMode.gamepad2.left_bumper) turretOffset += 1;
+        //if (opMode.gamepad2.right_bumper) turretOffset -= 1;
+        LLResult result = camera.getLastestResult();
+        if (opMode.gamepad1.left_trigger > 0) {
+            if (result != null && result.isValid()) turretOffset = -result.getTy();
+        }
+
+        if (result != null && result.isValid() && Math.abs(result.getTy()) < 2) opMode.gamepad1.rumble(100);
 
         if (opMode.gamepad1.left_bumper && !running) {
             //brakeDrive(true);

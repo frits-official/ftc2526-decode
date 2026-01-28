@@ -33,18 +33,40 @@ public class GlobalPose {
             public static final Pose pickup3_2 = new Pose(20.24, 35.97, Math.toRadians(180));
             public static final Pose pickup4_1 = new Pose(7.23, 32.37, Math.toRadians(270));
             public static final Pose pickup4_2 = new Pose(7.23, 10.08, Math.toRadians(270));
-            public static final Pose indulge1 = new Pose(7.33, 25.67, Math.toRadians(90));
+            public static final Pose indulge1 = new Pose(7.33, 25.67, Math.toRadians(135));
             public static final Pose indulge2 = new Pose(7.63, 54.51, Math.toRadians(90));
         }
     }
+
     public static class RED {
+        public static final Pose pushLever = BLUE.pushLever.mirror();
+        public static final Pose scorePoseEnd = BLUE.scorePoseEnd.mirror();
+
         public static class RedNearZonePose {
             //Pose start, score
             public static final Pose startPose = BLUE.BlueNearZonePose.startPose.mirror();
             public static final Pose scorePose = BLUE.BlueNearZonePose.scorePose.mirror();
             //Pose End
             public static final Pose endPose = BLUE.BlueNearZonePose.endPose.mirror();
+        }
 
+        public static class RedFarZonePose {
+            public static final Pose startPose = BLUE.BlueFarZonePose.startPose.mirror();
+            public static final Pose scorePose = BLUE.BlueFarZonePose.scorePose.mirror();
+            public static final Pose endPose = BLUE.BlueFarZonePose.endPose.mirror();
+        }
+
+        public static class PICKUP_POSE_RED {
+            public static final Pose pickup1_1 = BLUE.PICKUP_POSE_BLUE.pickup1_1.mirror();
+            public static final Pose pickup1_2 = BLUE.PICKUP_POSE_BLUE.pickup1_2.mirror();
+            public static final Pose pickup2_1 = BLUE.PICKUP_POSE_BLUE.pickup2_1.mirror();
+            public static final Pose pickup2_2 = BLUE.PICKUP_POSE_BLUE.pickup2_2.mirror();
+            public static final Pose pickup3_1 = BLUE.PICKUP_POSE_BLUE.pickup3_1.mirror();
+            public static final Pose pickup3_2 = BLUE.PICKUP_POSE_BLUE.pickup3_2.mirror();
+            public static final Pose pickup4_1 = BLUE.PICKUP_POSE_BLUE.pickup4_1.mirror();
+            public static final Pose pickup4_2 = BLUE.PICKUP_POSE_BLUE.pickup4_2.mirror();
+            public static final Pose indulge1 = BLUE.PICKUP_POSE_BLUE.indulge1.mirror();
+            public static final Pose indulge2 = BLUE.PICKUP_POSE_BLUE.indulge2.mirror();
         }
     }
 }
