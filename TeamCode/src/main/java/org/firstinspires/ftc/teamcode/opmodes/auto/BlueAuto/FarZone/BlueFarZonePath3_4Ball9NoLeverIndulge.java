@@ -84,9 +84,9 @@ public class BlueFarZonePath3_4Ball9NoLeverIndulge extends LinearOpMode {
                 if (!robot.running) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BLUE.PICKUP_POSE_BLUE.indulge1))
-                            .setLinearHeadingInterpolation(Math.toRadians(111), Math.toRadians(90))
+                            .setLinearHeadingInterpolation(Math.toRadians(111), Math.toRadians(135))
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BLUE.PICKUP_POSE_BLUE.indulge2))
-                            .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90))
+                            .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(90))
                             .build(), true);
                     setPathState(8);
                 }
