@@ -53,12 +53,18 @@ public class Hood {
    }
 
     public double getAngle() {
-        return potentiometer.getVoltage() * 81.8 + 25;
+        return potentiometer.getVoltage() * 81.8 + (25 - 6.8712);
     }
 
     public void update() {
         power = controlSystem.calculate(new KineticState(getAngle()));
         hood.setPower(power);
+    }
+
+    public void setCoefficients(double p, double i, double d) {
+        controlSystem = ControlSystem.builder()
+                .posPid(new PIDCoefficients(p, i, d))
+                .build();
     }
 
     public double getPower() {

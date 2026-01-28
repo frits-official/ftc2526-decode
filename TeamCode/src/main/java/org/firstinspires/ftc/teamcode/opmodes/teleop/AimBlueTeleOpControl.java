@@ -17,12 +17,13 @@ public class AimBlueTeleOpControl extends LinearOpMode {
     public void runOpMode() {
         //Telemetry
         robot.init(this, Constants.ALLIANCE.BLUE);
-        robot.setPose((GlobalPose.lastPose != null) ? GlobalPose.lastPose : new Pose(72, 72, 0));
-        robot.aimShoot(false, false);
+        robot.setPose((GlobalPose.lastPose != null) ? GlobalPose.lastPose : new Pose(72, 72, Math.toRadians(180)));
+        robot.aimShoot(false, true);
 
         while (!isStarted()) {
             telemetry.addLine("This program will open test TELEOP program of BLUE ALLIANCE, which will only track AprilTag 20 (BLUE GOAL AprilTag).");
 
+            robot.init_loop();
             robot.update();
             robot.updateTelemetry(true, false, false, false);
         }

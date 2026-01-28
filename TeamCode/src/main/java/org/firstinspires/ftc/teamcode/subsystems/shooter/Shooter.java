@@ -53,6 +53,12 @@ public class Shooter {
         }
     }
 
+    public void setCoefficients(double p, double i, double d) {
+        controlSystem = ControlSystem.builder()
+                .velPid(new PIDCoefficients(p, i, d))
+                .build();
+    }
+
     public double getVelocity() { //tick
         return shootEncoder.getVelocity();
     }

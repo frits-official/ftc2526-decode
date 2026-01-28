@@ -176,6 +176,11 @@ public class Robot {
         setShooterTarget(vel, angle, heading);
     }
 
+    public void init_loop() {
+        aimShoot(false, true);
+        update();
+    }
+
     public void update() {
         follower.update();
         GlobalPose.lastPose = follower.getPose();
@@ -256,10 +261,10 @@ public class Robot {
             double seconds = time.seconds();
 
             if (seconds < Math.abs(Constants.DOOR.delayTime - Constants.DOOR.openTime)) {
-                intakeRoller.setPower(1);
+                intakeRoller.setPower(.75);
                 outtakeDoor.block(true);
             } else if (seconds < Constants.DOOR.delayTime) {
-                intakeRoller.setPower(1);
+                intakeRoller.setPower(.75);
                 outtakeDoor.block(false);
             } else {
                 intakeRoller.setPower(.7);

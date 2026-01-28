@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Robot;
 public class Test_shooting_system extends LinearOpMode {
     Robot robot = new Robot();
 
-    public static double vel, angle;
+    public static double vel, angle, heading;
 
     public void runOpMode() {
         robot.init(this, Constants.ALLIANCE.BLUE);
@@ -22,12 +22,18 @@ public class Test_shooting_system extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            robot.setShooterTarget(vel, angle, 0);
+            robot.setShooterTarget(vel, angle, heading);
 
             robot.intakeFunnelTeleOpControl();
             if (gamepad1.left_bumper && !robot.running) {
                 //brakeDrive(true);
                 robot.unBlockAndShoot();
+            }
+
+            if (gamepad1.cross) {
+                robot.turret.setCoefficients(Constants.TURRET.p, Constants.TURRET.i, Constants.TURRET.d);
+                robot.hood.setCoefficients(Constants.HOOD.p, Constants.HOOD.i, Constants.HOOD.d);
+                robot.shooter.setCoefficients(Constants.SHOOTER.p, Constants.SHOOTER.i, Constants.SHOOTER.d);
             }
 
             robot.update();
