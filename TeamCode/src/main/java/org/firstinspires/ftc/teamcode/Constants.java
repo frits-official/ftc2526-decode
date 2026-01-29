@@ -6,7 +6,7 @@ public class Constants {
     public static enum ALLIANCE { BLUE, RED }; 
     @Configurable
     public static class SHOOTER {
-        public static double p = 0.01;
+        public static double p = 0.03;
         public static double i = 0;
         public static double d = 0;
     }
@@ -36,8 +36,8 @@ public class Constants {
     public static class DOOR {
         public static double block = 0.35;
         public static double unblock = 0;
-        public static double delayTime = 3;
-        public static double openTime = 2.5;
+        public static double delayTime = 2;
+        public static double openTime = 2;
     }
 
     public static class SHOOTER_CALCULATION {
@@ -46,7 +46,7 @@ public class Constants {
         // and copy it into array WITHOUT changing the order
         // only get lower bound of distanceThresh and then get target velocity and angle from the returned index
         public static final double distanceThresh[] = {70.46, 75.58, 90.9, 95.83, 100.64, 105.5, 110.798, 125.38, 130.1, 135.3, 145.09, 150.21, 155.4, 164.89, 170.04, 180, 190.77, 195.57, 205.39, 250, 300.71, 305.54, 310.2, 315.23, 323.7, 330.22, 335.38, 340.21, 350.73, 355.03};
-        public static final double targetAngle[] = {25.5, 25.5, 25.5, 25.5, 26, 26, 27, 27, 28, 29, 35, 35, 35, 37, 37, 37, 38, 40, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 35, 36};
+        public static final double targetAngle[] = {25.5, 25.5, 25.5, 25.5, 26, 26, 29, 29, 29, 29, 35, 35, 35, 37, 37, 37, 38, 40, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 35, 36};
         public static final double targetVelocity[] = {980, 990, 1000, 1030, 1030, 1050, 1050, 1100, 1100, 1125, 1125, 1150, 1200, 1215, 1250, 1300, 1325, 1325, 1350, 1540, 1580, 1590, 1600, 1625, 1675, 1675, 1695, 1700, 1700, 1750};
     }
 }

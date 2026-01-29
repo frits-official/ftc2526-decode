@@ -9,6 +9,8 @@ import org.firstinspires.ftc.teamcode.Constants;
 
 public class IntakeRoller {
     private DcMotorEx intake;
+    ElapsedTime timer = new ElapsedTime();
+    boolean reset = false;
 
     public void init (HardwareMap hardwareMap) {
         intake = hardwareMap.get(DcMotorEx.class, "intake");
@@ -32,7 +34,11 @@ public class IntakeRoller {
         if (gamepad1.right_trigger > 0) {
             setPower(.7);
         } else if (gamepad1.right_bumper) {
-            setPower(-.7);
+            reset = true;
+            timer.reset();
         } else if (gamepad1.b || gamepad1.circle) setPower(0);
+        if (reset && timer.milliseconds() < 300) {
+            setPower(-.7);
+        } else reset = false;
     }
 }

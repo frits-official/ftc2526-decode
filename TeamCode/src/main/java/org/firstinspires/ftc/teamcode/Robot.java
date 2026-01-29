@@ -125,6 +125,7 @@ public class Robot {
             telemetryM.debug("turret angle: " + turret.getDegree(turret.getCurrentPosition()));
             telemetryM.debug("turret target: " + turret.getTarget());
             telemetryM.debug("turret power: " + turret.getPower());
+            telemetryM.debug("offset: " + turretOffset);
             telemetryM.debug("turret í in tolerance: " + turret.controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance)));
             telemetryM.addLine("");
         }
@@ -227,7 +228,7 @@ public class Robot {
     }
 
     public void setTurretOffset() {
-        if (result != null && result.isValid()) turretOffset = -result.getTy();
+        if (result != null && result.isValid()) turretOffset = -result.getTy() / 2;
     }
     public void outtakeTeleOpControl() {
         aimShoot(true, true);
@@ -235,11 +236,14 @@ public class Robot {
         //if (opMode.gamepad2.left_bumper) turretOffset += 1;
         //if (opMode.gamepad2.right_bumper) turretOffset -= 1;
 
-        if (currentGamepad1.a && !previousGamepad1.a) {
+        if (currentGamepad2.left_bumper) {
             setTurretOffset();
         }
 
-        if (result != null && result.isValid() && Math.abs(result.getTy()) < 2) opMode.gamepad1.rumble(100);
+        if (result != null && result.isValid() && Math.abs(result.getTy()) < 2) {
+            opMode.gamepad1.rumble(5);
+            opMode.gamepad2.rumble(5);
+        }
 
         if (opMode.gamepad1.left_bumper && !running) {
             //brakeDrive(true);
@@ -248,6 +252,7 @@ public class Robot {
     }
 
     public void unBlockAndShoot() {
+        setTurretOffset();
         running = true;
         time.reset();
     }

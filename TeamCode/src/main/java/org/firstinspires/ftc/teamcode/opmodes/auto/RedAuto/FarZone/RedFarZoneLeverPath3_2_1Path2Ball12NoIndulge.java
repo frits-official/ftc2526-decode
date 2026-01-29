@@ -58,7 +58,7 @@ public class RedFarZoneLeverPath3_2_1Path2Ball12NoIndulge extends LinearOpMode {
                             .setLinearHeadingInterpolation(Math.toRadians(69), Math.toRadians(0))
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup2_2))
                             .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.pushLever))
+                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.RedFarZonePose.pushLever))
                             .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(270))
                             .build(), true);
                     setPathState(5);
