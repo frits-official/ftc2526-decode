@@ -27,9 +27,9 @@ public class RedFarZonePath3_2_1Ball12NoLeverNoIndulge extends LinearOpMode {
                 if (!robot.running) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(GlobalPose.RED.RedFarZonePose.startPose, GlobalPose.RED.PICKUP_POSE_RED.pickup3_1))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
+                            .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup3_2))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
+                            .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                             .build(), true);
                     setPathState(2);
                 }
@@ -38,7 +38,7 @@ public class RedFarZonePath3_2_1Ball12NoLeverNoIndulge extends LinearOpMode {
                 if (!robot.follower.isBusy()) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.RedFarZonePose.scorePose))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(111))
+                            .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(69))
                             .build(), true);
                     setPathState(3);
                 }
@@ -55,9 +55,9 @@ public class RedFarZonePath3_2_1Ball12NoLeverNoIndulge extends LinearOpMode {
                 if (!robot.running) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup2_1))
-                            .setLinearHeadingInterpolation(Math.toRadians(111), Math.toRadians(180))
+                            .setLinearHeadingInterpolation(Math.toRadians(69), Math.toRadians(0))
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup2_2))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
+                            .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                             .build(), true);
                     setPathState(5);
                 }
@@ -66,7 +66,7 @@ public class RedFarZonePath3_2_1Ball12NoLeverNoIndulge extends LinearOpMode {
                 if (!robot.follower.isBusy()) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.RedFarZonePose.scorePose))
-                            .setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(111))
+                            .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(69))
                             .build(), true);
                     setPathState(6);
                 }
@@ -83,9 +83,9 @@ public class RedFarZonePath3_2_1Ball12NoLeverNoIndulge extends LinearOpMode {
                 if (!robot.running) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup1_1))
-                            .setLinearHeadingInterpolation(Math.toRadians(111), Math.toRadians(180))
+                            .setLinearHeadingInterpolation(Math.toRadians(69), Math.toRadians(0))
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup1_2))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
+                            .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                             .build(), true);
                     setPathState(8);
                 }
@@ -94,7 +94,7 @@ public class RedFarZonePath3_2_1Ball12NoLeverNoIndulge extends LinearOpMode {
                 if (!robot.follower.isBusy()) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.scorePoseEnd))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(135))
+                            .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(45))
                             .build(), true);
                     setPathState(9);
                 }
@@ -120,7 +120,7 @@ public class RedFarZonePath3_2_1Ball12NoLeverNoIndulge extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        robot.init(this, Constants.ALLIANCE.BLUE);
+        robot.init(this, Constants.ALLIANCE.RED);
         robot.setPose(GlobalPose.RED.RedFarZonePose.startPose);
         robot.aimShoot(false, false);
 

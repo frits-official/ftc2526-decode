@@ -271,10 +271,10 @@ public class Robot {
             double seconds = time.seconds();
 
             if (seconds < Math.abs(Constants.DOOR.delayTime - Constants.DOOR.openTime)) {
-                intakeRoller.setPower(.75);
+                intakeRoller.setPower(1);
                 outtakeDoor.block(true);
             } else if (seconds < Constants.DOOR.delayTime) {
-                intakeRoller.setPower(.75);
+                intakeRoller.setPower(1);
                 outtakeDoor.block(false);
             } else {
                 intakeRoller.setPower(.7);

@@ -69,7 +69,7 @@ public class BlueNearZoneLeverPath1_2_3Path2Ball12NoIndulge extends LinearOpMode
                             .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(180))
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BLUE.PICKUP_POSE_BLUE.pickup2_2))
                             .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BLUE.pushLever))
+                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BLUE.BlueNearZonePose.pushLeverPath2))
                             .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(270))
                             .build(), true);
                     setPathState(6);
