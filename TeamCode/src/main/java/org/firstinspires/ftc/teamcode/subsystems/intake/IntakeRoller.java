@@ -33,6 +33,6 @@ public class IntakeRoller {
             setPower(.7);
         } else if (gamepad1.right_bumper) {
             setPower(-.7);
-        } else if (gamepad1.b) setPower(0);
+        } else if (gamepad1.b || gamepad1.circle) setPower(0);
     }
 }

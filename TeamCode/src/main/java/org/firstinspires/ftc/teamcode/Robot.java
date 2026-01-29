@@ -10,6 +10,7 @@ import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.commands.GlobalPose;
@@ -47,6 +48,13 @@ public class Robot {
     List<LynxModule> allHubs;
     ElapsedTime updateTime = new ElapsedTime();
     double turretOffset = 0;
+    LLResult result;
+    Gamepad currentGamepad1 = new Gamepad();
+    Gamepad currentGamepad2 = new Gamepad();
+
+    Gamepad previousGamepad1 = new Gamepad();
+    Gamepad previousGamepad2 = new Gamepad();
+
 
     public void init(LinearOpMode _opmode, Constants.ALLIANCE alliance) {
         opMode = _opmode;
@@ -156,6 +164,9 @@ public class Robot {
         }
 
         telemetryM.update(opMode.telemetry);
+
+        currentGamepad1 = opMode.gamepad1;
+        currentGamepad2 = opMode.gamepad2;
     }
 
     public void setShooterTarget(double velocity, double hoodAngle, double turretHeading) {
@@ -189,9 +200,17 @@ public class Robot {
         // if (result != null) {
         //    turretHeadingFromCam =  camera.getLastestResult().getTy();
         // }
+        result = camera.getLastestResult();
         turret.update();
         shooter.update();
         hood.update();
+
+        previousGamepad1.copy(currentGamepad1);
+        previousGamepad2.copy(currentGamepad2);
+
+        currentGamepad1 = opMode.gamepad1;
+        currentGamepad2 = opMode.gamepad2;
+
         updateUnblockAndShoot();
     }
 
@@ -206,14 +225,18 @@ public class Robot {
             intakeRoller.setPower(0);
         }
     }
+
+    public void setTurretOffset() {
+        if (result != null && result.isValid()) turretOffset = -result.getTy();
+    }
     public void outtakeTeleOpControl() {
         aimShoot(true, true);
 
         //if (opMode.gamepad2.left_bumper) turretOffset += 1;
         //if (opMode.gamepad2.right_bumper) turretOffset -= 1;
-        LLResult result = camera.getLastestResult();
-        if (opMode.gamepad1.left_trigger > 0) {
-            if (result != null && result.isValid()) turretOffset = -result.getTy();
+
+        if (currentGamepad1.a && !previousGamepad1.a) {
+            setTurretOffset();
         }
 
         if (result != null && result.isValid() && Math.abs(result.getTy()) < 2) opMode.gamepad1.rumble(100);
@@ -244,11 +267,10 @@ public class Robot {
 
             rotX = rotX * 1.1;
 
-            double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rotate), 1);
-            double frontLeftPower = (rotY + rotX + rotate) / denominator;
-            double backLeftPower = (rotY - rotX + rotate) / denominator;
-            double frontRightPower = (rotY - rotX - rotate) / denominator;
-            double backRightPower = (rotY + rotX - rotate) / denominator;
+            double frontLeftPower = (rotY + rotX + rotate);
+            double backLeftPower = (rotY - rotX + rotate);
+            double frontRightPower = (rotY - rotX - rotate);
+            double backRightPower = (rotY + rotX - rotate);
 
             lf.setPower(frontLeftPower);
             lr.setPower(backLeftPower);

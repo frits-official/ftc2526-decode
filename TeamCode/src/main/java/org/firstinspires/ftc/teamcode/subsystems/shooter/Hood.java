@@ -16,6 +16,7 @@ public class Hood {
     private PIDCoefficients coefficients = new PIDCoefficients(Constants.HOOD.p, Constants.HOOD.i, Constants.HOOD.d);
     public CRServo hood = null;
     public AnalogInput potentiometer = null;
+    public double off = 0;
 
     public void init(HardwareMap hardwareMap) {
         controlSystem = ControlSystem.builder()
@@ -48,8 +49,8 @@ public class Hood {
     }
 
     public void setTargetAngle(double a) {
-       if (a != -1) this.target = limitAngle(a);
-       controlSystem.setGoal(new KineticState(target, 0));
+        if (a != -1) this.target = limitAngle(a + off);
+        controlSystem.setGoal(new KineticState(target, 0));
    }
 
     public double getAngle() {
@@ -73,5 +74,9 @@ public class Hood {
 
     public double getTargetAngle() {
         return controlSystem.getGoal().getPosition();
+    }
+
+    public void setOff(double off) {
+        this.off = off;
     }
 }

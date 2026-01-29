@@ -24,12 +24,12 @@ public class AimBlueTeleOpControl extends LinearOpMode {
             telemetry.addLine("This program will open test TELEOP program of BLUE ALLIANCE, which will only track AprilTag 20 (BLUE GOAL AprilTag).");
 
             robot.init_loop();
-            robot.update();
             robot.updateTelemetry(true, false, false, false);
         }
 
         //Drivetrain
         if (opModeIsActive()) {
+            robot.setTurretOffset();
 
             while(opModeIsActive()) {
                 // if (gamepad1.start || gamepad1.options) {
