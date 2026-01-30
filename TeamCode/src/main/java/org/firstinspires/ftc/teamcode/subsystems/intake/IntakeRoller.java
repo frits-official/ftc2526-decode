@@ -39,6 +39,9 @@ public class IntakeRoller {
         } else if (gamepad1.b || gamepad1.circle) setPower(0);
         if (reset && timer.milliseconds() < 300) {
             setPower(-.7);
-        } else reset = false;
+        } else {
+            reset = false;
+            setPower(.7);
+        }
     }
 }
