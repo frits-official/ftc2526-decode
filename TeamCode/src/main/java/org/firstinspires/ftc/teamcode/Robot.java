@@ -219,11 +219,11 @@ public class Robot {
         intakeRoller.teleOpControl(opMode.gamepad1);
     }
 
-    public void intakeAuto(boolean active) {
-        if (active) {
-            intakeRoller.setPower(.7);
+    public void intakeAuto(boolean highSpeed) {
+        if (highSpeed) {
+            intakeRoller.setPower(.95);
         } else {
-            intakeRoller.setPower(0);
+            intakeRoller.setPower(.7);
         }
     }
 
@@ -298,10 +298,10 @@ public class Robot {
             double seconds = time.seconds();
 
             if (seconds < Math.abs(Constants.DOOR.delayTime - Constants.DOOR.openTime)) {
-                intakeRoller.setPower(1);
+                intakeRoller.setPower(.95);
                 outtakeDoor.block(true);
             } else if (seconds < Constants.DOOR.delayTime) {
-                intakeRoller.setPower(1);
+                intakeRoller.setPower(.95);
                 outtakeDoor.block(false);
             } else {
                 intakeRoller.setPower(.7);

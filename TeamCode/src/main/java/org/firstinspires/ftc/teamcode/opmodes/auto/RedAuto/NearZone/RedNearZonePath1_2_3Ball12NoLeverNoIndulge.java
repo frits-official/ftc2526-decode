@@ -21,6 +21,7 @@ public class RedNearZonePath1_2_3Ball12NoLeverNoIndulge extends LinearOpMode {
         switch (pathState) {
             //Start
             case 0:
+                robot.intakeAuto(false);
                 robot.follower.followPath(robot.follower.pathBuilder()
                         .addPath(new BezierLine(GlobalPose.RED.RedNearZonePose.startPose, GlobalPose.RED.RedNearZonePose.scorePose))
                         .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(45))
@@ -37,6 +38,7 @@ public class RedNearZonePath1_2_3Ball12NoLeverNoIndulge extends LinearOpMode {
             //Path1
             case 2:
                 if (!robot.running) {
+                    robot.intakeAuto(true);
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup1_1))
                             .setLinearHeadingInterpolation(Math.toRadians(45), Math.toRadians(0))
@@ -48,6 +50,7 @@ public class RedNearZonePath1_2_3Ball12NoLeverNoIndulge extends LinearOpMode {
                 break;
             case 3:
                 if (!robot.follower.isBusy()) {
+                    robot.intakeAuto(false);
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.RedNearZonePose.scorePose))
                             .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(45))
@@ -65,6 +68,7 @@ public class RedNearZonePath1_2_3Ball12NoLeverNoIndulge extends LinearOpMode {
             //Path2
             case 5:
                 if (!robot.running) {
+                    robot.intakeAuto(true);
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup2_1))
                             .setLinearHeadingInterpolation(Math.toRadians(45), Math.toRadians(0))
@@ -76,6 +80,7 @@ public class RedNearZonePath1_2_3Ball12NoLeverNoIndulge extends LinearOpMode {
                 break;
             case 6:
                 if (!robot.follower.isBusy()) {
+                    robot.intakeAuto(false);
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.RedNearZonePose.scorePose))
                             .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(45))
@@ -93,6 +98,7 @@ public class RedNearZonePath1_2_3Ball12NoLeverNoIndulge extends LinearOpMode {
             //Path3
             case 8:
                 if (!robot.running) {
+                    robot.intakeAuto(true);
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup3_1))
                             .setLinearHeadingInterpolation(Math.toRadians(45), Math.toRadians(0))
@@ -104,6 +110,7 @@ public class RedNearZonePath1_2_3Ball12NoLeverNoIndulge extends LinearOpMode {
                 break;
             case 9:
                 if (!robot.follower.isBusy()) {
+                    robot.intakeAuto(false);
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.RedNearZonePose.scorePose))
                             .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(45))
@@ -121,6 +128,7 @@ public class RedNearZonePath1_2_3Ball12NoLeverNoIndulge extends LinearOpMode {
             //End
             case 11:
                 if (!robot.running) {
+                    robot.intakeAuto(false);
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.RedNearZonePose.endPose))
                             .setLinearHeadingInterpolation(Math.toRadians(45), Math.toRadians(0))
@@ -163,7 +171,6 @@ public class RedNearZonePath1_2_3Ball12NoLeverNoIndulge extends LinearOpMode {
             while (opModeIsActive()) {
                 robot.update();
                 robot.aimShoot(true, true);
-                robot.intakeAuto(true);
                 autonomousPathUpdate();
 
                 robot.updateTelemetry(true, true, true, true);
