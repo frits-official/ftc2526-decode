@@ -54,7 +54,7 @@ public class Hood {
    }
 
     public double getAngle() {
-        return potentiometer.getVoltage() * 81.8 + (25 - 6.8712);
+        return potentiometer.getVoltage() * 81.8 + (25 - 8.8712);
     }
 
     public void update() {

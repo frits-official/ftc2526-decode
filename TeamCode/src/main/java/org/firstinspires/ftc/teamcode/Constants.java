@@ -45,8 +45,8 @@ public class Constants {
         // please!!! after testing all, sort the distance column in google sheet
         // and copy it into array WITHOUT changing the order
         // only get lower bound of distanceThresh and then get target velocity and angle from the returned index
-        public static final double distanceThresh[] = {70.46, 75.58, 90.9, 95.83, 100.64, 105.5, 110.798, 125.38, 130.1, 135.3, 145.09, 150.21, 155.4, 164.89, 170.04, 180, 190.77, 195.57, 205.39, 250, 300.71, 305.54, 310.2, 315.23, 323.7, 330.22, 335.38, 340.21, 350.73, 355.03};
-        public static final double targetAngle[] = {25.5, 25.5, 25.5, 25.5, 26, 26, 29, 29, 29, 29, 35, 35, 35, 37, 37, 37, 38, 40, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 35, 36};
-        public static final double targetVelocity[] = {980, 990, 1000, 1030, 1030, 1050, 1050, 1100, 1100, 1125, 1125, 1150, 1200, 1215, 1250, 1300, 1325, 1325, 1350, 1540, 1580, 1590, 1600, 1625, 1675, 1675, 1695, 1700, 1700, 1750};
+        public static final double distanceThresh[] = {70.46, 75.58, 90.9, 95.83, 100.64, 105.5, 110.798, 125.38, 130.1, 135.3, 145.09, 150.21, 155.4, 164.89, 170.04, 180, 190.77, 195.57, 205.39, 250, 300.3, 310, 316.17, 325.79, 330.14, 335.2, 340.71, 345.82, 350.32};
+        public static final double targetAngle[] = {25.5, 25.5, 25.5, 25.5, 26, 26, 27, 27, 28, 29, 35, 35, 35, 37, 37, 37, 38, 40, 38, 38, 33, 34, 35, 35.5, 37, 38, 37.5, 37.5, 38};
+        public static final double targetVelocity[] = {980, 990, 1000, 1030, 1030, 1050, 1050, 1100, 1100, 1125, 1125, 1150, 1200, 1215, 1250, 1300, 1325, 1325, 1350, 1540, 1515, 1535, 1540, 1550, 1575, 1600, 1625, 1675, 1690};
     }
 }

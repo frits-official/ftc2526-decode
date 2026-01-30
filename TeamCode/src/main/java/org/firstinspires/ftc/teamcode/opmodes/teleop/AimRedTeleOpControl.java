@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.commands.GlobalPose;
 @TeleOp(group = "A-teleop")
 public class AimRedTeleOpControl extends LinearOpMode {
     Robot robot = new Robot();
-    boolean isFieldCentric = true;
+    boolean isFieldCentric = false;
 
     @Override
     public void runOpMode() {
