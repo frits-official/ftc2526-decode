@@ -30,6 +30,8 @@ public class IntakeRoller {
         return intake.getPower();
     }
 
+    public boolean stopIntake = false;
+
     public void teleOpControl(Gamepad gamepad1) {
         if (gamepad1.right_trigger > 0) {
             setPower(.95);
@@ -37,15 +39,22 @@ public class IntakeRoller {
             reset = true;
             timer.reset();
         } else if (gamepad1.b || gamepad1.circle) {
+            stopIntake = true;
+        } else {
+            stopIntake = false;
+        }
+
+        if (stopIntake) {
             setPower(0);
         } else {
             setPower(.7);
         }
+
         if (reset && timer.milliseconds() < 50) {
             setPower(-.4);
         } else {
+            stopIntake = false;
             reset = false;
-            setPower(.7);
         }
     }
 }
