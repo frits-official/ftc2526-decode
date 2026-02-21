@@ -198,7 +198,7 @@ public class Robot {
     }
 
     public void init_loop() {
-        aimShoot(false, true);
+        aimShoot(false, false);
         update();
     }
 
@@ -248,10 +248,11 @@ public class Robot {
             setTurretOffset();
         }
 
-        if (result != null && result.isValid() && Math.abs(result.getTy()) < 2) {
-            opMode.gamepad1.rumble(5);
-            opMode.gamepad2.rumble(5);
-        }
+        double currentAngle = turret.getDegree(turret.getCurrentPosition());
+
+        if (currentAngle >= (Constants.TURRET.minAngle + 7) && currentAngle <= (Constants.TURRET.maxAngle - 7)) {
+            opMode.gamepad1.rumble(-1);
+        } else opMode.gamepad1.stopRumble();
 
         if (opMode.gamepad1.left_bumper && !running) {
             //brakeDrive(true);

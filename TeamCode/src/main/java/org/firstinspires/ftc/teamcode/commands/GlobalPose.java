@@ -12,7 +12,7 @@ public class GlobalPose {
 
         public static class BlueNearZonePose {
             //Pose start, score
-            public static final Pose startPose = new Pose(49.64, 137.14, Math.toRadians(180));
+            public static final Pose startPose = new Pose(18.05, 113.56, Math.toRadians(180));
             public static final Pose scorePose = new Pose(48.43, 96.54, Math.toRadians(135));
             //Pose End
             public static final Pose endPose = new Pose(43.61, 72.41, Math.toRadians(180));
@@ -47,7 +47,7 @@ public class GlobalPose {
 
         public static class RedNearZonePose {
             //Pose start, score
-            public static final Pose startPose = new Pose(97.33, 136.35, Math.toRadians(0));
+            public static final Pose startPose = new Pose(125.47, 113.69, Math.toRadians(0));
             public static final Pose scorePose = new Pose(90.2, 90.06, Math.toRadians(45));
             //Pose End
             public static final Pose endPose = BLUE.BlueNearZonePose.endPose.mirror();
