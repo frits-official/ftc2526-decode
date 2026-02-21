@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.teamcode.subsystems.drive.Tuning.follower;
+
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.follower.Follower;
@@ -54,7 +56,7 @@ public class Robot {
 
     Gamepad previousGamepad1 = new Gamepad();
     Gamepad previousGamepad2 = new Gamepad();
-
+    double teleOpFieldFaceAngle;
 
     public void init(LinearOpMode _opmode, Constants.ALLIANCE alliance) {
         opMode = _opmode;
@@ -89,6 +91,12 @@ public class Robot {
         telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
 
         setShooterTarget(0, 0, 0);
+
+        if (alliance == Constants.ALLIANCE.BLUE) {
+            teleOpFieldFaceAngle = Math.PI;
+        } else {
+            teleOpFieldFaceAngle = 0;
+        }
     }
 
     public void setPose(Pose pose) {
@@ -258,34 +266,13 @@ public class Robot {
     }
 
     public void driveTeleOpControl(double straight, double strafe, double rotate, boolean isFieldCentric) {
+        if (!follower.getTeleopDrive()) {
+            follower.startTeleopDrive();
+        }
         if (!brake) {
-            this.isFieldCentric = isFieldCentric;
-
-            double rotX = strafe, rotY = straight;
-
-            if (isFieldCentric) {
-                double botHeading = follower.getPose().getHeading();
-
-                rotX = strafe * Math.cos(-botHeading) - straight * Math.sin(-botHeading);
-                rotY = strafe * Math.sin(-botHeading) + straight * Math.cos(-botHeading);
-            }
-
-            rotX = rotX * 1.1;
-
-            double frontLeftPower = (rotY + rotX + rotate);
-            double backLeftPower = (rotY - rotX + rotate);
-            double frontRightPower = (rotY - rotX - rotate);
-            double backRightPower = (rotY + rotX - rotate);
-
-            lf.setPower(frontLeftPower);
-            lr.setPower(backLeftPower);
-            rf.setPower(frontRightPower);
-            rr.setPower(backRightPower);
+            follower.setTeleOpDrive(straight, strafe, rotate, isFieldCentric, teleOpFieldFaceAngle);
         } else {
-            lf.setPower(0);
-            lr.setPower(0);
-            rf.setPower(0);
-            rr.setPower(0);
+            follower.setTeleOpDrive(0, 0, 0, isFieldCentric, teleOpFieldFaceAngle);
         }
     }
 
