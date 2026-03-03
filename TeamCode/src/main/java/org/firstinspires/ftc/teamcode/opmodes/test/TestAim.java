@@ -26,7 +26,7 @@ public class TestAim extends LinearOpMode {
 
             robot.update();
 
-            robot.updateTelemetry(true, true,false,true);
+            robot.updateTelemetry(true, true,false,true, true);
         }
     }
 }

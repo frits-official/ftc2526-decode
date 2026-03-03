@@ -14,8 +14,6 @@ public class RedFarZoneLeverPath3_2_1Path2Ball12NoIndulge extends LinearOpMode {
     Robot robot = new Robot();
     private int pathState;
     private ElapsedTime time = new ElapsedTime();
-    private ElapsedTime Shoot = new ElapsedTime();
-    double timeShoot = Shoot.seconds();
 
     public void autonomousPathUpdate() {
         switch (pathState) {
@@ -30,11 +28,8 @@ public class RedFarZoneLeverPath3_2_1Path2Ball12NoIndulge extends LinearOpMode {
                 break;
             case 1:
                 if (!robot.follower.isBusy()) {
-                    time.reset();
-                    if (timeShoot > 1) {
-                        robot.unBlockAndShoot();
-                        setPathState(2);
-                    }
+                    robot.unBlockAndShoot();
+                    setPathState(2);
                 }
                 break;
 
@@ -63,12 +58,9 @@ public class RedFarZoneLeverPath3_2_1Path2Ball12NoIndulge extends LinearOpMode {
                 break;
             case 4:
                 if (!robot.follower.isBusy()) {
-                    time.reset();
-                    if (timeShoot > 1) {
-                        robot.unBlockAndShoot();
-                        setPathState(5);
+                    robot.unBlockAndShoot();
+                    setPathState(5);
                     }
-                }
                 break;
 
             //Path2
@@ -98,11 +90,8 @@ public class RedFarZoneLeverPath3_2_1Path2Ball12NoIndulge extends LinearOpMode {
                 break;
             case 7:
                 if (!robot.follower.isBusy()) {
-                    time.reset();
-                    if (timeShoot > 1) {
-                        robot.unBlockAndShoot();
-                        setPathState(8);
-                    }
+                    robot.unBlockAndShoot();
+                    setPathState(8);
                 }
                 break;
 
@@ -131,11 +120,8 @@ public class RedFarZoneLeverPath3_2_1Path2Ball12NoIndulge extends LinearOpMode {
                 break;
             case 10:
                 if (!robot.follower.isBusy()) {
-                    time.reset();
-                    if (timeShoot > 1) {
-                        robot.unBlockAndShoot();
-                        setPathState(11);
-                    }
+                    robot.unBlockAndShoot();
+                    setPathState(11);
                 }
                 break;
 
@@ -158,6 +144,7 @@ public class RedFarZoneLeverPath3_2_1Path2Ball12NoIndulge extends LinearOpMode {
         robot.aimShoot(false, false);
 
         setPathState(0);
+        time.reset();
 
         robot.turret.resetEncoder();
 
@@ -176,8 +163,9 @@ public class RedFarZoneLeverPath3_2_1Path2Ball12NoIndulge extends LinearOpMode {
                 robot.update();
                 robot.aimShoot(true, true);
                 autonomousPathUpdate();
+                robot.setBatteryPower();
 
-                robot.updateTelemetry(true, true, true, true);
+                robot.updateTelemetry(true, true, true, true, true);
             }
         }
     }

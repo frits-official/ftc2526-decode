@@ -123,6 +123,7 @@ public class BlueFarZonePath3_4Ball9NoLeverNoIndulge extends LinearOpMode {
         robot.aimShoot(false, false);
 
         setPathState(0);
+        time.reset();
 
         robot.turret.resetEncoder();
 
@@ -141,8 +142,9 @@ public class BlueFarZonePath3_4Ball9NoLeverNoIndulge extends LinearOpMode {
                 robot.update();
                 robot.aimShoot(true, true);
                 autonomousPathUpdate();
+                robot.setBatteryPower();
 
-                robot.updateTelemetry(true, true, true, true);
+                robot.updateTelemetry(true, true, true, true, true);
             }
         }
     }

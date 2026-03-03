@@ -1,10 +1,8 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto.BlueAuto.NearZone;
 
 import com.pedropathing.geometry.BezierLine;
-import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
@@ -14,8 +12,6 @@ import org.firstinspires.ftc.teamcode.commands.GlobalPose;
 public class BlueNearZoneLeverPath1_2_3Path2Ball12NoIndulge extends LinearOpMode {
     Robot robot = new Robot();
     private int pathState;
-    private Timer pathTimer, opmodeTimer;
-    private ElapsedTime time = new ElapsedTime();
     public void autonomousPathUpdate() {
         switch (pathState) {
             //Start
@@ -147,7 +143,6 @@ public class BlueNearZoneLeverPath1_2_3Path2Ball12NoIndulge extends LinearOpMode
 
     public void setPathState(int pState) {
         pathState = pState;
-        pathTimer.resetTimer();
     }
 
     @Override
@@ -156,9 +151,6 @@ public class BlueNearZoneLeverPath1_2_3Path2Ball12NoIndulge extends LinearOpMode
         robot.setPose(GlobalPose.BLUE.BlueNearZonePose.startPose);
         robot.aimShoot(false, false);
 
-        pathTimer = new Timer();
-        opmodeTimer = new Timer();
-        opmodeTimer.resetTimer();
         setPathState(0);
 
         robot.turret.resetEncoder();
@@ -173,8 +165,9 @@ public class BlueNearZoneLeverPath1_2_3Path2Ball12NoIndulge extends LinearOpMode
                 robot.update();
                 robot.aimShoot(true, true);
                 autonomousPathUpdate();
+                robot.setBatteryPower();
 
-                robot.updateTelemetry(true, true, true, true);
+                robot.updateTelemetry(true, true, true, true, true);
             }
         }
     }

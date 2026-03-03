@@ -21,7 +21,7 @@ public class Test_Hood extends LinearOpMode {
 
         while (opModeIsActive()) {
             robot.update();
-            robot.updateTelemetry(false, true, false, false);
+            robot.updateTelemetry(false, true, false, false, false);
         }
     }
 }

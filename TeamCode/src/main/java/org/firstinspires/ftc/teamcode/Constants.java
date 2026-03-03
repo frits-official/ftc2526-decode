@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.bylazar.configurables.annotations.Configurable;
 
 public class Constants {
+    public static double nominalVoltage = 12.5;
     public static enum ALLIANCE { BLUE, RED }; 
     @Configurable
     public static class SHOOTER {

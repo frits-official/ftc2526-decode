@@ -160,8 +160,9 @@ public class RedFarZonePath3_2_1Ball12NoLeverNoIndulge extends LinearOpMode {
                 robot.update();
                 robot.aimShoot(true, true);
                 autonomousPathUpdate();
+                robot.setBatteryPower();
 
-                robot.updateTelemetry(true, true, true, true);
+                robot.updateTelemetry(true, true, true, true, true);
             }
         }
     }

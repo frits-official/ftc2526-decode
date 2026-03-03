@@ -14,8 +14,6 @@ import org.firstinspires.ftc.teamcode.commands.GlobalPose;
 public class RedNearZonePath1_2_3Ball12NoLeverNoIndulge extends LinearOpMode {
     Robot robot = new Robot();
     private int pathState;
-    private Timer pathTimer, opmodeTimer;
-    private ElapsedTime time = new ElapsedTime();
 
     public void autonomousPathUpdate() {
         switch (pathState) {
@@ -146,7 +144,6 @@ public class RedNearZonePath1_2_3Ball12NoLeverNoIndulge extends LinearOpMode {
 
     public void setPathState(int pState) {
         pathState = pState;
-        pathTimer.resetTimer();
     }
 
     @Override
@@ -155,9 +152,6 @@ public class RedNearZonePath1_2_3Ball12NoLeverNoIndulge extends LinearOpMode {
         robot.setPose(GlobalPose.RED.RedNearZonePose.startPose);
         robot.aimShoot(false, false);
 
-        pathTimer = new Timer();
-        opmodeTimer = new Timer();
-        opmodeTimer.resetTimer();
         setPathState(0);
 
         robot.turret.resetEncoder();
@@ -172,8 +166,9 @@ public class RedNearZonePath1_2_3Ball12NoLeverNoIndulge extends LinearOpMode {
                 robot.update();
                 robot.aimShoot(true, true);
                 autonomousPathUpdate();
+                robot.setBatteryPower();
 
-                robot.updateTelemetry(true, true, true, true);
+                robot.updateTelemetry(true, true, true, true, true);
             }
         }
     }

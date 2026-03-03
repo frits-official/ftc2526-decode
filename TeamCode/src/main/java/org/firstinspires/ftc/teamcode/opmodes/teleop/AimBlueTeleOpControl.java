@@ -24,7 +24,7 @@ public class AimBlueTeleOpControl extends LinearOpMode {
             telemetry.addLine("This program will open test TELEOP program of BLUE ALLIANCE, which will only track AprilTag 20 (BLUE GOAL AprilTag).");
 
             robot.init_loop();
-            robot.updateTelemetry(true, false, false, false);
+            robot.updateTelemetry(true, false, false, false, false);
         }
 
         //Drivetrain
@@ -39,6 +39,8 @@ public class AimBlueTeleOpControl extends LinearOpMode {
                 // if (gamepad1.back || gamepad1.share) isFieldCentric = !isFieldCentric;
                 robot.driveTeleOpControl(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x, isFieldCentric);
 
+                robot.setBatteryPower();
+
                 robot.intakeFunnelTeleOpControl();
 
                 robot.outtakeTeleOpControl();
@@ -46,7 +48,7 @@ public class AimBlueTeleOpControl extends LinearOpMode {
                 robot.update();
 
                 //Telemetry
-                robot.updateTelemetry(true, true, true, true);
+                robot.updateTelemetry(true, true, true, true, false);
             }
         }
     }

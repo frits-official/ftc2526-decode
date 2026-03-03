@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.commands.GlobalPose;
@@ -54,13 +55,17 @@ public class Robot {
 
     Gamepad previousGamepad1 = new Gamepad();
     Gamepad previousGamepad2 = new Gamepad();
-
+    public VoltageSensor batteryVoltage;
+    static double currentVoltage = 12.5;
+    public static int pathState;
 
     public void init(LinearOpMode _opmode, Constants.ALLIANCE alliance) {
         opMode = _opmode;
         this.alliance = alliance;
 
         follower = DriveConstants.createFollower(opMode.hardwareMap);
+
+        batteryVoltage = opMode.hardwareMap.voltageSensor.iterator().next();
 
         lf = opMode.hardwareMap.get(DcMotor.class, "lf");
         lr = opMode.hardwareMap.get(DcMotor.class, "lr");
@@ -106,7 +111,7 @@ public class Robot {
         setPose(newP);
     }
 
-    public void updateTelemetry(boolean getDrive, boolean getShooter, boolean getIntake, boolean getCamera) {
+    public void updateTelemetry(boolean getDrive, boolean getShooter, boolean getIntake, boolean getCamera, boolean getPathstate) {
         telemetryM.debug("update time: " + updateTime.milliseconds() + "ms\n");
         updateTime.reset();
 
@@ -141,6 +146,10 @@ public class Robot {
         }
 
         //drivetrain
+        if (getPathstate) {
+            telemetryM.debug("Path State: " + pathState);
+        }
+
         if (getDrive) {
             telemetryM.debug("drive X:" + follower.getPose().getX());
             telemetryM.debug("drive Y:" + follower.getPose().getY());
@@ -195,6 +204,7 @@ public class Robot {
     }
 
     public void update() {
+        currentVoltage = batteryVoltage.getVoltage();
         follower.update();
         GlobalPose.lastPose = follower.getPose();
         // LLResult result = camera.getLastestResult();
@@ -326,6 +336,14 @@ public class Robot {
             lr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
             rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
+    }
+
+    public static void setPathState(int pState) {
+        pathState = pState;
+    }
+
+    public static double getVolFeedfoward() {
+        return Constants.nominalVoltage / currentVoltage;
     }
 }
 

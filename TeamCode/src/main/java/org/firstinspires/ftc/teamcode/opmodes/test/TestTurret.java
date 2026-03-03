@@ -30,7 +30,7 @@ public class TestTurret extends LinearOpMode {
             }
 
             robot.update();
-            robot.updateTelemetry(false, true, false, false);
+            robot.updateTelemetry(false, true, false, false, false);
         }
     }
 }
