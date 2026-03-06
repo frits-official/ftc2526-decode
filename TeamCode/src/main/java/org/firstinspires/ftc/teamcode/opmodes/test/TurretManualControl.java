@@ -25,7 +25,7 @@ public class TurretManualControl extends LinearOpMode {
 
             double limitedPower = Range.clip(power, -0.5, 0.5);
 
-            robot.turret.turret.setPower(limitedPower);
+            robot.turret.setPower(limitedPower);
 
             robot.updateTelemetry(false, true,false, false, false);
         }

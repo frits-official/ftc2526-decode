@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Constants;
+import org.firstinspires.ftc.teamcode.Robot;
 
 public class IntakeRoller {
     private DcMotorEx intake;
@@ -19,7 +20,7 @@ public class IntakeRoller {
     }
 
     public void setPower(double power) {
-        intake.setPower(power);
+        intake.setPower(power * Robot.getVolFeedfoward());
     }
 
     public double getVelocity() {

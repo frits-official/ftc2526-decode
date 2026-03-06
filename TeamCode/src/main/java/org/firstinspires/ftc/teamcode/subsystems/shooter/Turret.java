@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Constants;
+import org.firstinspires.ftc.teamcode.Robot;
 
 import dev.nextftc.control.ControlSystem;
 import dev.nextftc.control.KineticState;
@@ -63,20 +64,24 @@ public class Turret {
 
     public void update() {
         if (getDegree(getCurrentPosition()) > Constants.TURRET.maxAngle) {
-            turret.setPower(-.3);
+            setPower(-.3);
         } else  if (getDegree(getCurrentPosition()) < Constants.TURRET.minAngle) {
-            turret.setPower(.3);
+            setPower(.3);
         } else {
             double power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition())));
             /*if (result != null && result.isValid()) {
                 power = -result.getTy() * (Math.abs(result.getTy()) > Constants.TURRET.threshold ? Constants.TURRET.pCU : Constants.TURRET.pCD);
                 turret.setPower(power + (Constants.TURRET.fC * Math.signum(power)));
             } else */if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
-                turret.setPower(power + Constants.TURRET.f * Math.signum(power));
+                setPower(power + Constants.TURRET.f * Math.signum(power));
             } else {
-                turret.setPower(0);
+                setPower(0);
             }
         }
+    }
+
+    public void setPower(double power) {
+        turret.setPower(power * Robot.getVolFeedfoward());
     }
 
     public double getCurrentPosition() {

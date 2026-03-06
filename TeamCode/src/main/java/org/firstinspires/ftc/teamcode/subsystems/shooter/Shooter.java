@@ -45,12 +45,10 @@ public class Shooter {
     public void update() {
         power = controlSystem.calculate(new KineticState(0, getVelocity()));
         power = Math.max(-.2, Math.min(1.0, power));
-        shoot1.setPower(power);
-        shoot2.setPower(power);
+        setPower(power);
 
         if (getTarget() <= 0) {
-            shoot1.setPower(0);
-            shoot2.setPower(0);
+            setPower(0);
         }
     }
 
@@ -58,6 +56,11 @@ public class Shooter {
         controlSystem = ControlSystem.builder()
                 .velPid(new PIDCoefficients(p, i, d))
                 .build();
+    }
+
+    public void setPower(double power) {
+        shoot1.setPower(power * Robot.getVolFeedfoward());
+        shoot2.setPower(power * Robot.getVolFeedfoward());
     }
 
     public double getVelocity() { //tick
