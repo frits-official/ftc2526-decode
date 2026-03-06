@@ -39,14 +39,11 @@ public class Robot {
     public Hood hood = new Hood();
     public Turret turret = new Turret();
     public TelemetryManager telemetryM;
-    private DcMotor rf, rr, lf, lr;
     private boolean isFieldCentric;
     public Camera camera = new Camera();
     private Constants.ALLIANCE alliance;
     private ElapsedTime time = new ElapsedTime();
     public boolean running = false;
-    double turretHeadingFromCam = 0.0;
-    boolean brake = false;
     double vel = 0, angle = 0, heading = 0;
     List<LynxModule> allHubs;
     ElapsedTime updateTime = new ElapsedTime();
@@ -69,16 +66,6 @@ public class Robot {
         follower = DriveConstants.createFollower(opMode.hardwareMap);
 
         batteryVoltage = opMode.hardwareMap.voltageSensor.iterator().next();
-
-        lf = opMode.hardwareMap.get(DcMotor.class, "lf");
-        lr = opMode.hardwareMap.get(DcMotor.class, "lr");
-        rf = opMode.hardwareMap.get(DcMotor.class, "rf");
-        rr = opMode.hardwareMap.get(DcMotor.class, "rr");
-
-        lf.setDirection(DcMotorSimple.Direction.FORWARD);
-        lr.setDirection(DcMotorSimple.Direction.FORWARD);
-        rf.setDirection(DcMotorSimple.Direction.REVERSE);
-        rr.setDirection(DcMotorSimple.Direction.REVERSE);
 
         shooter.init(opMode.hardwareMap);
         hood.init(opMode.hardwareMap);
@@ -216,10 +203,6 @@ public class Robot {
         currentVoltage = batteryVoltage.getVoltage();
         follower.update();
         GlobalPose.lastPose = follower.getPose();
-        // LLResult result = camera.getLastestResult();
-        // if (result != null) {
-        //    turretHeadingFromCam =  camera.getLastestResult().getTy();
-        // }
         result = camera.getLastestResult();
         turret.update();
         shooter.update();
@@ -252,9 +235,6 @@ public class Robot {
     public void outtakeTeleOpControl() {
         aimShoot(true, true);
 
-        //if (opMode.gamepad2.left_bumper) turretOffset += 1;
-        //if (opMode.gamepad2.right_bumper) turretOffset -= 1;
-
         if (currentGamepad2.left_bumper) {
             setTurretOffset();
         }
@@ -266,7 +246,6 @@ public class Robot {
         } else opMode.gamepad1.stopRumble();
 
         if (opMode.gamepad1.left_bumper && !running) {
-            //brakeDrive(true);
             unBlockAndShoot();
         }
     }
@@ -281,16 +260,12 @@ public class Robot {
         if (!follower.getTeleopDrive()) {
             follower.startTeleopDrive();
         }
-        if (!brake) {
-            follower.setTeleOpDrive(straight, strafe, rotate, isFieldCentric, teleOpFieldFaceAngle);
-        } else {
-            follower.setTeleOpDrive(0, 0, 0, isFieldCentric, teleOpFieldFaceAngle);
-        }
+        follower.setTeleOpDrive(straight, strafe, rotate, isFieldCentric, teleOpFieldFaceAngle);
     }
 
-    //public void stop() {
-        //camera.stop();
-    //}
+    public void stop() {
+        camera.stop();
+    }
 
     public void updateUnblockAndShoot() {
         if (running) {
@@ -305,24 +280,8 @@ public class Robot {
             } else {
                 intakeRoller.setPower(.7);
                 outtakeDoor.block(true);
-                brakeDrive(false);
                 running = false;
             }
-        }
-    }
-
-    public void brakeDrive(boolean brake) {
-        this.brake = brake;
-        if (brake) {
-            lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            lr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        } else {
-            lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-            rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-            lr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-            rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
     }
 
