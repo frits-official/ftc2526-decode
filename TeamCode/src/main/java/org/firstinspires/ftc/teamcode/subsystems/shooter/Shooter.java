@@ -45,8 +45,8 @@ public class Shooter {
     public void update() {
         power = controlSystem.calculate(new KineticState(0, getVelocity()));
         power = Math.max(-.2, Math.min(1.0, power));
-        shoot1.setPower(power);
-        shoot2.setPower(power);
+        shoot1.setPower(power * Robot.getVolFeedfoward());
+        shoot2.setPower(power * Robot.getVolFeedfoward());
 
         if (getTarget() <= 0) {
             shoot1.setPower(0);

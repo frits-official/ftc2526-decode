@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.auto.RedAuto.FarZone;
 
 import com.pedropathing.geometry.BezierLine;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Constants;
@@ -10,25 +10,60 @@ import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.commands.GlobalPose;
 
 @Autonomous
-public class RedFarZonePath3_4Ball9NoLeverNoIndulge extends LinearOpMode {
+public class RedFarZonePath3_4Ball9NoLeverNoIndulge extends OpMode {
     Robot robot = new Robot();
-    private int pathState;
     private ElapsedTime time = new ElapsedTime();
+    private double seconds;
+
+    @Override
+    public void init() {
+        robot.init(this, Constants.ALLIANCE.RED);
+        robot.setPose(GlobalPose.RED.RedFarZonePose.startPose);
+        robot.aimShoot(false, false);
+
+        robot.turret.resetEncoder();
+    }
+
+    @Override
+    public void start() {
+        Robot.setPathState(0);
+        time.reset();
+        seconds = time.seconds();
+    }
+
+    @Override
+    public void init_loop() {
+        robot.init_loop();
+    }
+
+    @Override
+    public void loop() {
+        robot.update();
+
+        if (time.seconds() - seconds < 2) {
+            robot.aimShoot(true, false);
+        } else {
+            robot.aimShoot(true, true);
+            autonomousPathUpdate();
+        }
+
+        robot.updateTelemetry(true, true, true, true, true);
+    }
     public void autonomousPathUpdate() {
-        switch (pathState) {
-           //Start
+        switch (Robot.pathState) {
+            //Start
             case 0:
                 robot.intakeAuto(false);
                 robot.follower.followPath(robot.follower.pathBuilder()
                         .addPath(new BezierLine(GlobalPose.RED.RedFarZonePose.startPose, GlobalPose.RED.PICKUP_POSE_RED.pickup3_1))
                         .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(62))
                         .build(), true);
-                setPathState(2);
+                Robot.setPathState(2);
                 break;
             case 1:
                 if (!robot.follower.isBusy()) {
                     robot.unBlockAndShoot();
-                    setPathState(2);
+                    Robot.setPathState(2);
                 }
                 break;
 
@@ -42,7 +77,7 @@ public class RedFarZonePath3_4Ball9NoLeverNoIndulge extends LinearOpMode {
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup3_2))
                             .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                             .build(), true);
-                    setPathState(3);
+                    Robot.setPathState(3);
                 }
                 break;
             case 3:
@@ -52,13 +87,13 @@ public class RedFarZonePath3_4Ball9NoLeverNoIndulge extends LinearOpMode {
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.RedFarZonePose.scorePose))
                             .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(69))
                             .build(), true);
-                    setPathState(4);
+                    Robot.setPathState(4);
                 }
                 break;
             case 4:
                 if (!robot.follower.isBusy()) {
                     robot.unBlockAndShoot();
-                    setPathState(5);
+                    Robot.setPathState(5);
                 }
                 break;
 
@@ -72,7 +107,7 @@ public class RedFarZonePath3_4Ball9NoLeverNoIndulge extends LinearOpMode {
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup4_2))
                             .setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(270))
                             .build(), true);
-                    setPathState(6);
+                    Robot.setPathState(6);
                 }
                 break;
             case 6:
@@ -82,13 +117,13 @@ public class RedFarZonePath3_4Ball9NoLeverNoIndulge extends LinearOpMode {
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.RedFarZonePose.scorePose))
                             .setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(69))
                             .build(), true);
-                    setPathState(7);
+                    Robot.setPathState(7);
                 }
                 break;
             case 7:
                 if (!robot.follower.isBusy()) {
                     robot.unBlockAndShoot();
-                    setPathState(8);
+                    Robot.setPathState(8);
                 }
                 break;
 
@@ -100,51 +135,14 @@ public class RedFarZonePath3_4Ball9NoLeverNoIndulge extends LinearOpMode {
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.RedFarZonePose.endPose))
                             .setLinearHeadingInterpolation(Math.toRadians(69), Math.toRadians(69))
                             .build(), true);
-                    setPathState(9);
+                    Robot.setPathState(9);
                 }
                 break;
             case 9:
                 if (!robot.follower.isBusy()) {
-                    setPathState(-1);
+                    Robot.setPathState(-1);
                 }
                 break;
-        }
-    }
-
-    public void setPathState(int pState) {
-        pathState = pState;
-    }
-
-    @Override
-    public void runOpMode() {
-        robot.init(this, Constants.ALLIANCE.RED);
-        robot.setPose(GlobalPose.RED.RedFarZonePose.startPose);
-        robot.aimShoot(false, false);
-
-        setPathState(0);
-        time.reset();
-
-        robot.turret.resetEncoder();
-
-        while (!isStarted()) {
-            robot.init_loop();
-        }
-
-        if (opModeIsActive()) {
-            double seconds = time.seconds();
-
-            while ((time.seconds() - seconds) < 2) {
-                robot.update();
-                robot.aimShoot(true, false);
-            }
-            while (opModeIsActive()) {
-                robot.update();
-                robot.aimShoot(true, true);
-                autonomousPathUpdate();
-                robot.setBatteryPower();
-
-                robot.updateTelemetry(true, true, true, true, true);
-            }
         }
     }
 }

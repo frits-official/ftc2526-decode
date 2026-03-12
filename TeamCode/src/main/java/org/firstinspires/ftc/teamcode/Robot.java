@@ -10,6 +10,7 @@ import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -31,7 +32,7 @@ import java.util.List;
 import dev.nextftc.control.KineticState;
 
 public class Robot {
-    public LinearOpMode opMode;
+    public OpMode opMode;
     public Follower follower;
     public IntakeRoller intakeRoller = new IntakeRoller();
     public OuttakeDoor outtakeDoor = new OuttakeDoor();
@@ -62,7 +63,7 @@ public class Robot {
     public static int pathState;
     double teleOpFieldFaceAngle;
 
-    public void init(LinearOpMode _opmode, Constants.ALLIANCE alliance) {
+    public void init(OpMode _opmode, Constants.ALLIANCE alliance) {
         opMode = _opmode;
         this.alliance = alliance;
 

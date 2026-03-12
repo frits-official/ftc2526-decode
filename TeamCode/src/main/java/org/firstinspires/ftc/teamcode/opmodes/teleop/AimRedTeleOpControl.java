@@ -40,7 +40,6 @@ public class AimRedTeleOpControl extends LinearOpMode {
                 // if (gamepad1.back || gamepad1.share) isFieldCentric = !isFieldCentric;
                 robot.driveTeleOpControl(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x, isFieldCentric);
 
-                robot.setBatteryPower();
 
                 robot.intakeFunnelTeleOpControl();
 

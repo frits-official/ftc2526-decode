@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Constants;
+import org.firstinspires.ftc.teamcode.Robot;
+
 import dev.nextftc.control.ControlSystem;
 import dev.nextftc.control.KineticState;
 import dev.nextftc.control.feedback.PIDCoefficients;
@@ -59,7 +61,7 @@ public class Hood {
 
     public void update() {
         power = controlSystem.calculate(new KineticState(getAngle()));
-        hood.setPower(power);
+        hood.setPower(power * Robot.getVolFeedfoward());
     }
 
     public void setCoefficients(double p, double i, double d) {
