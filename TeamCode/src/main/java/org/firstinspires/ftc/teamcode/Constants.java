@@ -20,6 +20,9 @@ public class Constants {
         public static double changeFormulaDistanceThreshold = 2.65;
         public static double maxAngle = 45.5;
         public static double minAngle = 25.5;
+        public static double hoodOffset = 25;
+        public static double gearRatio = 0.5;
+        public static double servoRange = 270;
     }
 
     @Configurable

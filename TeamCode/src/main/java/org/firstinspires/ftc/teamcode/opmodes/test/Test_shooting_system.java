@@ -32,7 +32,7 @@ public class Test_shooting_system extends LinearOpMode {
 
             if (gamepad1.cross) {
                 robot.turret.setCoefficients(Constants.TURRET.p, Constants.TURRET.i, Constants.TURRET.d);
-                robot.hood.setCoefficients(Constants.HOOD.p, Constants.HOOD.i, Constants.HOOD.d);
+                //robot.hood.setCoefficients(Constants.HOOD.p, Constants.HOOD.i, Constants.HOOD.d);
                 robot.shooter.setCoefficients(Constants.SHOOTER.p, Constants.SHOOTER.i, Constants.SHOOTER.d);
             }
 

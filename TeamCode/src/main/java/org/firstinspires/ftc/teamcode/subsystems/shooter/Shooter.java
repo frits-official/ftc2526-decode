@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems.shooter;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Constants;
@@ -21,9 +22,9 @@ public class Shooter {
         shoot2 = hardwareMap.get(DcMotorEx.class, "shoot2");
         shootEncoder = hardwareMap.get(DcMotorEx.class, "rf");
 
-        shoot1.setDirection(DcMotorEx.Direction.REVERSE);
+        shoot1.setDirection(DcMotorEx.Direction.FORWARD);
         shoot2.setDirection(DcMotorEx.Direction.FORWARD);
-        shootEncoder.setDirection(DcMotorEx.Direction.REVERSE);
+        shootEncoder.setDirection(DcMotorEx.Direction.FORWARD);
 
         shootEncoder.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         shootEncoder.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);

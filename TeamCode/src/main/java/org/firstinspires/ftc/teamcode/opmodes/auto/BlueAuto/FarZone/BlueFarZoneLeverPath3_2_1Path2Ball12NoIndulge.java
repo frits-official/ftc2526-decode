@@ -163,7 +163,6 @@ public class BlueFarZoneLeverPath3_2_1Path2Ball12NoIndulge extends LinearOpMode 
                 robot.update();
                 robot.aimShoot(true, true);
                 autonomousPathUpdate();
-                robot.setBatteryPower();
 
                 robot.updateTelemetry(true, true, true, true, true);
             }
