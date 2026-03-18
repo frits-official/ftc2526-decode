@@ -7,32 +7,27 @@ import org.firstinspires.ftc.teamcode.Constants;
 import org.opencv.core.Mat;
 
 public class Hood {
-    private double target = 25.0;
-    public Servo hood = null;
+    private double position = 0;
+    private double targetPos = 0;
+    private double target = Constants.HOOD.minAngle;
+    public Servo hood;
 
     public void init(HardwareMap hardwareMap) {
 
         hood = hardwareMap.get(Servo.class, "hood");
+        hood.setDirection(Servo.Direction.FORWARD);
         hood.setPosition(calcAngle(Constants.HOOD.minAngle));
 
-        hood.setDirection(Servo.Direction.FORWARD);
-
-        setTargetAngle(25.0);
-        update();
     }
 
     public double calcAngle(double targetHood) {
-        double hoodAngle = targetHood - Constants.HOOD.hoodOffset;
-
-        double servoAngle = hoodAngle * Constants.HOOD.gearRatio;
-
-        double position = servoAngle / Constants.HOOD.servoRange;
+        position = (targetHood - Constants.HOOD.hoodOffset) * Constants.HOOD.gearRatio / Constants.HOOD.servoRange;
 
         return Math.max(0.0, Math.min(1.0, position));
     }
 
     public void update() {
-        double targetPos = calcAngle(target);
+        targetPos = calcAngle(target);
         hood.setPosition(targetPos);
     }
 
