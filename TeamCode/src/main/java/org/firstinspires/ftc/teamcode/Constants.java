@@ -16,12 +16,11 @@ public class Constants {
 
     @Configurable
     public static class HOOD {
-        public static double p = 0.15;
-        public static double i = 0;
-        public static double d = 0;
-        public static double changeFormulaDistanceThreshold = 2.65;
-        public static double maxAngle = 45.5;
-        public static double minAngle = 25.5;
+        public static double maxAngle = 57;
+        public static double minAngle = 25;
+        public static double hoodOffset = 25.0;
+        public static double gearRatio = 2;
+        public static double servoRange = 300;
     }
 
     @Configurable
@@ -37,7 +36,7 @@ public class Constants {
 
     @Configurable
     public static class DOOR {
-        public static double block = 0.7;
+        public static double block = .78;
         public static double unblock = 1;
         public static double delayTime = 2;
         public static double openTime = 2;

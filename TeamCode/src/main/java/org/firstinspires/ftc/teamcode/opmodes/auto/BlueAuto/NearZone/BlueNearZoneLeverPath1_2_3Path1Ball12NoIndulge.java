@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.commands.GlobalPose;
 
-@Autonomous(group = "test")
+@Autonomous
 public class BlueNearZoneLeverPath1_2_3Path1Ball12NoIndulge extends LinearOpMode {
     Robot robot = new Robot();
     private int pathState;
@@ -165,7 +165,6 @@ public class BlueNearZoneLeverPath1_2_3Path1Ball12NoIndulge extends LinearOpMode
                 robot.update();
                 robot.aimShoot(true, true);
                 autonomousPathUpdate();
-                robot.setBatteryPower();
 
                 robot.updateTelemetry(true, true, true, true, true);
             }

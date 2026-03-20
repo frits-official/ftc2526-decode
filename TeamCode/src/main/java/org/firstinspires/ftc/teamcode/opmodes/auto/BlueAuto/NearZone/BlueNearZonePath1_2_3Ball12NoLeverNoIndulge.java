@@ -166,7 +166,6 @@ public class BlueNearZonePath1_2_3Ball12NoLeverNoIndulge extends LinearOpMode {
                 robot.update();
                 robot.aimShoot(true, true);
                 autonomousPathUpdate();
-                robot.setBatteryPower();
 
                 robot.updateTelemetry(true, true, true, true, true);
             }

@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.subsystems.drive.Tuning.follower;
-
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.follower.Follower;
@@ -10,8 +8,6 @@ import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -118,9 +114,8 @@ public class Robot {
             telemetryM.debug("shoot power:" + shooter.power);
 
             //hood
-            telemetryM.debug("hood angle:" + hood.getAngle());
+            telemetryM.debug("hood angle:" + hood.getCurrentAngle());
             telemetryM.debug("hood target angle:" + hood.getTargetAngle());
-            telemetryM.debug("hood power:" + hood.getPower());
 
             //turret
             telemetryM.debug("turret angle: " + turret.getDegree(turret.getCurrentPosition()));

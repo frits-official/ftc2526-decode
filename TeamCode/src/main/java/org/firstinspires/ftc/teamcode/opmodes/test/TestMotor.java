@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 @TeleOp
 public class TestMotor extends LinearOpMode {
     private DcMotorEx motor;
+
+    @Override
     public void runOpMode() {
         motor = hardwareMap.get(DcMotorEx.class, "rr");
         motor.setDirection(DcMotorSimple.Direction.FORWARD);

@@ -8,20 +8,6 @@ public class GlobalPose {
     public static class BLUE {
         public static final Pose scorePoseEnd = new Pose(51.79, 106.09);
 
-        public static class Test21Ball {
-            // Start Pose
-            public static final Pose startPose = new Pose(18.05, 113.56);
-
-            //Score Pose
-            public static final Pose scorePose1 = new Pose(48.43, 96.54);
-            public static final Pose scorePose2 = new Pose(57.356, 84.936);
-            public static final Pose scorePose3 = new Pose(59.16, 21.1);
-            public static final Pose pushLever = new Pose(12.203, 61.261);
-
-            //End Pose
-            public static final Pose endPose = new Pose(54.97, 37.15);
-        }
-
         public static class BlueNearZonePose {
             //Pose start, score
             public static final Pose startPose = new Pose(18.05, 113.56);

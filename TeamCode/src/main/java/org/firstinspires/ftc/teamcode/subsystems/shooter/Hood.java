@@ -1,82 +1,45 @@
 package org.firstinspires.ftc.teamcode.subsystems.shooter;
 
-import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Constants;
-import dev.nextftc.control.ControlSystem;
-import dev.nextftc.control.KineticState;
-import dev.nextftc.control.feedback.PIDCoefficients;
+import org.opencv.core.Mat;
 
 public class Hood {
-    public double power = 0;
-    private double target = 0;
-    private ControlSystem controlSystem;
-    private PIDCoefficients coefficients = new PIDCoefficients(Constants.HOOD.p, Constants.HOOD.i, Constants.HOOD.d);
-    public CRServo hood = null;
-    public AnalogInput potentiometer = null;
-    public double off = 0;
+    private double position = 0;
+    private double targetPos = 0;
+    private double target = Constants.HOOD.minAngle;
+    public Servo hood;
 
     public void init(HardwareMap hardwareMap) {
-        controlSystem = ControlSystem.builder()
-                .posPid(coefficients)
-                .build();
 
-        hood = hardwareMap.get(CRServo.class, "hood");
-        potentiometer = hardwareMap.get(AnalogInput.class, "potentiometer");
+        hood = hardwareMap.get(Servo.class, "hood");
+        hood.setDirection(Servo.Direction.FORWARD);
+        hood.setPosition(calcAngle(Constants.HOOD.minAngle));
 
-        hood.setDirection(CRServo.Direction.FORWARD);
     }
 
-    public double limitAngle(double a) {
-        if (a != -1) return Math.max(Constants.HOOD.minAngle, Math.min(Constants.HOOD.maxAngle, a));
-        else return -1;
-    }
+    public double calcAngle(double targetHood) {
+        position = (targetHood - Constants.HOOD.hoodOffset) * Constants.HOOD.gearRatio / Constants.HOOD.servoRange;
 
-    public double calcAngle(double l, double vel) {
-        if (vel != 0 && l != 0) {
-            double b = (-9.8 * Math.pow(l, 2)) / (2 * Math.pow(vel, 2));
-            double d = Math.pow(l, 2) - 4  * (b * (b - 0.7));
-            double a = -1;
-            if (d >= 0) {
-                if (l <= Constants.HOOD.changeFormulaDistanceThreshold) a = Math.atan((-l - Math.sqrt(d)) / (2 * b));
-                else a = Math.atan((-l + Math.sqrt(d)) / (2 * b));
-            }
-            a *= 180 / Math.PI;
-            return a;
-        } else return -1;
-    }
-
-    public void setTargetAngle(double a) {
-        if (a != -1) this.target = limitAngle(a + off);
-        controlSystem.setGoal(new KineticState(target, 0));
-   }
-
-    public double getAngle() {
-        return potentiometer.getVoltage() * 81.8 + (25 - 8.8712);
+        return Math.max(0.0, Math.min(1.0, position));
     }
 
     public void update() {
-        power = controlSystem.calculate(new KineticState(getAngle()));
-        hood.setPower(power);
+        targetPos = calcAngle(target);
+        hood.setPosition(targetPos);
     }
 
-    public void setCoefficients(double p, double i, double d) {
-        controlSystem = ControlSystem.builder()
-                .posPid(new PIDCoefficients(p, i, d))
-                .build();
-    }
-
-    public double getPower() {
-        return hood.getPower();
+    public void setTargetAngle(double angle) {
+        this.target = Math.max(Constants.HOOD.minAngle, Math.min(Constants.HOOD.maxAngle, angle));
     }
 
     public double getTargetAngle() {
-        return controlSystem.getGoal().getPosition();
+        return target;
     }
 
-    public void setOff(double off) {
-        this.off = off;
+    public double getCurrentAngle() {
+        return (hood.getPosition() * Constants.HOOD.servoRange / Constants.HOOD.gearRatio) + Constants.HOOD.hoodOffset;
     }
 }
