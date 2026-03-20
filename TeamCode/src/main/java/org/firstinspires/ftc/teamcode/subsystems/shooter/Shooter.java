@@ -30,6 +30,7 @@ public class Shooter {
 
         PIDCoefficients coefficients = new PIDCoefficients(Constants.SHOOTER.p, Constants.SHOOTER.i, Constants.SHOOTER.d);
         controlSystem = ControlSystem.builder()
+                .basicFF(Constants.SHOOTER.v, 0, Constants.SHOOTER.s)
                 .velPid(coefficients)
                 .build();
     }
@@ -52,9 +53,11 @@ public class Shooter {
         }
     }
 
-    public void setCoefficients(double p, double i, double d) {
+    public void setCoefficients() {
+        PIDCoefficients coefficients = new PIDCoefficients(Constants.SHOOTER.p, Constants.SHOOTER.i, Constants.SHOOTER.d);
         controlSystem = ControlSystem.builder()
-                .velPid(new PIDCoefficients(p, i, d))
+                .basicFF(Constants.SHOOTER.v, 0, Constants.SHOOTER.s)
+                .velPid(coefficients)
                 .build();
     }
 

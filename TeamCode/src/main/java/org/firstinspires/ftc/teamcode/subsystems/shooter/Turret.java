@@ -14,13 +14,14 @@ import dev.nextftc.control.feedback.PIDCoefficients;
 
 public class Turret {
     public ControlSystem controlSystem;
-    private PIDCoefficients coefficients = new PIDCoefficients(Constants.TURRET.p, Constants.TURRET.i, Constants.TURRET.d);
     public DcMotorEx turret, turretEncoder;
     LLResult result;
 
     public void init(HardwareMap hardwareMap) {
+        PIDCoefficients coefficients = new PIDCoefficients(Constants.TURRET.p, Constants.TURRET.i, Constants.TURRET.d);
         controlSystem = ControlSystem.builder()
                 .posPid(coefficients)
+                .basicFF(0, 0, Constants.TURRET.f)
                 .build();
 
         turret = hardwareMap.get(DcMotorEx.class, "turning");
@@ -36,9 +37,11 @@ public class Turret {
         turretEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
-    public void setCoefficients(double p, double i, double d) {
+    public void setCoefficients() {
+        PIDCoefficients coefficients = new PIDCoefficients(Constants.TURRET.p, Constants.TURRET.i, Constants.TURRET.d);
         controlSystem = ControlSystem.builder()
-                .posPid(new PIDCoefficients(p, i, d))
+                .posPid(coefficients)
+                .basicFF(0, 0, Constants.TURRET.f)
                 .build();
     }
 
@@ -73,7 +76,7 @@ public class Turret {
                 power = -result.getTy() * (Math.abs(result.getTy()) > Constants.TURRET.threshold ? Constants.TURRET.pCU : Constants.TURRET.pCD);
                 turret.setPower(power + (Constants.TURRET.fC * Math.signum(power)));
             } else */if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
-                setPower(power + Constants.TURRET.f * Math.signum(power));
+                setPower(power);
             } else {
                 setPower(0);
             }

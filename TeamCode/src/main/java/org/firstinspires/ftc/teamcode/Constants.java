@@ -10,6 +10,8 @@ public class Constants {
         public static double p = 0.027;
         public static double i = 0;
         public static double d = 0;
+        public static double v = 0;
+        public static double s = 0;
     }
 
     @Configurable
