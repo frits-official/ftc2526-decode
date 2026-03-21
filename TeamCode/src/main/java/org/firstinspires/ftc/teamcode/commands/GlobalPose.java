@@ -1,9 +1,16 @@
 package org.firstinspires.ftc.teamcode.commands;
 
 import com.pedropathing.geometry.Pose;
+import com.skeletonarmy.marrow.zones.Point;
+import com.skeletonarmy.marrow.zones.PolygonZone;
 
 public class GlobalPose {
-    public static Pose lastPose;
+    public static class ZONES {
+        public static final PolygonZone closeLaunchZone = new PolygonZone(new Point(144, 144), new Point(72, 72), new Point(0, 144));
+        public static final PolygonZone farLaunchZone = new PolygonZone(new Point(48, 0), new Point(72, 24), new Point(96, 0));
+        public static final PolygonZone blueGate = new PolygonZone(new Point(19, 72), 10, 2.75);
+        public static final PolygonZone redGate = new PolygonZone(new Point(125, 72), 10, 2.75);
+    }
 
     public static class BLUE {
         public static final Pose scorePoseEnd = new Pose(51.79, 106.09);

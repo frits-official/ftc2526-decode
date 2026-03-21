@@ -10,7 +10,6 @@ import org.firstinspires.ftc.teamcode.Robot;
 
 public class IntakeRoller {
     private DcMotorEx intake;
-    ElapsedTime timer = new ElapsedTime();
     boolean reset = false;
 
     public void init (HardwareMap hardwareMap) {
@@ -34,28 +33,12 @@ public class IntakeRoller {
     public boolean stopIntake = false;
 
     public void teleOpControl(Gamepad gamepad1) {
-        if (gamepad1.right_trigger > 0) {
-            setPower(.95);
-        } else if (gamepad1.right_bumper) {
-            reset = true;
-            timer.reset();
+        if (gamepad1.right_bumper) {
+            setPower(-.4);
         } else if (gamepad1.b || gamepad1.circle) {
-            stopIntake = true;
-        } else {
-            stopIntake = false;
-        }
-
-        if (stopIntake) {
             setPower(0);
         } else {
-            setPower(.7);
-        }
-
-        if (reset && timer.milliseconds() < 50) {
-            setPower(-.4);
-        } else {
-            stopIntake = false;
-            reset = false;
+            setPower(.95);
         }
     }
 }

@@ -1,32 +1,42 @@
 package org.firstinspires.ftc.teamcode.opmodes.test;
 
 import com.pedropathing.geometry.Pose;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
-import org.firstinspires.ftc.teamcode.commands.ShooterAim;
 
 @TeleOp(group = "test")
-public class TestAim extends LinearOpMode {
+public class TestAim extends OpMode {
     Robot robot = new Robot();
 
     @Override
-    public void runOpMode() {
+    public void init() {
         robot.init(this, Constants.ALLIANCE.BLUE);
         robot.setPose(new Pose(72, 72, 0));
+    }
 
-        waitForStart();
+    @Override
+    public void init_loop() {
+        robot.init_loop();
+    }
 
-        while (opModeIsActive()) {
-            robot.driveTeleOpControl(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x, false);
+    @Override
+    public void start() {
+        robot.start();
+    }
 
-            robot.aimShoot(false, true);
+    @Override
+    public void loop() {
+        robot.driveTeleOpControl(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x, false);
+        robot.aimShoot(false, true);
+        robot.update();
+        robot.updateTelemetry(true, true,false,true, true);
+    }
 
-            robot.update();
-
-            robot.updateTelemetry(true, true,false,true, true);
-        }
+    @Override
+    public void stop() {
+        robot.stop();
     }
 }

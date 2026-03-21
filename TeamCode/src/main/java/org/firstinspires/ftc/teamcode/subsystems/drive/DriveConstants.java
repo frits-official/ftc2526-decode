@@ -57,6 +57,8 @@ public class DriveConstants {
             .xVelocity(58.73)
             .yVelocity(42.14);
 
+    // remember to change tValueConstraint to .95
+    // and higher brakingStrength
     public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 0.71, 1);
     public static Follower createFollower(HardwareMap hardwareMap) {
         return new FollowerBuilder(followerConstants, hardwareMap)

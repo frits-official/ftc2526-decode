@@ -55,6 +55,7 @@ public class ShooterAim {
                                 * Math.signum(Vector2D.dot(perpBot, goal)));
     }
 
+    
     static int lowerBound(double key) {
         int low = 0, high = distanceThresh.length;
         int mid;

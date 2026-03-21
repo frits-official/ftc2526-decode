@@ -4,15 +4,15 @@ import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
-import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.hardware.lynx.LynxModule;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.skeletonarmy.marrow.TimerEx;
+import com.skeletonarmy.marrow.zones.PolygonZone;
 
-import org.firstinspires.ftc.teamcode.commands.GlobalPose;
 import org.firstinspires.ftc.teamcode.commands.ShooterAim;
 import org.firstinspires.ftc.teamcode.subsystems.Camera;
 import org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants;
@@ -27,7 +27,7 @@ import java.util.List;
 import dev.nextftc.control.KineticState;
 
 public class Robot {
-    public LinearOpMode opMode;
+    public OpMode opMode;
     public Follower follower;
     public IntakeRoller intakeRoller = new IntakeRoller();
     public OuttakeDoor outtakeDoor = new OuttakeDoor();
@@ -38,13 +38,13 @@ public class Robot {
     private boolean isFieldCentric;
     public Camera camera = new Camera();
     private Constants.ALLIANCE alliance;
-    private ElapsedTime time = new ElapsedTime();
+    TimerEx shootTimer = new TimerEx(Constants.DOOR.openTime);
+    TimerEx relocalizeTimer = new TimerEx(60);
     public boolean running = false;
     double vel = 0, angle = 0, heading = 0;
     List<LynxModule> allHubs;
     ElapsedTime updateTime = new ElapsedTime();
-    double turretOffset = 0;
-    LLResult result;
+    private boolean firstRelocalization = true;
     Gamepad currentGamepad1 = new Gamepad();
     Gamepad currentGamepad2 = new Gamepad();
 
@@ -54,8 +54,9 @@ public class Robot {
     static double currentVoltage = 12.5;
     public static int pathState;
     double teleOpFieldFaceAngle;
+    PolygonZone robot = new PolygonZone(13, 13);
 
-    public void init(LinearOpMode _opmode, Constants.ALLIANCE alliance) {
+    public void init(OpMode _opmode, Constants.ALLIANCE alliance) {
         opMode = _opmode;
         this.alliance = alliance;
 
@@ -88,19 +89,52 @@ public class Robot {
         }
     }
 
+    public void init_loop() {
+        aimShoot(false, false);
+        update();
+    }
+
+    public void start() {
+        relocalizeTimer.start();
+    }
+
+    public void update() {
+        currentVoltage = batteryVoltage.getVoltage();
+        follower.update();
+        robot.setPosition(follower.getPose().getX(), follower.getPose().getY());
+        robot.setRotation(follower.getPose().getHeading());
+
+        if (relocalizeTimer.isDone() || firstRelocalization) {
+            boolean success = relocalize();
+            if (success) {
+                firstRelocalization = false;
+                relocalizeTimer.restart();
+            }
+        }
+
+        turret.update();
+        shooter.update();
+        hood.update();
+
+        previousGamepad1.copy(currentGamepad1);
+        previousGamepad2.copy(currentGamepad2);
+
+        currentGamepad1 = opMode.gamepad1;
+        currentGamepad2 = opMode.gamepad2;
+
+        updateUnblockAndShoot();
+    }
+
+    public void stop() {
+        camera.stop();
+    }
+
+
     public void setPose(Pose pose) {
         follower.setPose(pose);
         follower.update();
-        GlobalPose.lastPose = follower.getPose();
-    }
-
-    public void resetPose(boolean resetX, boolean resetY, boolean resetHeading) {
-        Pose p = follower.getPose();
-        Pose newP = new Pose(0, 0, 0);
-        if (resetX) newP = new Pose(0, p.getY(), p.getHeading());
-        if (resetY) newP = new Pose(newP.getX(), 0, p.getHeading());
-        if (resetHeading) newP = new Pose(newP.getX(), newP.getY(), 0);
-        setPose(newP);
+        robot.setPosition(follower.getPose().getX(), follower.getPose().getY());
+        robot.setRotation(follower.getPose().getHeading());
     }
 
     public void updateTelemetry(boolean getDrive, boolean getShooter, boolean getIntake, boolean getCamera, boolean getPathstate) {
@@ -121,7 +155,6 @@ public class Robot {
             telemetryM.debug("turret angle: " + turret.getDegree(turret.getCurrentPosition()));
             telemetryM.debug("turret target: " + turret.getTarget());
             telemetryM.debug("turret power: " + turret.getPower());
-            telemetryM.debug("offset: " + turretOffset);
             telemetryM.debug("turret í in tolerance: " + turret.controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance)));
             telemetryM.addLine("");
         }
@@ -156,11 +189,7 @@ public class Robot {
             LLStatus status = camera.getStatus();
             telemetryM.debug("pipeline number: " + status.getPipelineIndex());
             telemetryM.debug("temp: " + status.getTemp() + "; fps: " + (int)status.getFps());
-            LLResult result = camera.getLastestResult();
-            if (result != null) {
-                telemetryM.debug("tx:" + result.getTx());
-                telemetryM.debug("ty:" + result.getTy());
-            } else telemetryM.addLine("detect nothing from camera");
+            telemetryM.debug("pose: " + camera.getAprilTagPose(Math.toDegrees(follower.getPose().getHeading())).toString());
             telemetryM.addLine("");
         }
 
@@ -186,94 +215,55 @@ public class Robot {
         if (aimHeading) {
             heading = ShooterAim.calcTurretHeadingFromOdometry(follower.getPose(), alliance);
         }
-        setShooterTarget(vel, angle, heading + turretOffset);
+        setShooterTarget(vel, angle, heading);
     }
 
-    public void init_loop() {
-        aimShoot(false, false);
-        update();
-    }
-
-    public void update() {
-        currentVoltage = batteryVoltage.getVoltage();
-        follower.update();
-        GlobalPose.lastPose = follower.getPose();
-        result = camera.getLastestResult();
-        turret.update();
-        shooter.update();
-        hood.update();
-
-        previousGamepad1.copy(currentGamepad1);
-        previousGamepad2.copy(currentGamepad2);
-
-        currentGamepad1 = opMode.gamepad1;
-        currentGamepad2 = opMode.gamepad2;
-
-        updateUnblockAndShoot();
-    }
-
-    public void intakeFunnelTeleOpControl() {
+    public void intakeTeleOpControl() {
         intakeRoller.teleOpControl(opMode.gamepad1);
     }
 
-    public void intakeAuto(boolean highSpeed) {
-        if (highSpeed) {
-            intakeRoller.setPower(.95);
-        } else {
-            intakeRoller.setPower(.7);
-        }
-    }
-
-    public void setTurretOffset() {
-        if (result != null && result.isValid()) turretOffset = -result.getTy() / 2;
-    }
     public void outtakeTeleOpControl() {
         aimShoot(true, true);
 
-        if (currentGamepad2.left_bumper) {
-            setTurretOffset();
+        if (currentGamepad1.left_stick_button) {
+             boolean success = relocalize();
+             if (!success) currentGamepad1.rumble(300);
         }
 
-        double currentAngle = turret.getDegree(turret.getCurrentPosition());
-
-        if (currentAngle >= (Constants.TURRET.minAngle + 7) && currentAngle <= (Constants.TURRET.maxAngle - 7)) {
-            opMode.gamepad1.rumble(-1);
-        } else opMode.gamepad1.stopRumble();
-
-        if (opMode.gamepad1.left_bumper && !running) {
-            unBlockAndShoot();
-        }
+        if (currentGamepad1.left_bumper) {
+            outtakeDoor.block(false);
+        } else outtakeDoor.block(true);
     }
 
     public void unBlockAndShoot() {
-        setTurretOffset();
         running = true;
-        time.reset();
+        shootTimer.restart();
+    }
+
+    public boolean relocalize() {
+        double velocity = follower.getVelocity().getMagnitude();
+        double angularVelocity = follower.getAngularVelocity();
+        if (Math.abs(velocity) > .2 || Math.abs(angularVelocity) > .2) return false;
+
+        Pose tagPose = camera.getAprilTagPose(Math.toDegrees(follower.getPose().getHeading()));
+        if (tagPose.roughlyEquals(new Pose(), 0.001)) return false;
+
+        setPose(tagPose);
+
+        return true;
     }
 
     public void driveTeleOpControl(double straight, double strafe, double rotate, boolean isFieldCentric) {
         if (!follower.getTeleopDrive()) {
             follower.startTeleopDrive();
         }
-        follower.setTeleOpDrive(straight, strafe, rotate, isFieldCentric, teleOpFieldFaceAngle);
+        follower.setTeleOpDrive(straight, strafe, rotate * Constants.DRIVE.turnSpeedMultiplier, isFieldCentric, teleOpFieldFaceAngle);
     }
-
-    public void stop() {
-        camera.stop();
-    }
-
     public void updateUnblockAndShoot() {
         if (running) {
-            double seconds = time.seconds();
-
-            if (seconds < Math.abs(Constants.DOOR.delayTime - Constants.DOOR.openTime)) {
-                intakeRoller.setPower(.95);
-                outtakeDoor.block(true);
-            } else if (seconds < Constants.DOOR.delayTime) {
-                intakeRoller.setPower(.95);
+            if (!shootTimer.isDone()) {
                 outtakeDoor.block(false);
             } else {
-                intakeRoller.setPower(.7);
                 outtakeDoor.block(true);
                 running = false;
             }

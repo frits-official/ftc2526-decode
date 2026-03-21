@@ -4,7 +4,12 @@ import com.bylazar.configurables.annotations.Configurable;
 
 public class Constants {
     public static double nominalVoltage = 12.5;
-    public static enum ALLIANCE { BLUE, RED }; 
+    public static enum ALLIANCE { BLUE, RED };
+
+    @Configurable
+    public static class DRIVE {
+        public static double turnSpeedMultiplier = .8;
+    }
     @Configurable
     public static class SHOOTER {
         public static double p = 0.027;
@@ -42,6 +47,10 @@ public class Constants {
         public static double openTime = 2;
     }
 
+    @Configurable
+    public static class CAMERA {
+        public static double fieldFaceAngle = 0;
+    }
     public static class SHOOTER_CALCULATION {
         // https://docs.google.com/spreadsheets/d/1fzLwaEBuZ9TpgEnR5Y467lHZ0Rm3B78DA-xSx2ID6B4/edit?gid=0#gid=0
         // please!!! after testing all, sort the distance column in google sheet
