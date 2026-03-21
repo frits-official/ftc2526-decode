@@ -12,11 +12,11 @@ public class Constants {
     }
     @Configurable
     public static class SHOOTER {
-        public static double p = 0.027;
+        public static double p = 0.01;
         public static double i = 0;
         public static double d = 0;
-        public static double v = 0;
-        public static double s = 0;
+        public static double v = 0.00039;
+        public static double s = 0.04;
     }
 
     @Configurable
