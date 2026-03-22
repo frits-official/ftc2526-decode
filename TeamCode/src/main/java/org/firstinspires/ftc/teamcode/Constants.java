@@ -2,6 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.bylazar.configurables.annotations.Configurable;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Constants {
     public static double nominalVoltage = 12.5;
     public static enum ALLIANCE { BLUE, RED };
@@ -49,18 +52,12 @@ public class Constants {
 
     @Configurable
     public static class CAMERA {
-        public static double fieldFaceAngle = 0;
+        public static double fieldFaceAngle = 90;
     }
     public static class SHOOTER_CALCULATION {
         // https://docs.google.com/spreadsheets/d/1fzLwaEBuZ9TpgEnR5Y467lHZ0Rm3B78DA-xSx2ID6B4/edit?gid=0#gid=0
-        // please!!! after testing all, sort the distance column in google sheet
-        // and copy it into array WITHOUT changing the order
-        // only get lower bound of distanceThresh and then get target velocity and angle from the returned index
-        //public static final double distanceThresh[] = {70.46, 75.58, 90.9, 95.83, 100.64, 105.5, 110.798, 125.38, 130.1, 135.3, 145.09, 150.21, 155.4, 164.89, 170.04, 180, 190.77, 195.57, 205.39, 250, 300.3, 310, 316.17, 325.79, 330.14, 335.2, 340.71, 345.82, 350.32, 322.75, 355.15, 360};
-        public static final double distanceThresh[] = {70.46, 75.58, 90.9, 95.83, 100.64, 105.5, 110.798, 125.38, 130.1, 135.3, 145.09, 150.21, 155.4, 164.89, 170.04, 180, 190.77, 195.57, 205.39, 250};
-        //public static final double targetAngle[] = {25.5, 25.5, 25.5, 25.5, 26, 26, 27, 27, 28, 29, 35, 35, 35, 37, 37, 37, 38, 40, 38, 38, 33, 34, 35, 35.5, 37, 38, 37.5, 37.5, 38, 35, 40, 40};
-        public static final double targetAngle[] = {25.5, 25.5, 25.5, 25.5, 26, 26, 27, 27, 28, 29, 35, 35, 35, 37, 37, 37, 38, 40, 38, 40};
-        //public static final double targetVelocity[] = {980, 990, 1000, 1030, 1030, 1050, 1050, 1100, 1100, 1125, 1125, 1150, 1200, 1215, 1250, 1300, 1325, 1325, 1350, 1540, 1515, 1535, 1540, 1550, 1575, 1600, 1625, 1675, 1690, 1525, 1675, 1680};
-        public static final double targetVelocity[] = {980, 990, 1000, 1030, 1030, 1050, 1050, 1100, 1100, 1125, 1125, 1150, 1200, 1215, 1250, 1300, 1325, 1325, 1350, 1600};
+        public static final List<Double> distanceThresh = Arrays.asList(0.46, 75.58, 90.9, 95.83, 100.64, 105.5, 110.798, 125.38, 130.1, 135.3, 145.09, 150.21, 155.4, 164.89, 170.04, 180.0, 190.77, 195.57, 205.39, 250.0);
+        public static final List<Double> targetAngle = Arrays.asList(25.5, 25.5, 25.5, 25.5, 26.0, 26.0, 27.0, 27.0, 28.0, 29.0, 35.0, 35.0, 35.0, 37.0, 37.0, 37.0, 38.0, 40.0, 38.0, 40.0);
+        public static final List<Double> targetVelocity = Arrays.asList(980.0, 990.0, 1000.0, 1030.0, 1030.0, 1050.0, 1050.0, 1100.0, 1100.0, 1125.0, 1125.0, 1150.0, 1200.0, 1215.0, 1250.0, 1300.0, 1325.0, 13250.0, 1350.0, 1600.0);
     }
 }

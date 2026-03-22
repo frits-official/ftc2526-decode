@@ -1,78 +1,48 @@
 package org.firstinspires.ftc.teamcode.commands;
 
-import static org.firstinspires.ftc.teamcode.Constants.SHOOTER_CALCULATION.*;
-
 import com.pedropathing.geometry.Pose;
+import com.pedropathing.math.Vector;
 
 
 import org.firstinspires.ftc.teamcode.Constants;
-import org.firstinspires.ftc.teamcode.utils.Vector2D;
+import org.firstinspires.ftc.teamcode.Robot;
 
 public class ShooterAim {
     public static class ShooterState {
-        private double velocity, angle;
+        private double velocity, angle, heading;
 
-        public ShooterState(double velocity, double angle) {
+        public ShooterState(double velocity, double angle, double heading) {
             this.velocity = velocity;
             this.angle = angle;
+            this.heading = heading;
         }
 
         public double getVelocity() { return velocity; }
         public double getAngle() { return angle; }
+        public double getHeading() { return heading; }
     }
 
-    public static double calcDistanceFromTag(double cm, Pose pose, Constants.ALLIANCE alliance) {
-        double distance = cm;
-        if (cm == 0.0)
-            distance = calcDistanceFromTagOdometryCM(pose, alliance);
-        return distance;
+    public static Vector getGoalVec(Pose pose) {
+        double xOff;
+        if (Robot.alliance == Constants.ALLIANCE.BLUE) xOff = 6;
+        else xOff = 138;
+        return new Vector(Math.sqrt(Math.pow(xOff - pose.getX(), 2) + Math.pow(132 - pose.getY(), 2)) * 2.54,
+                            Math.atan2(pose.getY(), pose.getX()));
     }
 
-    public static double calcDistanceFromTagOdometryCM(Pose pose, Constants.ALLIANCE alliance) {
-        double xOff = 0.0;
-        if (alliance == Constants.ALLIANCE.BLUE) xOff = 12;
-        else xOff = 132;
-        return Math.sqrt(Math.pow(xOff - pose.getX(), 2) + Math.pow(132 - pose.getY(), 2)) * 2.54;
-    }
-
-    public static ShooterState calcShoot(Pose pose, Constants.ALLIANCE alliance) {
-        int i = lowerBound(calcDistanceFromTagOdometryCM(pose, alliance));
-        if (i == -1) i = 0;
-        return new ShooterState(targetVelocity[i], targetAngle[i]);
+    public static ShooterState calcShoot(Pose pose) {
+        double distance = getGoalVec(pose).getMagnitude();
+        return new ShooterState(Robot.velocityLUT.get(distance),
+                                Robot.angleLUT.get(distance),
+                                getTurretHeadingFromOdometry(pose));
     }
     /** this will return degree with -90deg -> 90deg will run in counterclockwise
      * use this for nearly accurate turning, we will use limelight for more accuracy **/
-    public static double calcTurretHeadingFromOdometry(Pose pose, Constants.ALLIANCE alliance) {
-        double xOff;
-        if (alliance == Constants.ALLIANCE.BLUE) xOff = 0;
-        else xOff = 144;
-        double x = Math.cos(pose.getHeading());
-        double y = Math.sin(pose.getHeading());
-        Vector2D bot = new Vector2D(x, y);
-        Vector2D perpBot = new Vector2D(-y, x);
-        Vector2D goal = new Vector2D(xOff - pose.getX(), 144 - pose.getY());
-        return Math.toDegrees(Math.acos(Vector2D.dot(bot, goal) / (bot.getLength() * goal.getLength()))
-                                * Math.signum(Vector2D.dot(perpBot, goal)));
-    }
-
-    
-    static int lowerBound(double key) {
-        int low = 0, high = distanceThresh.length;
-        int mid;
-
-        while (low < high) {
-            mid = low + (high - low) / 2;
-            if (key <= distanceThresh[mid]) {
-                high = mid;
-            } else {
-                low = mid + 1;
-            }
-        }
-
-        if (low < distanceThresh.length && distanceThresh[low] < key) {
-            low++;
-        }
-
-        return low - 1;
+    public static double getTurretHeadingFromOdometry(Pose pose) {
+        Vector bot = new Vector(1, pose.getHeading());
+        Vector perpBot = new Vector(1, pose.getHeading() + Math.PI / 2);
+        Vector goal = getGoalVec(pose);
+        return Math.toDegrees(Math.acos(goal.dot(bot) / (bot.getMagnitude() * goal.getMagnitude()))
+                                * Math.signum(goal.dot(perpBot)));
     }
 }

@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.seattlesolvers.solverslib.util.InterpLUT;
 import com.skeletonarmy.marrow.TimerEx;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
@@ -37,7 +38,7 @@ public class Robot {
     public TelemetryManager telemetryM;
     private boolean isFieldCentric;
     public Camera camera = new Camera();
-    private Constants.ALLIANCE alliance;
+    public static Constants.ALLIANCE alliance;
     TimerEx shootTimer = new TimerEx(Constants.DOOR.openTime);
     TimerEx relocalizeTimer = new TimerEx(60);
     public boolean running = false;
@@ -55,6 +56,9 @@ public class Robot {
     public static int pathState;
     double teleOpFieldFaceAngle;
     PolygonZone robot = new PolygonZone(13, 13);
+    public static InterpLUT velocityLUT = new InterpLUT(Constants.SHOOTER_CALCULATION.distanceThresh, Constants.SHOOTER_CALCULATION.targetVelocity);
+    public static InterpLUT angleLUT = new InterpLUT(Constants.SHOOTER_CALCULATION.distanceThresh, Constants.SHOOTER_CALCULATION.targetAngle);
+
 
     public void init(OpMode _opmode, Constants.ALLIANCE alliance) {
         opMode = _opmode;
@@ -87,6 +91,9 @@ public class Robot {
         } else {
             teleOpFieldFaceAngle = 0;
         }
+
+        velocityLUT.createLUT();
+        angleLUT.createLUT();
     }
 
     public void init_loop() {
@@ -180,8 +187,8 @@ public class Robot {
             telemetryM.debug("drive Heading:" + follower.getPose().getHeading());
             telemetryM.debug("drive is field centric:" + isFieldCentric);
 
-            telemetryM.debug(" pure turret target: ", ShooterAim.calcTurretHeadingFromOdometry(follower.getPose(), alliance));
-            telemetryM.debug("distance from tag odo: ", ShooterAim.calcDistanceFromTagOdometryCM(follower.getPose(), alliance));
+            telemetryM.debug(" pure turret target: ", ShooterAim.getTurretHeadingFromOdometry(follower.getPose()));
+            telemetryM.debug("distance from tag odo: ", ShooterAim.getGoalVec(follower.getPose()).getMagnitude());
             telemetryM.addLine("");
         }
 
@@ -207,13 +214,13 @@ public class Robot {
     }
 
     public void aimShoot(boolean aimVelAndAngle, boolean aimHeading) {
+        ShooterAim.ShooterState shooterState = ShooterAim.calcShoot(follower.getPose());
         if (aimVelAndAngle) {
-            ShooterAim.ShooterState shooterState = ShooterAim.calcShoot(follower.getPose(), alliance);
             vel = shooterState.getVelocity();
             angle = shooterState.getAngle();
         }
         if (aimHeading) {
-            heading = ShooterAim.calcTurretHeadingFromOdometry(follower.getPose(), alliance);
+            heading = shooterState.getHeading();
         }
         setShooterTarget(vel, angle, heading);
     }
