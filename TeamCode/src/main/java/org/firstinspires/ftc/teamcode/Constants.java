@@ -53,7 +53,8 @@ public class Constants {
     @Configurable
     public static class INTAKE {
         public static double normal = .7;
-        public static double shooting = .5;
+        public static double goalShooting = .7;
+        public static double farShooting = .3;
     }
 
     @Configurable

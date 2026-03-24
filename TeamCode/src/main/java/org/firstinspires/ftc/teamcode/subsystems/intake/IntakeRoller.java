@@ -38,7 +38,7 @@ public class IntakeRoller {
         } else if (gamepad1.b || gamepad1.circle) {
             setPower(0);
         } else if (gamepad1.left_bumper) {
-            setPower(Constants.INTAKE.shooting);
+            setPower(Constants.INTAKE.farShooting);
         } else {
             setPower(Constants.INTAKE.normal);
         }
