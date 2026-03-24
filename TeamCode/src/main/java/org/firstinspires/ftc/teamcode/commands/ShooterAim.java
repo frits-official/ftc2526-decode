@@ -26,7 +26,7 @@ public class ShooterAim {
         double xOff;
         if (Robot.alliance == Constants.ALLIANCE.BLUE) xOff = 6;
         else xOff = 138;
-        return new Vector(Math.sqrt(Math.pow(xOff - pose.getX(), 2) + Math.pow(132 - pose.getY(), 2)) * 2.54,
+        return new Vector(Math.sqrt(Math.pow(xOff - pose.getX(), 2) + Math.pow(138 - pose.getY(), 2)) * 2.54,
                             Math.atan2(pose.getY(), pose.getX()));
     }
 
