@@ -24,7 +24,7 @@ public class Constants {
 
     @Configurable
     public static class HOOD {
-        public static double maxAngle = 57;
+        public static double maxAngle = 80;
         public static double minAngle = 25;
         public static double hoodOffset = 25.0;
         public static double gearRatio = 2;
@@ -48,6 +48,13 @@ public class Constants {
         public static double unblock = 1;
         public static double delayTime = 2;
         public static double openTime = 2;
+    }
+
+    @Configurable
+    public static class INTAKE {
+        public static double normal = .7;
+        public static double goalShooting = .7;
+        public static double farShooting = .3;
     }
 
     @Configurable
