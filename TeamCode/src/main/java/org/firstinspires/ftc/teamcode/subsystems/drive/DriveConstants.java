@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems.drive;
 
 import com.pedropathing.control.FilteredPIDFCoefficients;
 import com.pedropathing.control.PIDFCoefficients;
+import com.pedropathing.control.PredictiveBrakingCoefficients;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.follower.FollowerConstants;
 import com.pedropathing.ftc.FollowerBuilder;
@@ -17,27 +18,16 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 public class DriveConstants {
     public static FollowerConstants followerConstants = new FollowerConstants()
             //Setup
-            .mass(13.0)
-            .forwardZeroPowerAcceleration(-45.98)
-            .lateralZeroPowerAcceleration(-64.33)
-            //TranslationPIDF
-            .useSecondaryTranslationalPIDF(true)
-            .translationalPIDFCoefficients(new PIDFCoefficients(0.07,0,0.005,0.02))
-            .secondaryTranslationalPIDFCoefficients(new PIDFCoefficients(0.1,0,0.01,0))
-            //HeadingPIDF
-            .useSecondaryHeadingPIDF(true)
-            .headingPIDFCoefficients(new PIDFCoefficients(1,0,0.01,0.02))
-            .secondaryHeadingPIDFCoefficients(new PIDFCoefficients(0.1,0,0.05,0))
-            //DrivePIDF
-            .useSecondaryDrivePIDF(true)
-            .drivePIDFCoefficients(new FilteredPIDFCoefficients(0.05,0,0.0006 ,0.6,0.01))
-            .secondaryDrivePIDFCoefficients(new FilteredPIDFCoefficients(0.01,0,0.0001,0.6,0.0001))
-            //Centripetal
-            .centripetalScaling(0.0005);
+            .mass(14.0)
+            //Predictive Braking
+            .predictiveBrakingCoefficients(new PredictiveBrakingCoefficients(0.05, 0.1249, 0.0013))
+            //Heading
+            .headingPIDFCoefficients(new PIDFCoefficients(0.65, 0, 0.015, 0.025))
+            .centripetalScaling(0);
 
     public static PinpointConstants localizerConstants = new PinpointConstants()
-            .forwardPodY(-1.88976377952756)
-            .strafePodX(-3.34645669291339)
+            .forwardPodY(2.9527559055)
+            .strafePodX(-5.7086614173)
             .distanceUnit(DistanceUnit.INCH)
             .hardwareMapName("pinpoint")
             .encoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
@@ -54,11 +44,9 @@ public class DriveConstants {
             .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
             .rightFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
             .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD)
-            .xVelocity(58.73)
-            .yVelocity(42.14);
+            .xVelocity(76.58)
+            .yVelocity(61.41);
 
-    // remember to change tValueConstraint to .95
-    // and higher brakingStrength
     public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 0.71, 1);
     public static Follower createFollower(HardwareMap hardwareMap) {
         return new FollowerBuilder(followerConstants, hardwareMap)
