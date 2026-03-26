@@ -20,6 +20,7 @@ public class Constants {
         public static double d = 0;
         public static double v = 0.00039;
         public static double s = 0.04;
+        public static double shootingIncrement = 200;
     }
 
     @Configurable
@@ -55,6 +56,7 @@ public class Constants {
         public static double normal = .7;
         public static double goalShooting = .7;
         public static double farShooting = .3;
+        public static double zoneThreshold = 250;
     }
 
     @Configurable

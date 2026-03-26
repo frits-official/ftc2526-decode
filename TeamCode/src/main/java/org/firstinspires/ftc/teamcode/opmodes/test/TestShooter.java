@@ -22,12 +22,11 @@ public class TestShooter extends OpMode {
 
     @Override
     public void loop() {
-        robot.setShooterTarget(vel, angle, heading);
+        robot.vel = vel;
+        robot.angle = angle;
+        robot.heading = heading;
 
-        robot.intakeTeleOpControl();
-        if (gamepad1.left_bumper) {
-            robot.outtakeDoor.block(false);
-        } else robot.outtakeDoor.block(true);
+        robot.teleOpControl();
 
         if (gamepad1.cross) {
             robot.turret.setCoefficients();

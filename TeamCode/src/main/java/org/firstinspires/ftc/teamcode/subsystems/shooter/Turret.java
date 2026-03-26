@@ -15,7 +15,6 @@ import dev.nextftc.control.feedback.PIDCoefficients;
 public class Turret {
     public ControlSystem controlSystem;
     public DcMotorEx turret, turretEncoder;
-    LLResult result;
 
     public void init(HardwareMap hardwareMap) {
         PIDCoefficients coefficients = new PIDCoefficients(Constants.TURRET.p, Constants.TURRET.i, Constants.TURRET.d);
@@ -61,10 +60,6 @@ public class Turret {
         controlSystem.setGoal(new KineticState(finalTarget));
     }
 
-    public void setCamResult(LLResult result) {
-        this.result = result;
-    }
-
     public void update() {
         if (getDegree(getCurrentPosition()) > Constants.TURRET.maxAngle) {
             setPower(-.3);
@@ -72,10 +67,7 @@ public class Turret {
             setPower(.3);
         } else {
             double power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition())));
-            /*if (result != null && result.isValid()) {
-                power = -result.getTy() * (Math.abs(result.getTy()) > Constants.TURRET.threshold ? Constants.TURRET.pCU : Constants.TURRET.pCD);
-                turret.setPower(power + (Constants.TURRET.fC * Math.signum(power)));
-            } else */if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
+            if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
                 setPower(power);
             } else {
                 setPower(0);
@@ -84,7 +76,7 @@ public class Turret {
     }
 
     public void setPower(double power) {
-        turret.setPower(power * Robot.getVolFeedfoward());
+        turret.setPower(power * Robot.getVolFeedforward());
     }
 
     public double getCurrentPosition() {

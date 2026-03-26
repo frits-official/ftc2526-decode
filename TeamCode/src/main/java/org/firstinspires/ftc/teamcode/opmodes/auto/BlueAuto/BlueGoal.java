@@ -24,14 +24,14 @@ public class BlueGoal extends OpMode {
                 break;
             case 1:
                 if (!robot.follower.isBusy()) {
-                    robot.unBlockAndShoot();
+                    robot.shoot();
                     setPathState(2);
                 }
                 break;
 
             //Path1
             case 2:
-                if (!robot.running) {
+                if (!robot.isShooting) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BLUE.PICKUP_POSE_BLUE.pickup1_1))
                             .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(180))
@@ -54,14 +54,14 @@ public class BlueGoal extends OpMode {
                 break;
             case 4:
                 if (!robot.follower.isBusy()) {
-                    robot.unBlockAndShoot();
+                    robot.shoot();
                     setPathState(5);
                 }
                 break;
 
             //Path2
             case 5:
-                if (!robot.running) {
+                if (!robot.isShooting) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BLUE.PICKUP_POSE_BLUE.pickup2_1))
                             .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(180))
@@ -82,14 +82,14 @@ public class BlueGoal extends OpMode {
                 break;
             case 7:
                 if (!robot.follower.isBusy()) {
-                    robot.unBlockAndShoot();
+                    robot.shoot();
                     setPathState(8);
                 }
                 break;
 
             //Path3
             case 8:
-                if (!robot.running) {
+                if (!robot.isShooting) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BLUE.PICKUP_POSE_BLUE.pickup3_1))
                             .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(180))
@@ -110,14 +110,14 @@ public class BlueGoal extends OpMode {
                 break;
             case 10:
                 if (!robot.follower.isBusy()) {
-                    robot.unBlockAndShoot();
+                    robot.shoot();
                     setPathState(11);
                 }
                 break;
 
             //End
             case 11:
-                if (!robot.running) {
+                if (!robot.isShooting) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.BLUE.BlueNearZonePose.endPose))
                             .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(180))

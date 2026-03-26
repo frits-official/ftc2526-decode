@@ -27,7 +27,7 @@ public class ShooterAim {
         if (Robot.alliance == Constants.ALLIANCE.BLUE) xOff = 6;
         else xOff = 138;
         return new Vector(Math.sqrt(Math.pow(xOff - pose.getX(), 2) + Math.pow(138 - pose.getY(), 2)) * 2.54,
-                            Math.atan2(pose.getY(), pose.getX()));
+                            Math.atan2(138 - pose.getY(), xOff - pose.getX()));
     }
 
     public static ShooterState calcShoot(Pose pose) {
@@ -42,7 +42,8 @@ public class ShooterAim {
         Vector bot = new Vector(1, pose.getHeading());
         Vector perpBot = new Vector(1, pose.getHeading() + Math.PI / 2);
         Vector goal = getGoalVec(pose);
-        return Math.toDegrees(Math.acos(goal.dot(bot) / (bot.getMagnitude() * goal.getMagnitude()))
-                                * Math.signum(goal.dot(perpBot)));
+
+        double angle = goal.getTheta() - bot.getTheta();
+        return Math.toDegrees(Math.IEEEremainder(angle, 2 * Math.PI));
     }
 }

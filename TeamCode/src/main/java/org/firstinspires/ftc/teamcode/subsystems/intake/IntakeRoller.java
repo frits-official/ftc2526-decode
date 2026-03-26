@@ -1,25 +1,25 @@
 package org.firstinspires.ftc.teamcode.subsystems.intake;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 
 public class IntakeRoller {
     private DcMotorEx intake;
-    boolean reset = false;
+    public enum INTAKE_STATE { INTAKE, GOAL_SHOOTING, FAR_SHOOTING, STOP }
+    public INTAKE_STATE currentState;
 
-    public void init (HardwareMap hardwareMap) {
+    public void init(HardwareMap hardwareMap) {
         intake = hardwareMap.get(DcMotorEx.class, "intake");
 
         intake.setDirection(DcMotorEx.Direction.FORWARD);
+        setState(INTAKE_STATE.STOP);
     }
 
     public void setPower(double power) {
-        intake.setPower(power * Robot.getVolFeedfoward());
+        intake.setPower(power * Robot.getVolFeedforward());
     }
 
     public double getVelocity() {
@@ -30,17 +30,26 @@ public class IntakeRoller {
         return intake.getPower();
     }
 
-    public boolean stopIntake = false;
+    public void setState(INTAKE_STATE state) {
+        currentState = state;
+    }
 
-    public void teleOpControl(Gamepad gamepad1) {
-        if (gamepad1.right_bumper) {
-            setPower(-.4);
-        } else if (gamepad1.b || gamepad1.circle) {
-            setPower(0);
-        } else if (gamepad1.left_bumper) {
-            setPower(Constants.INTAKE.farShooting);
-        } else {
-            setPower(Constants.INTAKE.normal);
+    public INTAKE_STATE getCurrentState() { return currentState; }
+
+    public void update() {
+        switch (currentState) {
+            case INTAKE:
+                setPower(Constants.INTAKE.normal);
+                break;
+            case GOAL_SHOOTING:
+                setPower(Constants.INTAKE.goalShooting);
+                break;
+            case FAR_SHOOTING:
+                setPower(Constants.INTAKE.farShooting);
+                break;
+            case STOP:
+                setPower(0);
+                break;
         }
     }
 }

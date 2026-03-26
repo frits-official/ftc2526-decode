@@ -27,14 +27,14 @@ public class RedFar extends OpMode {
                 break;
             case 1:
                 if (!robot.follower.isBusy()) {
-                    robot.unBlockAndShoot();
+                    robot.shoot();
                     setPathState(2);
                 }
                 break;
 
             //Path1
             case 2:
-                if (!robot.running) {
+                if (!robot.isShooting) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup3_1))
                             .setLinearHeadingInterpolation(Math.toRadians(69), Math.toRadians(0))
@@ -55,14 +55,14 @@ public class RedFar extends OpMode {
                 break;
             case 4:
                 if (!robot.follower.isBusy()) {
-                    robot.unBlockAndShoot();
+                    robot.shoot();
                     setPathState(5);
                     }
                 break;
 
             //Path2
             case 5:
-                if (!robot.running) {
+                if (!robot.isShooting) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup2_1))
                             .setLinearHeadingInterpolation(Math.toRadians(69), Math.toRadians(0))
@@ -85,14 +85,14 @@ public class RedFar extends OpMode {
                 break;
             case 7:
                 if (!robot.follower.isBusy()) {
-                    robot.unBlockAndShoot();
+                    robot.shoot();
                     setPathState(8);
                 }
                 break;
 
             //Path3
             case 8:
-                if (!robot.running) {
+                if (!robot.isShooting) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup1_1))
                             .setLinearHeadingInterpolation(Math.toRadians(69), Math.toRadians(0))
@@ -113,7 +113,7 @@ public class RedFar extends OpMode {
                 break;
             case 10:
                 if (!robot.follower.isBusy()) {
-                    robot.unBlockAndShoot();
+                    robot.shoot();
                     setPathState(11);
                 }
                 break;

@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems.shooter;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Constants;
@@ -63,8 +62,8 @@ public class Shooter {
     }
 
     public void setPower(double power) {
-        shoot1.setPower(power * Robot.getVolFeedfoward());
-        shoot2.setPower(power * Robot.getVolFeedfoward());
+        shoot1.setPower(power * Robot.getVolFeedforward());
+        shoot2.setPower(power * Robot.getVolFeedforward());
     }
 
     public double getVelocity() { //tick
