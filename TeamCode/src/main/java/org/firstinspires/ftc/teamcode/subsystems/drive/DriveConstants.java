@@ -20,10 +20,9 @@ public class DriveConstants {
             //Setup
             .mass(14.0)
             //Predictive Braking
-            .predictiveBrakingCoefficients(new PredictiveBrakingCoefficients(0.05, 0.1249, 0.0013))
+            .predictiveBrakingCoefficients(new PredictiveBrakingCoefficients(0.05, 0.1092, 0.0015))
             //Heading
-            .headingPIDFCoefficients(new PIDFCoefficients(0.65, 0, 0.015, 0.025))
-            .centripetalScaling(0);
+            .headingPIDFCoefficients(new PIDFCoefficients(0.65, 0, 0.015, 0.025));
 
     public static PinpointConstants localizerConstants = new PinpointConstants()
             .forwardPodY(2.9527559055)
