@@ -4,6 +4,7 @@ import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.seattlesolvers.solverslib.util.MathUtils;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
@@ -48,16 +49,8 @@ public class Turret {
         return pos * (360.0 / 768.0);
     }
 
-    public void setTarget(double target1) {
-        double finalTarget = target1;
-        if (target1 > Constants.TURRET.maxAngle) {
-            finalTarget = Constants.TURRET.maxAngle;
-        }
-        if (target1 < Constants.TURRET.minAngle) {
-            finalTarget = Constants.TURRET.minAngle;
-        }
-
-        controlSystem.setGoal(new KineticState(finalTarget));
+    public void setTarget(double target) {
+        controlSystem.setGoal(new KineticState(MathUtils.clamp(target, Constants.TURRET.minAngle, Constants.TURRET.maxAngle)));
     }
 
     public void update() {

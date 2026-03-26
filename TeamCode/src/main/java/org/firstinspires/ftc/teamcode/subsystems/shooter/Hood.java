@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems.shooter;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.seattlesolvers.solverslib.util.MathUtils;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.opencv.core.Mat;
@@ -13,7 +14,6 @@ public class Hood {
     public Servo hood;
 
     public void init(HardwareMap hardwareMap) {
-
         hood = hardwareMap.get(Servo.class, "hood");
         hood.setDirection(Servo.Direction.FORWARD);
         hood.setPosition(calcAngle(Constants.HOOD.minAngle));
@@ -22,7 +22,6 @@ public class Hood {
 
     public double calcAngle(double targetHood) {
         position = (targetHood - Constants.HOOD.hoodOffset) * Constants.HOOD.gearRatio / Constants.HOOD.servoRange;
-
         return Math.max(0.0, Math.min(1.0, position));
     }
 
@@ -32,7 +31,7 @@ public class Hood {
     }
 
     public void setTargetAngle(double angle) {
-        this.target = Math.max(Constants.HOOD.minAngle, Math.min(Constants.HOOD.maxAngle, angle));
+        this.target = MathUtils.clamp(angle, Constants.HOOD.minAngle, Constants.HOOD.maxAngle);
     }
 
     public double getTargetAngle() {
