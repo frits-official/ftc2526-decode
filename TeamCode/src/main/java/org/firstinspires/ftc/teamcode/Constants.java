@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.bylazar.configurables.annotations.Configurable;
+import com.pedropathing.geometry.Pose;
 
 import java.util.Arrays;
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.List;
 public class Constants {
     public static double nominalVoltage = 12.5;
     public static enum ALLIANCE { BLUE, RED };
+    public static final Pose RED_GOAL_POS = new Pose(138, 138);
+    public static final Pose BLUE_GOAL_POS = RED_GOAL_POS.mirror();
 
     @Configurable
     public static class DRIVE {
@@ -15,6 +18,9 @@ public class Constants {
     }
     @Configurable
     public static class SHOOTER {
+        public static double scoreHeight = 0;
+        public static double scoreAngle = Math.toRadians(0);
+        public static double passThroughPoint = 0;
         public static double p = 0.01;
         public static double i = 0;
         public static double d = 0;

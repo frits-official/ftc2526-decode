@@ -164,6 +164,7 @@ public class Robot {
 
         if (getShooter) {
             //shooter
+            telemetryM.debug("is shooting: " + isShooting);
             telemetryM.debug("shoot velocity:" + shooter.getVelocity());
             telemetryM.debug("shoot target:" + shooter.getTarget());
             telemetryM.debug("shoot power:" + shooter.power);
@@ -176,7 +177,7 @@ public class Robot {
             telemetryM.debug("turret angle: " + turret.getDegree(turret.getCurrentPosition()));
             telemetryM.debug("turret target: " + turret.getTarget());
             telemetryM.debug("turret power: " + turret.getPower());
-            telemetryM.debug("turret í in tolerance: " + turret.controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance)));
+            telemetryM.debug("turret is in tolerance: " + turret.controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance)));
             telemetryM.addLine("");
         }
 
@@ -235,9 +236,7 @@ public class Robot {
     }
 
     public void teleOpControl() {
-        aimShoot(true, true);
-
-        if (currentGamepad1.left_bumper) {
+        if (currentGamepad1.left_bumper || currentGamepad1.dpad_up) {
             isShooting = true;
         } else isShooting = false;
 
@@ -248,7 +247,7 @@ public class Robot {
 
         if (isShooting) {
             outtakeDoor.block(false);
-            if (robotZone.isInside(GlobalPose.ZONES.closeLaunchZone)) {
+            if (robotZone.isInside(GlobalPose.ZONES.closeLaunchZone) || currentGamepad1.dpad_up ) {
                 intakeRoller.setState(IntakeRoller.INTAKE_STATE.GOAL_SHOOTING);
             } else intakeRoller.setState(IntakeRoller.INTAKE_STATE.FAR_SHOOTING);
         } else {

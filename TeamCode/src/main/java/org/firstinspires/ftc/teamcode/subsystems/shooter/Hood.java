@@ -22,7 +22,7 @@ public class Hood {
 
     public double calcAngle(double targetHood) {
         position = (targetHood - Constants.HOOD.hoodOffset) * Constants.HOOD.gearRatio / Constants.HOOD.servoRange;
-        return Math.max(0.0, Math.min(1.0, position));
+        return MathUtils.clamp(position, 0, 1);
     }
 
     public void update() {

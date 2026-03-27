@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode.subsystems.shooter;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
+
+import java.util.Vector;
 
 import dev.nextftc.control.ControlSystem;
 import dev.nextftc.control.KineticState;
@@ -19,11 +22,11 @@ public class Shooter {
     public void init(HardwareMap hardwareMap) {
         shoot1 = hardwareMap.get(DcMotorEx.class, "shoot1");
         shoot2 = hardwareMap.get(DcMotorEx.class, "shoot2");
-        shootEncoder = hardwareMap.get(DcMotorEx.class, "rf");
+        shootEncoder = hardwareMap.get(DcMotorEx.class, "turning");
 
-        shoot1.setDirection(DcMotorEx.Direction.REVERSE);
+        shoot1.setDirection(DcMotorEx.Direction.FORWARD);
         shoot2.setDirection(DcMotorEx.Direction.REVERSE);
-        shootEncoder.setDirection(DcMotorEx.Direction.FORWARD);
+        shootEncoder.setDirection(DcMotorEx.Direction.REVERSE);
 
         shootEncoder.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         shootEncoder.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
@@ -53,6 +56,9 @@ public class Shooter {
         }
     }
 
+    public Vector caclShootVectorAndTurret (double robotHeading) {
+    }
+
     public void setCoefficients() {
         PIDCoefficients coefficients = new PIDCoefficients(Constants.SHOOTER.p, Constants.SHOOTER.i, Constants.SHOOTER.d);
         controlSystem = ControlSystem.builder()
@@ -64,9 +70,10 @@ public class Shooter {
     public void setPower(double power) {
         shoot1.setPower(power * Robot.getVolFeedforward());
         shoot2.setPower(power * Robot.getVolFeedforward());
+        
     }
 
     public double getVelocity() { //tick
-        return shootEncoder.getVelocity();
+        return -shootEncoder.getVelocity();
     }
 }
