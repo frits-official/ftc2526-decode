@@ -56,9 +56,6 @@ public class Shooter {
         }
     }
 
-    public Vector caclShootVectorAndTurret (double robotHeading) {
-    }
-
     public void setCoefficients() {
         PIDCoefficients coefficients = new PIDCoefficients(Constants.SHOOTER.p, Constants.SHOOTER.i, Constants.SHOOTER.d);
         controlSystem = ControlSystem.builder()

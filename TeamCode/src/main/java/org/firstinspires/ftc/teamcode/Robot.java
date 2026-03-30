@@ -178,6 +178,7 @@ public class Robot {
             telemetryM.debug("turret target: " + turret.getTarget());
             telemetryM.debug("turret power: " + turret.getPower());
             telemetryM.debug("turret is in tolerance: " + turret.controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance)));
+            telemetryM.debug("turret tick: " + turret.getCurrentPosition());
             telemetryM.addLine("");
         }
 
@@ -279,6 +280,14 @@ public class Robot {
             follower.startTeleopDrive();
         }
         follower.setTeleOpDrive(straight, strafe, rotate * Constants.DRIVE.turnSpeedMultiplier, isFieldCentric, teleOpFieldFaceAngle);
+    }
+
+    public void testTurret (Gamepad gamepad1) {
+        if (gamepad1.right_bumper) {
+            turret.setTarget(180);
+        } else {
+            turret.setTarget(0);
+        }
     }
 
     public static void setPathState(int pState) {

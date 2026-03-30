@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.subsystems.shooter;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.util.MathUtils;
 
@@ -46,7 +48,7 @@ public class Turret {
     }
 
     public double getDegree(double pos) {
-        return pos * (360.0 / 768.0);
+        return pos * (360.0 / 575);
     }
 
     public void setTarget(double target) {
