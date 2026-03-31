@@ -18,6 +18,8 @@ public class TestShooter extends OpMode {
     public void init() {
         robot.init(this, Constants.ALLIANCE.BLUE);
         robot.setPose(new Pose(72, 72, 0));
+        robot.turret.resetEncoder();
+        robot.turret.setTarget(0);
     }
 
     @Override

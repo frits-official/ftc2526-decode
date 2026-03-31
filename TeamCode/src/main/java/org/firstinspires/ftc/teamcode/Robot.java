@@ -178,6 +178,7 @@ public class Robot {
             telemetryM.debug("turret target: " + turret.getTarget());
             telemetryM.debug("turret power: " + turret.getPower());
             telemetryM.debug("turret is in tolerance: " + turret.controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance)));
+            telemetryM.debug("turret tick: " + turret.getCurrentPosition());
             telemetryM.addLine("");
         }
 

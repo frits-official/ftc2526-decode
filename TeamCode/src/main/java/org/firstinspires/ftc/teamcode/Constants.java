@@ -27,6 +27,9 @@ public class Constants {
         public static double v = 0.00039;
         public static double s = 0.04;
         public static double shootingIncrement = 0;
+        public static double flywheelMinSpeed = 0;
+        public static double flywheelMaxSpeed = 2000;
+        public static double flywheelOffset = 0;
     }
 
     @Configurable
@@ -40,13 +43,13 @@ public class Constants {
 
     @Configurable
     public static class TURRET {
-        public static double p = 0.017;
+        public static double p = 0;
         public static double i = 0;
         public static double d = 0;
-        public static double f = 0.16;
+        public static double f = 0.;
         public static double tolerance = 0.1;
-        public static double maxAngle = 45;
-        public static double minAngle = -45;
+        public static double maxAngle = 180;
+        public static double minAngle = -180;
     }
 
     @Configurable
