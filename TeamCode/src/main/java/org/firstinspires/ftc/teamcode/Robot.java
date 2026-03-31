@@ -282,14 +282,6 @@ public class Robot {
         follower.setTeleOpDrive(straight, strafe, rotate * Constants.DRIVE.turnSpeedMultiplier, isFieldCentric, teleOpFieldFaceAngle);
     }
 
-    public void testTurret (Gamepad gamepad1) {
-        if (gamepad1.right_bumper) {
-            turret.setTarget(180);
-        } else {
-            turret.setTarget(0);
-        }
-    }
-
     public static void setPathState(int pState) {
         pathState = pState;
     }

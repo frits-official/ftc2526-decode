@@ -37,8 +37,6 @@ public class TestShooter extends OpMode {
 
         robot.update();
 
-        robot.testTurret(gamepad1);
-
         robot.updateTelemetry(true, true, false, false, false);
     }
 }

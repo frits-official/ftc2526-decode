@@ -27,6 +27,9 @@ public class Constants {
         public static double v = 0.00039;
         public static double s = 0.04;
         public static double shootingIncrement = 0;
+        public static double flywheelMinSpeed = 0;
+        public static double flywheelMaxSpeed = 2000;
+        public static double flywheelOffset = 0;
     }
 
     @Configurable
