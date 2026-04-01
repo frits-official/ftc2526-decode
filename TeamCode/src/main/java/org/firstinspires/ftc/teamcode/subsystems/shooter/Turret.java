@@ -42,7 +42,7 @@ public class Turret {
     public void setCoefficients() {
         PIDCoefficients coefficients = new PIDCoefficients(Constants.TURRET.p, Constants.TURRET.i, Constants.TURRET.d);
         controlSystem = ControlSystem.builder()
-                .posPid(coefficients)
+                .posSquID(coefficients)
                 .build();
     }
 
@@ -56,11 +56,11 @@ public class Turret {
 
     public void update() {
         if (getDegree(getCurrentPosition()) > Constants.TURRET.maxAngle) {
-            setPower(-.3);
+            setPower(-.7);
         } else if (getDegree(getCurrentPosition()) < Constants.TURRET.minAngle) {
-            setPower(.3);
+            setPower(.7);
         } else {
-            power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition()))) + Math.signum(Constants.TURRET.f) * Constants.TURRET.f;
+            power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition()))) + Math.signum(getTarget() - getDegree(getCurrentPosition())) * Constants.TURRET.f;
             if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
                 setPower(power);
             } else {

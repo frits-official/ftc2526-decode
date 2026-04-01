@@ -37,13 +37,13 @@ public class Constants {
 
     @Configurable
     public static class TURRET {
-        public static double p = 0;
+        public static double p = 0.008;
         public static double i = 0;
         public static double d = 0;
-        public static double f = 0.;
+        public static double f = 0.1;
         public static double tolerance = 0.1;
-        public static double maxAngle = 180;
-        public static double minAngle = -180;
+        public static double maxAngle = 185;
+        public static double minAngle = -185;
     }
 
     @Configurable
