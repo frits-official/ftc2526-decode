@@ -18,18 +18,12 @@ public class Constants {
     }
     @Configurable
     public static class SHOOTER {
-        public static double scoreHeight = 0;
-        public static double scoreAngle = Math.toRadians(0);
-        public static double passThroughPoint = 0;
         public static double p = 0.01;
         public static double i = 0;
         public static double d = 0;
         public static double v = 0.00039;
         public static double s = 0.04;
         public static double shootingIncrement = 0;
-        public static double flywheelMinSpeed = 0;
-        public static double flywheelMaxSpeed = 2000;
-        public static double flywheelOffset = 0;
     }
 
     @Configurable

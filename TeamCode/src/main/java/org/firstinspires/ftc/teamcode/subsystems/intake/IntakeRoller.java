@@ -39,13 +39,13 @@ public class IntakeRoller {
     public void update() {
         switch (currentState) {
             case INTAKE:
-                //setPower(Constants.INTAKE.normal);
+                setPower(Constants.INTAKE.normal);
                 break;
             case GOAL_SHOOTING:
-                //setPower(Constants.INTAKE.goalShooting);
+                setPower(Constants.INTAKE.goalShooting);
                 break;
             case FAR_SHOOTING:
-                //setPower(Constants.INTAKE.farShooting);
+                setPower(Constants.INTAKE.farShooting);
                 break;
             case STOP:
                 setPower(0);
