@@ -27,7 +27,7 @@ public class Turret {
                 .build();
 
         turret = hardwareMap.get(DcMotorEx.class, "turning");
-        turretEncoder = hardwareMap.get(DcMotorEx.class, "lf");
+        turretEncoder = hardwareMap.get(DcMotorEx.class, "lr");
 
         turret.setDirection(DcMotorEx.Direction.FORWARD);
 

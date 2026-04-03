@@ -40,7 +40,7 @@ public class Constants {
         public static double p = 0.008;
         public static double i = 0;
         public static double d = 0;
-        public static double f = 0.1;
+        public static double f = 0.16;
         public static double tolerance = 0.1;
         public static double maxAngle = 185;
         public static double minAngle = -185;
@@ -58,7 +58,7 @@ public class Constants {
     public static class INTAKE {
         public static double normal = .7;
         public static double goalShooting = .95;
-        public static double farShooting = .9;
+        public static double farShooting = .95;
         public static double zoneThreshold = 250;
     }
 
