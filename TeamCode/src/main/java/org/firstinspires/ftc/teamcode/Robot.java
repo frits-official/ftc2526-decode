@@ -14,8 +14,9 @@ import com.seattlesolvers.solverslib.util.InterpLUT;
 import com.skeletonarmy.marrow.TimerEx;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
-import org.firstinspires.ftc.teamcode.commands.GlobalPose;
-import org.firstinspires.ftc.teamcode.commands.ShooterAim;
+import org.firstinspires.ftc.teamcode.commands.InterpLUTShooterCalculator;
+import org.firstinspires.ftc.teamcode.misc.GlobalPose;
+import org.firstinspires.ftc.teamcode.misc.ShooterState;
 import org.firstinspires.ftc.teamcode.subsystems.Camera;
 import org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.subsystems.intake.IntakeRoller;
@@ -203,8 +204,8 @@ public class Robot {
             telemetryM.debug("drive Heading:" + follower.getPose().getHeading());
             telemetryM.debug("drive is field centric:" + isFieldCentric);
 
-            telemetryM.debug(" pure turret target: ", ShooterAim.getTurretHeadingFromOdometry(follower.getPose()));
-            telemetryM.debug("distance from tag odo: ", ShooterAim.getGoalVec(follower.getPose()).getMagnitude());
+            telemetryM.debug(" pure turret target: ", InterpLUTShooterCalculator.getTurretHeadingFromOdometry(follower.getPose()));
+            telemetryM.debug("distance from tag odo: ", InterpLUTShooterCalculator.getGoalVec(follower.getPose()).getMagnitude());
             telemetryM.addLine("");
         }
 
@@ -226,7 +227,7 @@ public class Robot {
     }
 
     public void aimShoot(boolean aimVelAndAngle, boolean aimHeading) {
-        ShooterAim.ShooterState shooterState = ShooterAim.calcShoot(follower.getPose());
+        ShooterState shooterState = InterpLUTShooterCalculator.calcShoot(follower.getPose());
         if (aimVelAndAngle) {
             vel = shooterState.getVelocity();
             angle = shooterState.getAngle();

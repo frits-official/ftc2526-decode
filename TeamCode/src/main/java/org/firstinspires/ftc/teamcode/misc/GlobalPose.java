@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.commands;
+package org.firstinspires.ftc.teamcode.misc;
 
 import com.pedropathing.geometry.Pose;
 import com.skeletonarmy.marrow.zones.Point;

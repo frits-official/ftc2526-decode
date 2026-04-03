@@ -3,25 +3,11 @@ package org.firstinspires.ftc.teamcode.commands;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.math.Vector;
 
-
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
+import org.firstinspires.ftc.teamcode.misc.ShooterState;
 
-public class ShooterAim {
-    public static class ShooterState {
-        private double velocity, angle, heading;
-
-        public ShooterState(double velocity, double angle, double heading) {
-            this.velocity = velocity;
-            this.angle = angle;
-            this.heading = heading;
-        }
-
-        public double getVelocity() { return velocity; }
-        public double getAngle() { return angle; }
-        public double getHeading() { return heading; }
-    }
-
+public class LUTShooterCalculator {
     public static Vector getGoalVec(Pose pose) {
         double xOff;
         if (Robot.alliance == Constants.ALLIANCE.BLUE) xOff = 6;

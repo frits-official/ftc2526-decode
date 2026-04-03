@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
-import org.firstinspires.ftc.teamcode.commands.GlobalPose;
+import org.firstinspires.ftc.teamcode.misc.GlobalPose;
 
 @Autonomous
 public class BlueGoal extends OpMode {

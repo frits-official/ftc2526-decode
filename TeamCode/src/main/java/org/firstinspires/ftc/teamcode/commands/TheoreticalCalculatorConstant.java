@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.commands;
 import com.bylazar.configurables.annotations.Configurable;
 
 @Configurable
-public class Constants_ShooterCacl {
+public class TheoreticalCalculatorConstant {
     public static double scoreHeight = 31.5 * 2.54;
     public static double scoreAngle = Math.toRadians(-30);
     public static double passThroughPoint = 5 * 2.54;
