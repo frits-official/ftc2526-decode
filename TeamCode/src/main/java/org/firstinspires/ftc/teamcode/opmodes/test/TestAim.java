@@ -14,6 +14,7 @@ public class TestAim extends OpMode {
     @Override
     public void init() {
         robot.init(this, Constants.ALLIANCE.BLUE);
+        robot.turret.resetEncoder();
         robot.setPose(new Pose(72, 72, 0));
     }
 
@@ -29,7 +30,7 @@ public class TestAim extends OpMode {
 
     @Override
     public void loop() {
-        robot.driveTeleOpControl(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x, false);
+        robot.driveTeleOpControl(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, true);
         robot.aimShoot(false, true);
         robot.update();
         robot.updateTelemetry(true, true,false,true, true);

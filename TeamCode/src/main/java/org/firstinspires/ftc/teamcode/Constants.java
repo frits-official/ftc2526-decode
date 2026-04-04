@@ -41,9 +41,9 @@ public class Constants {
         public static double i = 0;
         public static double d = 0;
         public static double f = 0.16;
-        public static double tolerance = 0.1;
-        public static double maxAngle = 185;
-        public static double minAngle = -185;
+        public static double tolerance = 0.5;
+        public static double maxAngle = 5;
+        public static double minAngle = -365;
     }
 
     @Configurable
@@ -68,8 +68,9 @@ public class Constants {
     }
     public static class SHOOTER_CALCULATION {
         // https://docs.google.com/spreadsheets/d/1fzLwaEBuZ9TpgEnR5Y467lHZ0Rm3B78DA-xSx2ID6B4/edit?gid=0#gid=0
-        public static final List<Double> distanceThresh = Arrays.asList(0.46, 75.58, 90.9, 95.83, 100.64, 105.5, 110.798, 125.38, 130.1, 135.3, 145.09, 150.21, 155.4, 164.89, 170.04, 180.0, 190.77, 195.57, 205.39, 250.0);
-        public static final List<Double> targetAngle = Arrays.asList(25.5, 25.5, 25.5, 25.5, 26.0, 26.0, 27.0, 27.0, 28.0, 29.0, 35.0, 35.0, 35.0, 37.0, 37.0, 37.0, 38.0, 40.0, 38.0, 40.0);
-        public static final List<Double> targetVelocity = Arrays.asList(980.0, 990.0, 1000.0, 1030.0, 1030.0, 1050.0, 1050.0, 1100.0, 1100.0, 1125.0, 1125.0, 1150.0, 1200.0, 1215.0, 1250.0, 1300.0, 1325.0, 13250.0, 1350.0, 1600.0);
+        // ensure distanceThresh have strictly increasing values and match the targetVelocity and targetAngle
+        public static final List<Double> distanceThresh = Arrays.asList(84.0, 109.27, 127.34, 148.9, 168.66, 187.57, 209.5, 219.74, 347.3, 369.8, 373.65);
+        public static final List<Double> targetAngle = Arrays.asList(30.0, 38.0, 45.0, 50.0, 52.0, 52.0, 55.0, 53.0, 62.0, 60.0, 57.0);
+        public static final List<Double> targetVelocity = Arrays.asList(950.0, 960.0, 1000.0, 1040.0, 1075.0, 1125.0, 1160.0, 1160.0, 1447.0, 1415.0, 1430.0);
     }
 }

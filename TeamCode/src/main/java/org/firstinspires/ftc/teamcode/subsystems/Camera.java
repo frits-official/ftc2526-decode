@@ -59,9 +59,8 @@ public class Camera {
                 double heading = botPose.getOrientation().getYaw(AngleUnit.RADIANS);
 
                 Pose standardFTCPose = new Pose(x, y, heading).scale(39.37);
-                Pose pedroPose = FTCCoordinates.INSTANCE.convertToPedro(standardFTCPose);
 
-                return pedroPose;
+                return FTCCoordinates.INSTANCE.convertToPedro(standardFTCPose);
             }
         }
 

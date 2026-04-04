@@ -3,8 +3,10 @@ package org.firstinspires.ftc.teamcode.opmodes.test;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.seattlesolvers.solverslib.util.InterpLUT;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
@@ -25,10 +27,10 @@ public class TestAimWithoutRobot extends OpMode {
     @Override
     public void init() {
         follower = DriveConstants.createFollower(this.hardwareMap);
+        follower.setStartingPose(new Pose(72, 72, 0));
 
-        Collections.sort(Constants.SHOOTER_CALCULATION.distanceThresh);
-        Collections.sort(Constants.SHOOTER_CALCULATION.targetVelocity);
-        Collections.sort(Constants.SHOOTER_CALCULATION.targetAngle);
+        Robot.velocityLUT = new InterpLUT(Constants.SHOOTER_CALCULATION.distanceThresh, Constants.SHOOTER_CALCULATION.targetVelocity);
+        Robot.angleLUT = new InterpLUT(Constants.SHOOTER_CALCULATION.distanceThresh, Constants.SHOOTER_CALCULATION.targetAngle);
 
         Robot.velocityLUT.createLUT();
         Robot.angleLUT.createLUT();
@@ -38,6 +40,7 @@ public class TestAimWithoutRobot extends OpMode {
         telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
         telemetryM.debug("test aim by manually input the pose. left bumper for interplut. right bumper for theoretical calculation.");
         telemetryM.update();
+        telemetry.update();
     }
 
     @Override
@@ -49,6 +52,8 @@ public class TestAimWithoutRobot extends OpMode {
         telemetryM.addLine("");
 
         ShooterState shooterState;
+        if (gamepad1.left_bumper) mode = MODE.INTERPLUT;
+        else if (gamepad1.right_bumper) mode = MODE.THEORETICAL;
         if (mode == MODE.INTERPLUT) shooterState = InterpLUTShooterCalculator.calcShoot(follower.getPose());
         else if (mode == MODE.THEORETICAL) shooterState = TheoreticalShooterCalculator.calcShoot(follower);
         else shooterState = new ShooterState(0, 0, 0);
@@ -56,12 +61,12 @@ public class TestAimWithoutRobot extends OpMode {
         telemetryM.debug("current pose: " + follower.getPose().toString());
         telemetryM.debug("current velocity: " + follower.getVelocity().toString());
         telemetryM.addLine("");
-        telemetryM.debug("distance: " + InterpLUTShooterCalculator.getGoalVec(follower.getPose()));
+        telemetryM.debug("distance: " + InterpLUTShooterCalculator.getGoalVec(follower.getPose()).getMagnitude());
         telemetryM.addLine("");
         telemetryM.debug("velo: " + shooterState.getVelocity());
         telemetryM.debug("angle: " + shooterState.getAngle());
         telemetryM.debug("heading: " + shooterState.getHeading());
 
-        telemetryM.update();
+        telemetryM.update(telemetry);
     }
 }

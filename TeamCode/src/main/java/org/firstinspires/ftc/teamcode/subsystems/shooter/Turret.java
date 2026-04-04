@@ -51,6 +51,10 @@ public class Turret {
     }
 
     public void setTarget(double target) {
+        // convert heading from calculator (-180 -> 180 range, counterclockwise)
+        // to turret (0 -> -360 range, counterclockwise)
+        if (target >= 0) target = -target;
+        else target = -360 - target;
         controlSystem.setGoal(new KineticState(MathUtils.clamp(target, Constants.TURRET.minAngle, Constants.TURRET.maxAngle)));
     }
 

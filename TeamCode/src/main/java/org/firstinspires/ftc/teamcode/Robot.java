@@ -94,10 +94,6 @@ public class Robot {
             teleOpFieldFaceAngle = 0;
         }
 
-        Collections.sort(Constants.SHOOTER_CALCULATION.distanceThresh);
-        Collections.sort(Constants.SHOOTER_CALCULATION.targetVelocity);
-        Collections.sort(Constants.SHOOTER_CALCULATION.targetAngle);
-
         velocityLUT = new InterpLUT(Constants.SHOOTER_CALCULATION.distanceThresh, Constants.SHOOTER_CALCULATION.targetVelocity);
         angleLUT = new InterpLUT(Constants.SHOOTER_CALCULATION.distanceThresh, Constants.SHOOTER_CALCULATION.targetAngle);
 
@@ -125,6 +121,7 @@ public class Robot {
         currentGamepad2 = opMode.gamepad2;
 
         follower.update();
+        GlobalPose.lastPose = follower.getPose();
 
         // marrow spatial
         robotZone.setPosition(follower.getPose().getX(), follower.getPose().getY());
@@ -155,6 +152,7 @@ public class Robot {
     public void setPose(Pose pose) {
         follower.setPose(pose);
         follower.update();
+        GlobalPose.lastPose = follower.getPose();
         robotZone.setPosition(follower.getPose().getX(), follower.getPose().getY());
         robotZone.setRotation(follower.getPose().getHeading());
     }
@@ -276,11 +274,12 @@ public class Robot {
         return true;
     }
 
-    public void driveTeleOpControl(double straight, double strafe, double rotate, boolean isFieldCentric) {
+    public void driveTeleOpControl(double straight, double strafe, double rotate, boolean isRobotCentric) {
         if (!follower.getTeleopDrive()) {
             follower.startTeleopDrive();
         }
-        follower.setTeleOpDrive(straight, strafe, rotate * Constants.DRIVE.turnSpeedMultiplier, isFieldCentric, teleOpFieldFaceAngle);
+        isFieldCentric = !isRobotCentric;
+        follower.setTeleOpDrive(straight, strafe, rotate * Constants.DRIVE.turnSpeedMultiplier, isRobotCentric, teleOpFieldFaceAngle);
     }
 
     public static void setPathState(int pState) {
