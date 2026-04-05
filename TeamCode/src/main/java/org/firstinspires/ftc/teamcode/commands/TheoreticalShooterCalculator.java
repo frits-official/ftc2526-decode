@@ -23,9 +23,9 @@ public class TheoreticalShooterCalculator {
         double y = TheoreticalCalculatorConstant.scoreHeight;
         double a = TheoreticalCalculatorConstant.scoreAngle;
 
-        double hoodAngle = MathFunctions.clamp(Math.atan(2 * y / x - Math.tan(a)), Constants.HOOD.minAngle, Constants.HOOD.maxAngle);
+        double hoodAngle = MathFunctions.clamp(Math.atan(2 * y / x - Math.tan(a)), Math.toRadians(Constants.HOOD.minAngle), Math.toRadians(Constants.HOOD.maxAngle));
 
-        double flywheelSpeed = Math.sqrt(g * Math.pow(x, 2) / (2 * Math.pow(Math.cos(hoodAngle), 2) * (x *Math.tan(hoodAngle) - y)));
+        double flywheelSpeed = Math.sqrt(g * Math.pow(x, 2) / (2 * Math.pow(Math.cos(hoodAngle), 2) * (x * Math.tan(hoodAngle) - y)));
 
         Vector robotVel = follower.getVelocity();
 
@@ -44,13 +44,13 @@ public class TheoreticalShooterCalculator {
         double ndr = nvr * time;
 
         hoodAngle = MathFunctions.clamp(Math.atan(vz / nvr),
-                Constants.HOOD.minAngle, Constants.HOOD.maxAngle);
+                Math.toRadians(Constants.HOOD.minAngle), Math.toRadians(Constants.HOOD.maxAngle));
 
         flywheelSpeed = Math.sqrt(g * Math.pow(ndr, 2) / (2 * Math.pow(Math.cos(hoodAngle), 2) * (ndr * Math.tan(hoodAngle) - y)));
 
         double turretVelComOffset = Math.atan(perpendicularComponent / ivr);
         double turretAngle = Math.toDegrees(follower.getHeading() - robotToGoalVector.getTheta() + turretVelComOffset);
 
-        return new ShooterState(flywheelSpeed, hoodAngle, turretAngle);
+        return new ShooterState(flywheelSpeed, Math.toDegrees(hoodAngle), turretAngle);
     }
 }

@@ -16,7 +16,7 @@ public class AimBlueTeleOpControl extends OpMode {
     @Override
     public void init() {
         robot.init(this, Constants.ALLIANCE.BLUE);
-        robot.setPose((GlobalPose.lastPose != null) ? GlobalPose.lastPose : new Pose(72, 72, Math.toRadians(180)));
+        robot.setPose((GlobalPose.lastPose != null) ? GlobalPose.lastPose : new Pose(72, 72, Math.toRadians(0)));
         robot.aimShoot(false, true);
     }
 
