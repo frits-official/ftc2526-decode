@@ -15,6 +15,7 @@ import com.skeletonarmy.marrow.TimerEx;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
 import org.firstinspires.ftc.teamcode.commands.InterpLUTShooterCalculator;
+import org.firstinspires.ftc.teamcode.commands.ShootingMath;
 import org.firstinspires.ftc.teamcode.misc.GlobalPose;
 import org.firstinspires.ftc.teamcode.misc.ShooterState;
 import org.firstinspires.ftc.teamcode.subsystems.Camera;
@@ -25,7 +26,6 @@ import org.firstinspires.ftc.teamcode.subsystems.shooter.Hood;
 import org.firstinspires.ftc.teamcode.subsystems.shooter.Shooter;
 import org.firstinspires.ftc.teamcode.subsystems.shooter.Turret;
 
-import java.util.Collections;
 import java.util.List;
 
 import dev.nextftc.control.KineticState;
@@ -202,8 +202,8 @@ public class Robot {
             telemetryM.debug("drive Heading:" + follower.getPose().getHeading());
             telemetryM.debug("drive is field centric:" + isFieldCentric);
 
-            telemetryM.debug(" pure turret target: ", InterpLUTShooterCalculator.getTurretHeadingFromOdometry(follower.getPose()));
-            telemetryM.debug("distance from tag odo: ", InterpLUTShooterCalculator.getGoalVec(follower.getPose()).getMagnitude());
+            telemetryM.debug(" pure turret target: ", InterpLUTShooterCalculator.getTurretHeadingFromOdometry(follower.getPose(), ShootingMath.getStaticGoalVector(follower.getPose())));
+            telemetryM.debug("distance from tag odo: ", ShootingMath.getStaticGoalVector(follower.getPose()).getMagnitude());
             telemetryM.addLine("");
         }
 

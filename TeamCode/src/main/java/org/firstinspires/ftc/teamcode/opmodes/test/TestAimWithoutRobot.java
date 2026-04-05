@@ -10,12 +10,11 @@ import com.seattlesolvers.solverslib.util.InterpLUT;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
+import org.firstinspires.ftc.teamcode.commands.ShootingMath;
 import org.firstinspires.ftc.teamcode.misc.ShooterState;
 import org.firstinspires.ftc.teamcode.commands.InterpLUTShooterCalculator;
 import org.firstinspires.ftc.teamcode.commands.TheoreticalShooterCalculator;
 import org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants;
-
-import java.util.Collections;
 
 @TeleOp(group = "test")
 public class TestAimWithoutRobot extends OpMode {
@@ -61,7 +60,7 @@ public class TestAimWithoutRobot extends OpMode {
         telemetryM.debug("current pose: " + follower.getPose().toString());
         telemetryM.debug("current velocity: " + follower.getVelocity().toString());
         telemetryM.addLine("");
-        telemetryM.debug("distance: " + InterpLUTShooterCalculator.getGoalVec(follower.getPose()).getMagnitude());
+        telemetryM.debug("distance: " + ShootingMath.getStaticGoalVector(follower.getPose()).getMagnitude());
         telemetryM.addLine("");
         telemetryM.debug("velo: " + shooterState.getVelocity());
         telemetryM.debug("angle: " + shooterState.getAngle());

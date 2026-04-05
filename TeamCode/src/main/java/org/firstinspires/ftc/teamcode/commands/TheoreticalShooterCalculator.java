@@ -10,20 +10,17 @@ import org.firstinspires.ftc.teamcode.misc.ShooterState;
 
 
 public class TheoreticalShooterCalculator {
-    public static double getTickFromVel (double velocity){
-        return MathFunctions.clamp(TheoreticalCalculatorConstant.slope * velocity - TheoreticalCalculatorConstant.static_friction + TheoreticalCalculatorConstant.flywheelOffset,
-                TheoreticalCalculatorConstant.flywheelMinSpeed, TheoreticalCalculatorConstant.flywheelMaxSpeed);
-    }
     public static ShooterState calcShoot(Follower follower) {
         Pose currentPose = follower.getPose();
-        Vector robotToGoalVector = InterpLUTShooterCalculator.getGoalVec(currentPose);
+        Vector robotToGoalVector = ShootingMath.getStaticGoalVector(currentPose);
 
         double g = 9.8 * 100;
         double x = robotToGoalVector.getMagnitude() - TheoreticalCalculatorConstant.passThroughPoint;
+        if (x < 0.1) x = 0.1;
         double y = TheoreticalCalculatorConstant.scoreHeight;
         double a = TheoreticalCalculatorConstant.scoreAngle;
 
-        double hoodAngle = MathFunctions.clamp(Math.atan(2 * y / x - Math.tan(a)), Math.toRadians(Constants.HOOD.minAngle), Math.toRadians(Constants.HOOD.maxAngle));
+        double hoodAngle = MathFunctions.clamp(Math.atan((2 * y / x) - Math.tan(a)), Math.toRadians(Constants.HOOD.minAngle), Math.toRadians(Constants.HOOD.maxAngle));
 
         double flywheelSpeed = Math.sqrt(g * Math.pow(x, 2) / (2 * Math.pow(Math.cos(hoodAngle), 2) * (x * Math.tan(hoodAngle) - y)));
 
@@ -35,10 +32,9 @@ public class TheoreticalShooterCalculator {
         double perpendicularComponent = Math.sin(coordinateTheta) * robotVel.getMagnitude();
 
         if (flywheelSpeed < 0.1) flywheelSpeed = 0.1;
-        if (x < 0.1) x = 0.1;
 
         double vz = flywheelSpeed * Math.sin(hoodAngle);
-        double time = x / (flywheelSpeed * Math.sin(hoodAngle));
+        double time = x / (flywheelSpeed * Math.cos(hoodAngle));
         double ivr = x / time + parallelComponent;
         double nvr = Math.sqrt(Math.pow(ivr, 2) + Math.pow(perpendicularComponent, 2));
         double ndr = nvr * time;
@@ -48,7 +44,7 @@ public class TheoreticalShooterCalculator {
 
         flywheelSpeed = Math.sqrt(g * Math.pow(ndr, 2) / (2 * Math.pow(Math.cos(hoodAngle), 2) * (ndr * Math.tan(hoodAngle) - y)));
 
-        double turretVelComOffset = Math.atan(perpendicularComponent / ivr);
+        double turretVelComOffset = Math.atan2(ivr, perpendicularComponent);
         double turretAngle = Math.toDegrees(follower.getHeading() - robotToGoalVector.getTheta() + turretVelComOffset);
 
         return new ShooterState(flywheelSpeed, Math.toDegrees(hoodAngle), turretAngle);

@@ -18,7 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 public class DriveConstants {
     public static FollowerConstants followerConstants = new FollowerConstants()
             //Setup
-            .mass(14.0)
+            .mass(12.6)
             //Predictive Braking
             .predictiveBrakingCoefficients(new PredictiveBrakingCoefficients(0.05, 0.1092, 0.0015))
             //Heading
