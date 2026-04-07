@@ -6,9 +6,11 @@ import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.telemetry.SelectableOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.opmodes.auto.BlueAuto.BlueFar;
+import org.firstinspires.ftc.teamcode.opmodes.auto.BlueAuto.BlueFarHuman;
+import org.firstinspires.ftc.teamcode.opmodes.auto.BlueAuto.BlueFarPath3Human;
 import org.firstinspires.ftc.teamcode.opmodes.auto.BlueAuto.BlueGoal;
-import org.firstinspires.ftc.teamcode.opmodes.auto.RedAuto.RedFar;
+import org.firstinspires.ftc.teamcode.opmodes.auto.RedAuto.RedFarHuman;
+import org.firstinspires.ftc.teamcode.opmodes.auto.RedAuto.RedFarPath3Human;
 import org.firstinspires.ftc.teamcode.opmodes.auto.RedAuto.RedGoal;
 
 import java.util.List;
@@ -22,11 +24,13 @@ public class AutoPrompter extends SelectableOpMode {
     public AutoPrompter() {
         super("Select autonomous configuration", s -> {
             s.folder("RED", l -> {
-                l.add("Far", RedFar::new);
+                l.add("FarHuman", RedFarHuman::new);
+                l.add("FarPath3Human", RedFarPath3Human::new);
                 l.add("Goal", RedGoal::new);
             });
             s.folder("BLUE", a -> {
-                a.add("Far", BlueFar::new);
+                a.add("FarHuman", BlueFarHuman::new);
+                a.add("FarPath3Human", BlueFarPath3Human::new);
                 a.add("Goal", BlueGoal::new);
             });
         });

@@ -136,6 +136,7 @@ public class Robot {
         }
 
         intakeRoller.update();
+        intakeRoller.setState(IntakeRoller.INTAKE_STATE.INTAKE);
 
         if (isShooting) {
             outtakeDoor.block(false);
