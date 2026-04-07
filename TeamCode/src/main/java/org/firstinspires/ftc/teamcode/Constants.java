@@ -37,7 +37,7 @@ public class Constants {
 
     @Configurable
     public static class TURRET {
-        public static double p = 0.008;
+        public static double p = 0.005; // 0.008 if using degree
         public static double i = 0;
         public static double d = 0;
         public static double f = 0.16;

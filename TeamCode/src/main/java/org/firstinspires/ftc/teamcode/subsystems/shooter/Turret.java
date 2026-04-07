@@ -1,10 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems.shooter;
 
-import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.util.MathUtils;
 
@@ -46,8 +43,11 @@ public class Turret {
                 .build();
     }
 
-    public double getDegree(double pos) {
-        return pos * (360.0 / 575);
+    public double getDegreeFromTick(int tick) {
+        return tick * (360.0 / 575.0);
+    }
+    public long getTickFromDegree(double degree) {
+        return Math.round(degree * (575.0 / 360.0));
     }
 
     public void setTarget(double target) {
@@ -55,16 +55,20 @@ public class Turret {
         // to turret (0 -> -360 range, counterclockwise)
         if (target >= 0) target = -target;
         else target = -360 - target;
-        controlSystem.setGoal(new KineticState(MathUtils.clamp(target, Constants.TURRET.minAngle, Constants.TURRET.maxAngle)));
+
+        // convert to tick it's more accurate
+        controlSystem.setGoal(new KineticState(MathUtils.clamp(getTickFromDegree(target),
+                                                                getTickFromDegree(Constants.TURRET.minAngle),
+                                                                getTickFromDegree(Constants.TURRET.maxAngle))));
     }
 
     public void update() {
-        if (getDegree(getCurrentPosition()) > Constants.TURRET.maxAngle) {
+        if (getCurrentPosition() > getTickFromDegree(Constants.TURRET.maxAngle)) {
             setPower(-.7);
-        } else if (getDegree(getCurrentPosition()) < Constants.TURRET.minAngle) {
+        } else if (getCurrentPosition() < getTickFromDegree(Constants.TURRET.minAngle)) {
             setPower(.7);
         } else {
-            power = controlSystem.calculate(new KineticState(getDegree(getCurrentPosition()))) + Math.signum(getTarget() - getDegree(getCurrentPosition())) * Constants.TURRET.f;
+            power = controlSystem.calculate(new KineticState(getDegreeFromTick(getCurrentPosition()))) + Math.signum(getTarget() - getCurrentPosition()) * Constants.TURRET.f;
             if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
                 setPower(power);
             } else {
@@ -77,7 +81,7 @@ public class Turret {
         turret.setPower(power * Robot.getVolFeedforward());
     }
 
-    public double getCurrentPosition() {
+    public int getCurrentPosition() {
         return turretEncoder.getCurrentPosition();
     }
 

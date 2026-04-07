@@ -137,6 +137,16 @@ public class Robot {
 
         intakeRoller.update();
 
+        if (isShooting) {
+            outtakeDoor.block(false);
+            if (robotZone.isInside(GlobalPose.ZONES.closeLaunchZone) || currentGamepad1.dpad_up ) {
+                intakeRoller.setState(IntakeRoller.INTAKE_STATE.GOAL_SHOOTING);
+            } else intakeRoller.setState(IntakeRoller.INTAKE_STATE.FAR_SHOOTING);
+        } else {
+            intakeRoller.setState(IntakeRoller.INTAKE_STATE.INTAKE);
+            outtakeDoor.block(true);
+        }
+
         if (!isShooting) setShooterTarget(vel, angle, heading);
         else setShooterTarget(vel + Constants.SHOOTER.shootingIncrement, angle, heading);
 
@@ -173,7 +183,7 @@ public class Robot {
             telemetryM.debug("hood target angle:" + hood.getTargetAngle());
 
             //turret
-            telemetryM.debug("turret angle: " + turret.getDegree(turret.getCurrentPosition()));
+            telemetryM.debug("turret angle: " + turret.getDegreeFromTick(turret.getCurrentPosition()));
             telemetryM.debug("turret target: " + turret.getTarget());
             telemetryM.debug("turret power: " + turret.getPower());
             telemetryM.debug("turret is in tolerance: " + turret.controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance)));
@@ -243,16 +253,6 @@ public class Robot {
         if (currentGamepad1.left_stick_button) {
              boolean success = relocalize();
              if (!success) currentGamepad1.rumble(300);
-        }
-
-        if (isShooting) {
-            outtakeDoor.block(false);
-            if (robotZone.isInside(GlobalPose.ZONES.closeLaunchZone) || currentGamepad1.dpad_up ) {
-                intakeRoller.setState(IntakeRoller.INTAKE_STATE.GOAL_SHOOTING);
-            } else intakeRoller.setState(IntakeRoller.INTAKE_STATE.FAR_SHOOTING);
-        } else {
-            intakeRoller.setState(IntakeRoller.INTAKE_STATE.INTAKE);
-            outtakeDoor.block(true);
         }
     }
 

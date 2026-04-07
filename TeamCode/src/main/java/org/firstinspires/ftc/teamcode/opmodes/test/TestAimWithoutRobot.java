@@ -51,8 +51,10 @@ public class TestAimWithoutRobot extends OpMode {
         telemetryM.addLine("");
 
         ShooterState shooterState;
+
         if (gamepad1.left_bumper) mode = MODE.INTERPLUT;
         else if (gamepad1.right_bumper) mode = MODE.THEORETICAL;
+
         if (mode == MODE.INTERPLUT) shooterState = InterpLUTShooterCalculator.calcShoot(follower.getPose());
         else if (mode == MODE.THEORETICAL) shooterState = TheoreticalShooterCalculator.calcShoot(follower);
         else shooterState = new ShooterState(0, 0, 0);
