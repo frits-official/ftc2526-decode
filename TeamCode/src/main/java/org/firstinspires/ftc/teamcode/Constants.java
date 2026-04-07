@@ -30,7 +30,7 @@ public class Constants {
     public static class HOOD {
         public static double maxAngle = 80;
         public static double minAngle = 25;
-        public static double hoodOffset = 25.0;
+        public static double hoodOffset = 30;
         public static double gearRatio = 2;
         public static double servoRange = 300;
     }

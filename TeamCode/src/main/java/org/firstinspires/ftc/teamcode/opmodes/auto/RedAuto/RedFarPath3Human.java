@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto.RedAuto;
 
+import com.bylazar.telemetry.TelemetryManager;
+import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.skeletonarmy.marrow.TimerEx;
@@ -10,133 +13,122 @@ import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.misc.GlobalPose;
 
 @Autonomous
-public class RedFar extends OpMode {
+public class RedFarPath3Human extends OpMode {
     Robot robot = new Robot();
-    private int pathState;
     TimerEx timer = new TimerEx(2);
+    int reTakeTurn;
+    int loopTime = 4;
+    TelemetryManager telemetryM;
 
     public void autonomousPathUpdate() {
-        switch (pathState) {
+        switch (Robot.pathState) {
             //Start
             case 0:
                 robot.follower.followPath(robot.follower.pathBuilder()
-                        .addPath(new BezierLine(GlobalPose.RED.RedFarZonePose.startPose, GlobalPose.RED.RedFarZonePose.scorePose))
-                        .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(69))
-                        .build(), true);
-                setPathState(1);
+                        .addPath(new BezierLine(GlobalPose.RED.BASIC_POSE_FAR.startPose,
+                                GlobalPose.RED.BASIC_POSE_FAR.scorePose))
+                        .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
+                        .build());
+                Robot.setPathState(1);
                 break;
             case 1:
                 if (!robot.follower.isBusy()) {
                     robot.shoot();
-                    setPathState(2);
+                    Robot.setPathState(2);
                 }
                 break;
 
-            //Path1
+            //Stage 1 (Path 3)
             case 2:
                 if (!robot.isShooting) {
                     robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup3_1))
-                            .setLinearHeadingInterpolation(Math.toRadians(69), Math.toRadians(0))
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup3_2))
+                            .addPath(new BezierCurve(robot.follower.getPose(),
+                                    new Pose(90.06, 39.05),
+                                    GlobalPose.RED.PICKUP_POSE.pickup3))
                             .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                             .build(), true);
-                    setPathState(3);
+                    Robot.setPathState(3);
                 }
                 break;
             case 3:
                 if (!robot.follower.isBusy()) {
                     robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.RedFarZonePose.scorePose))
-                            .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(69))
+                            .addPath(new BezierLine(robot.follower.getPose(),
+                                    GlobalPose.RED.BASIC_POSE_FAR.scorePose))
+                            .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                             .build(), true);
-                    setPathState(4);
+                    Robot.setPathState(4);
                 }
                 break;
             case 4:
                 if (!robot.follower.isBusy()) {
                     robot.shoot();
-                    setPathState(5);
-                    }
+                    Robot.setPathState(5);
+                }
                 break;
 
-            //Path2
+            //Stage 2 (Human)
             case 5:
                 if (!robot.isShooting) {
                     robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup2_1))
-                            .setLinearHeadingInterpolation(Math.toRadians(69), Math.toRadians(0))
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup2_2))
+                            .addPath(new BezierLine(robot.follower.getPose(),
+                                    GlobalPose.RED.PICKUP_POSE.pickupHuman))
                             .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.RedFarZonePose.pushLever))
-                            .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(270))
                             .build(), true);
-                    setPathState(6);
+                    Robot.setPathState(6);
                 }
                 break;
             case 6:
                 if (!robot.follower.isBusy()) {
                     robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.RedFarZonePose.scorePose))
-                            .setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(69))
+                            .addPath(new BezierLine(robot.follower.getPose(),
+                                    GlobalPose.RED.BASIC_POSE_FAR.scorePose))
+                            .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                             .build(), true);
-                    setPathState(7);
+                    Robot.setPathState(7);
                 }
                 break;
             case 7:
                 if (!robot.follower.isBusy()) {
                     robot.shoot();
-                    setPathState(8);
-                }
-                break;
+                    reTakeTurn += 1;
 
-            //Path3
-            case 8:
-                if (!robot.isShooting) {
-                    robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup1_1))
-                            .setLinearHeadingInterpolation(Math.toRadians(69), Math.toRadians(0))
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.PICKUP_POSE_RED.pickup1_2))
-                            .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
-                            .build(), true);
-                    setPathState(9);
-                }
-                break;
-            case 9:
-                if (!robot.follower.isBusy()) {
-                    robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(), GlobalPose.RED.scorePoseEnd))
-                            .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(45))
-                            .build(), true);
-                    setPathState(10);
-                }
-                break;
-            case 10:
-                if (!robot.follower.isBusy()) {
-                    robot.shoot();
-                    setPathState(11);
+                    if (reTakeTurn < loopTime) {
+                        Robot.setPathState(5);
+                    } else {
+                        Robot.setPathState(8);
+                    }
                 }
                 break;
 
             //End
-            case 11:
-                if (!robot.follower.isBusy()) {
-                    setPathState(-1);
+            case 8:
+                if (!robot.isShooting) {
+                    robot.follower.followPath(robot.follower.pathBuilder()
+                            .addPath(new BezierLine(robot.follower.getPose(),
+                                    GlobalPose.RED.BASIC_POSE_FAR.endPose))
+                            .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
+                            .build(), true);
+                    Robot.setPathState(9);
                 }
+                break;
+            case 9:
+                if (!robot.follower.isBusy()) {
+                    Robot.setPathState(-1);
+                }
+                break;
         }
     }
 
-    public void setPathState(int pState) {
-        pathState = pState;
-    }
 
     @Override
     public void init() {
         robot.init(this, Constants.ALLIANCE.RED);
-        robot.setPose(GlobalPose.RED.RedFarZonePose.startPose);
+        robot.setPose(GlobalPose.RED.BASIC_POSE_FAR.startPose);
         robot.aimShoot(false, false);
 
-        setPathState(0);
+        Robot.setPathState(0);
+        reTakeTurn = 0;
 
         robot.turret.resetEncoder();
     }
@@ -144,6 +136,9 @@ public class RedFar extends OpMode {
     @Override
     public void init_loop() {
         robot.init_loop();
+        telemetryM.debug("This program will run automatically at RED FAR ZONE, " +
+                "pick up artifact at PATH 3 and HUMAN ZONE");
+        telemetryM.update(telemetry);
     }
 
     @Override

@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.misc.GlobalPose;
 @TeleOp(group = "A-teleop")
 public class AimBlueTeleOpControl extends OpMode {
     Robot robot = new Robot();
-    boolean isRobotCentric = true;
+    boolean isRobotCentric = false;
 
     @Override
     public void init() {
