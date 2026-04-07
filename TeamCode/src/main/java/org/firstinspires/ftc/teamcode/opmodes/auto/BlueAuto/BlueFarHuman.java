@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto.BlueAuto;
 
+import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.geometry.BezierLine;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -99,6 +100,7 @@ public class BlueFarHuman extends OpMode {
         Robot.setPathState(0);
 
         robot.turret.resetEncoder();
+        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
     }
 
     @Override

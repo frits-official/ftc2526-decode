@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto.RedAuto;
 
+import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
@@ -131,6 +132,7 @@ public class RedFarPath3Human extends OpMode {
         reTakeTurn = 0;
 
         robot.turret.resetEncoder();
+        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
     }
 
     @Override

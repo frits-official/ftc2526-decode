@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto.RedAuto;
 
+import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.geometry.BezierLine;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -100,6 +101,7 @@ public class RedFarHuman extends OpMode {
         reTakeTurn = 0;
 
         robot.turret.resetEncoder();
+        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
     }
 
     @Override

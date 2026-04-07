@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto.BlueAuto;
 
+import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
@@ -28,15 +29,15 @@ public class BlueGoal extends OpMode {
                         .build());
                 Robot.setPathState(1);
                 break;
-            //case 1:
-            //if (!robot.follower.isBusy()) {
-            //robot.shoot();
-            //Robot.setPathState(2);
-            //}
-            //break;
+            case 1:
+                if (!robot.follower.isBusy()) {
+                    robot.shoot();
+                    Robot.setPathState(2);
+                }
+                break;
 
             //Stage 1
-            case 1:
+            case 2:
                 if (!robot.isShooting) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierCurve(robot.follower.getPose(),
@@ -58,15 +59,15 @@ public class BlueGoal extends OpMode {
                     Robot.setPathState(4);
                 }
                 break;
-            //case 4:
-            //if (!robot.follower.isBusy()) {
-            //robot.shoot();
-            //Robot.setPathState(5);
-            //}
-            //break;
+            case 4:
+                if (!robot.follower.isBusy()) {
+                    robot.shoot();
+                    Robot.setPathState(5);
+                }
+                break;
 
             //Stage 2 (Retake)
-            case 4:
+            case 5:
                 if (!robot.isShooting) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierCurve(robot.follower.getPose(),
@@ -88,21 +89,21 @@ public class BlueGoal extends OpMode {
                     Robot.setPathState(7);
                 }
                 break;
-            //case 7:
-            //if (!robot.follower.isBusy()) {
-            //robot.shoot();
-            //reTakeTurn += 1;
+            case 7:
+                if (!robot.follower.isBusy()) {
+                    robot.shoot();
+                    reTakeTurn += 1;
 
-            //if (reTakeTurn < loopTime) {
-            //Robot.setPathState(5);
-            //} else {
-            //Robot.setPathState(8);
-            //}
-            //}
-            //break;
+                    if (reTakeTurn < loopTime) {
+                        Robot.setPathState(5);
+                    } else {
+                        Robot.setPathState(8);
+                    }
+                }
+                break;
 
             //Stage 3
-            case 7:
+            case 8:
                 if (!robot.isShooting) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierCurve(robot.follower.getPose(),
@@ -124,14 +125,15 @@ public class BlueGoal extends OpMode {
                     Robot.setPathState(10);
                 }
                 break;
-            //case 10:
-            //if (!robot.follower.isBusy()) {
-            //robot.shoot();
-            //Robot.setPathState(11);
-            //}
-            //break;
-            //End
             case 10:
+                if (!robot.follower.isBusy()) {
+                    robot.shoot();
+                    Robot.setPathState(11);
+                }
+                break;
+
+            //End
+            case 11:
                 if (!robot.isShooting) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
@@ -162,6 +164,7 @@ public class BlueGoal extends OpMode {
         reTakeTurn = 0;
 
         robot.turret.resetEncoder();
+        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
     }
 
     @Override
@@ -175,7 +178,7 @@ public class BlueGoal extends OpMode {
     @Override
     public void loop() {
         robot.update();
-        robot.aimShoot(false, false);
+        robot.aimShoot(true, true);
         autonomousPathUpdate();
 
         robot.updateTelemetry(true, true, true, true, true);
