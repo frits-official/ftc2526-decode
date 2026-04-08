@@ -10,6 +10,12 @@ import org.firstinspires.ftc.teamcode.misc.ShooterState;
 
 
 public class TheoreticalShooterCalculator {
+
+    /**
+     * use theoretical shooting formula. return in cm/s, deg, deg
+     * @param follower
+     * @return shooterState in cm/s, deg, deg
+     */
     public static ShooterState calcShoot(Follower follower) {
         Pose currentPose = follower.getPose();
         Vector robotToGoalVector = ShootingMath.getStaticGoalVector(currentPose);
@@ -45,7 +51,9 @@ public class TheoreticalShooterCalculator {
         flywheelSpeed = Math.sqrt(g * Math.pow(ndr, 2) / (2 * Math.pow(Math.cos(hoodAngle), 2) * (ndr * Math.tan(hoodAngle) - y)));
 
         double turretVelComOffset = Math.atan2(ivr, perpendicularComponent);
-        double turretAngle = Math.toDegrees(follower.getHeading() - robotToGoalVector.getTheta() + turretVelComOffset);
+        double turretAngle = Math.toDegrees(robotToGoalVector.getTheta() - follower.getHeading() + turretVelComOffset);
+
+        turretAngle = Math.IEEEremainder(turretAngle, 360);
 
         return new ShooterState(flywheelSpeed, Math.toDegrees(hoodAngle), turretAngle);
     }

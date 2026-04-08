@@ -14,7 +14,7 @@ public class InterpLUTShooterCalculator {
         double distance = ShootingMath.getStaticGoalVector(pose).getMagnitude();
         return new ShooterState(Robot.velocityLUT.get(distance),
                                 Robot.angleLUT.get(distance),
-                                getTurretHeadingFromOdometry(pose, ShootingMath.getStaticGoalVector(pose)));
+                                ShootingMath.getTurretHeadingFromOdometry(pose, ShootingMath.getStaticGoalVector(pose)));
     }
 
     // this for shooting on the move
@@ -31,16 +31,7 @@ public class InterpLUTShooterCalculator {
         double distance = newGoal.getMagnitude();
         return new ShooterState(Robot.velocityLUT.get(distance),
                 Robot.angleLUT.get(distance),
-                getTurretHeadingFromOdometry(follower.getPose(), newGoal));
+                ShootingMath.getTurretHeadingFromOdometry(follower.getPose(), newGoal));
     }
 
-    /** this will return degree with -180deg -> 180deg will run in counterclockwise
-     * use this for nearly accurate turning, we will use limelight for more accuracy **/
-    public static double getTurretHeadingFromOdometry(Pose pose, Vector goal) {
-        Vector bot = new Vector(1, pose.getHeading());
-        Vector perpBot = new Vector(1, pose.getHeading() + Math.PI / 2);
-
-        double angle = goal.getTheta() - bot.getTheta();
-        return Math.toDegrees(Math.IEEEremainder(angle, 2 * Math.PI));
-    }
 }

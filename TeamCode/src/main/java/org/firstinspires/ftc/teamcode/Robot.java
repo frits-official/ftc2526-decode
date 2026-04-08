@@ -213,7 +213,7 @@ public class Robot {
             telemetryM.debug("drive Heading:" + follower.getPose().getHeading());
             telemetryM.debug("drive is field centric:" + isFieldCentric);
 
-            telemetryM.debug(" pure turret target: ", InterpLUTShooterCalculator.getTurretHeadingFromOdometry(follower.getPose(), ShootingMath.getStaticGoalVector(follower.getPose())));
+            telemetryM.debug(" pure turret target: ", ShootingMath.getTurretHeadingFromOdometry(follower.getPose(), ShootingMath.getStaticGoalVector(follower.getPose())));
             telemetryM.debug("distance from tag odo: ", ShootingMath.getStaticGoalVector(follower.getPose()).getMagnitude());
             telemetryM.addLine("");
         }
