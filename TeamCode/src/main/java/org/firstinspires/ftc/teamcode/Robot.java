@@ -261,6 +261,9 @@ public class Robot {
     public void shoot() {
         isShooting = true;
     }
+    public void stopShoot() {
+        isShooting = false;
+    }
 
     public boolean relocalize() {
         double velocity = follower.getVelocity().getMagnitude();

@@ -7,6 +7,7 @@ import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
@@ -18,6 +19,7 @@ public class BlueGoal extends OpMode {
     int reTakeTurn;
     int loopTime = 2;
     TelemetryManager telemetryM;
+    ElapsedTime time = new ElapsedTime();
     public void autonomousPathUpdate() {
         switch (Robot.pathState) {
             //Start
@@ -32,13 +34,15 @@ public class BlueGoal extends OpMode {
             case 1:
                 if (!robot.follower.isBusy()) {
                     robot.shoot();
+                    time.reset();
                     Robot.setPathState(2);
                 }
                 break;
 
             //Stage 1
             case 2:
-                if (!robot.isShooting) {
+                if (!(time.seconds() < 1.5)) {
+                    robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierCurve(robot.follower.getPose(),
                                     new Pose(59.12, 56.66),
@@ -62,13 +66,15 @@ public class BlueGoal extends OpMode {
             case 4:
                 if (!robot.follower.isBusy()) {
                     robot.shoot();
+                    time.reset();
                     Robot.setPathState(5);
                 }
                 break;
 
             //Stage 2 (Retake)
             case 5:
-                if (!robot.isShooting) {
+                if (!(time.seconds() < 1.5)) {
+                    robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierCurve(robot.follower.getPose(),
                                     new Pose(39.11, 62.67),
@@ -92,10 +98,11 @@ public class BlueGoal extends OpMode {
             case 7:
                 if (!robot.follower.isBusy()) {
                     robot.shoot();
-                    reTakeTurn += 1;
+                    time.reset();
 
                     if (reTakeTurn < loopTime) {
                         Robot.setPathState(5);
+                        reTakeTurn += 1;
                     } else {
                         Robot.setPathState(8);
                     }
@@ -104,7 +111,8 @@ public class BlueGoal extends OpMode {
 
             //Stage 3
             case 8:
-                if (!robot.isShooting) {
+                if (!(time.seconds() < 1.5)) {
+                    robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierCurve(robot.follower.getPose(),
                                     new Pose(48.41, 82.2),
@@ -128,13 +136,15 @@ public class BlueGoal extends OpMode {
             case 10:
                 if (!robot.follower.isBusy()) {
                     robot.shoot();
+                    time.reset();
                     Robot.setPathState(11);
                 }
                 break;
 
             //End
             case 11:
-                if (!robot.isShooting) {
+                if (!(time.seconds() < 1.5)) {
+                    robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.BLUE.BASIC_POSE_NEAR.endPose))

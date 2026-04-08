@@ -20,7 +20,7 @@ public class Turret {
     public void init(HardwareMap hardwareMap) {
         PIDCoefficients coefficients = new PIDCoefficients(Constants.TURRET.p, Constants.TURRET.i, Constants.TURRET.d);
         controlSystem = ControlSystem.builder()
-                .posPid(coefficients)
+                .posSquID(coefficients)
                 .build();
 
         turret = hardwareMap.get(DcMotorEx.class, "turning");
@@ -57,20 +57,20 @@ public class Turret {
         else target = -360 - target;
 
         // convert to tick it's more accurate
-        controlSystem.setGoal(new KineticState(MathUtils.clamp(getTickFromDegree(target),
-                                                                getTickFromDegree(Constants.TURRET.minAngle),
-                                                                getTickFromDegree(Constants.TURRET.maxAngle))));
+        controlSystem.setGoal(new KineticState(MathUtils.clamp(target,
+                                                                Constants.TURRET.minAngle,
+                                                                Constants.TURRET.maxAngle)));
     }
 
     public void update() {
-        if (getCurrentPosition() > getTickFromDegree(Constants.TURRET.maxAngle)) {
+        if (getDegreeFromTick(getCurrentPosition()) > Constants.TURRET.maxAngle) {
             setPower(-.7);
-        } else if (getCurrentPosition() < getTickFromDegree(Constants.TURRET.minAngle)) {
+        } else if (getDegreeFromTick(getCurrentPosition()) < Constants.TURRET.minAngle) {
             setPower(.7);
         } else {
-            power = controlSystem.calculate(new KineticState(getDegreeFromTick(getCurrentPosition()))) + Math.signum(getTarget() - getCurrentPosition()) * Constants.TURRET.f;
+            power = controlSystem.calculate(new KineticState(getDegreeFromTick(getCurrentPosition())));
             if (!controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance))) {
-                setPower(power);
+                setPower(power + Math.signum(power) * Constants.TURRET.f);
             } else {
                 setPower(0);
             }
