@@ -99,6 +99,8 @@ public class Robot {
 
         velocityLUT.createLUT();
         angleLUT.createLUT();
+
+        intakeRoller.setState(IntakeRoller.INTAKE_STATE.STOP);
     }
 
     public void init_loop() {
@@ -136,7 +138,6 @@ public class Robot {
         }
 
         intakeRoller.update();
-        intakeRoller.setState(IntakeRoller.INTAKE_STATE.INTAKE);
 
         if (isShooting) {
             outtakeDoor.block(false);
