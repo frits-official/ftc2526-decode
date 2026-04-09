@@ -7,6 +7,7 @@ import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.skeletonarmy.marrow.TimerEx;
 
 import org.firstinspires.ftc.teamcode.Constants;
@@ -20,6 +21,7 @@ public class BlueFarPath3Human extends OpMode {
     int reTakeTurn;
     int loopTime = 4;
     TelemetryManager telemetryM;
+    ElapsedTime time = new ElapsedTime();
     public void autonomousPathUpdate() {
         switch (Robot.pathState) {
             //Start
@@ -32,9 +34,14 @@ public class BlueFarPath3Human extends OpMode {
                Robot.setPathState(1);
                break;
             case 1:
+                time.reset();
                 if (!robot.follower.isBusy()) {
-                    robot.shoot();
-                    Robot.setPathState(2);
+                    if (time.seconds() < 1.5) {
+                        robot.shoot();
+                    } else {
+                        robot.stopShoot();
+                        Robot.setPathState(2);
+                    }
                 }
                 break;
 
@@ -61,10 +68,17 @@ public class BlueFarPath3Human extends OpMode {
                 }
                 break;
             case 4:
+                time.reset();
                 if (!robot.follower.isBusy()) {
-                    robot.shoot();
-                    Robot.setPathState(5);
+                    if (time.seconds() < 1.5) {
+                        robot.shoot();
+                    } else {
+                        robot.stopShoot();
+                        Robot.setPathState(5);
+                    }
                 }
+                break;
+
 
             //Stage 2 (Human)
             case 5:
@@ -88,14 +102,18 @@ public class BlueFarPath3Human extends OpMode {
                 }
                 break;
             case 7:
+                time.reset();
                 if (!robot.follower.isBusy()) {
-                    robot.shoot();
-                    reTakeTurn += 1;
-
-                    if (reTakeTurn < loopTime) {
-                        Robot.setPathState(5);
+                    if (time.seconds() < 1.5) {
+                        robot.shoot();
                     } else {
-                        Robot.setPathState(8);
+                        robot.stopShoot();
+                        if (reTakeTurn < loopTime) {
+                            reTakeTurn += 1;
+                            Robot.setPathState(5);
+                        } else {
+                            Robot.setPathState(8);
+                        }
                     }
                 }
                 break;
@@ -128,6 +146,7 @@ public class BlueFarPath3Human extends OpMode {
 
         Robot.setPathState(0);
         reTakeTurn = 0;
+        time.reset();
 
         robot.turret.resetEncoder();
         telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();

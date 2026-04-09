@@ -4,6 +4,7 @@ import com.pedropathing.geometry.Pose;
 import com.skeletonarmy.marrow.zones.Point;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
+
 public class GlobalPose {
     public static Pose lastPose = new Pose(72, 72, Math.toRadians(0));
     public static class ZONES {
@@ -14,10 +15,12 @@ public class GlobalPose {
     }
 
     public static class BLUE {
-        public static final Pose pushLever = new Pose(13.73, 61, Math.toRadians(130));
+        public static final Pose pushLever = new Pose(11.05, 60.09, Math.toRadians(131));
+        public static final Pose reTake = new Pose(12.4, 58.3, Math.toRadians(131));
         public static class BASIC_POSE_NEAR {
-            public static final Pose startPose = new Pose(18.57, 114.17, Math.toRadians(180));
-            public static final Pose scorePose = new Pose(48.08, 95.56, Math.toRadians(180));
+            public static final Pose startPose = new Pose(17.44, 121.01, Math.toRadians(322));
+            public static final Pose scorePose1 = new Pose(48.08, 95.56, Math.toRadians(180));
+            public static final Pose scorePose2 = new Pose(58.33, 84.09, Math.toRadians(180));
             public static final Pose endPose = new Pose(38.05, 83.11, Math.toRadians(180));
 
         }
@@ -29,7 +32,7 @@ public class GlobalPose {
         }
 
         public static class PICKUP_POSE {
-            public static final Pose pickup1 = new Pose(25.05, 83.2, Math.toRadians(180));
+            public static final Pose pickup1 = new Pose(16.87, 83.93, Math.toRadians(180));
             public static final Pose pickup2 = new Pose(20.06, 59.73, Math.toRadians(180));
             public static final Pose pickup3 = new Pose(16.79, 35.88, Math.toRadians(180));
             public static final Pose pickupHuman = new Pose(11.97, 7.32, Math.toRadians(180));
@@ -37,10 +40,12 @@ public class GlobalPose {
     }
 
     public static class RED {
-        public static final Pose pushLever = new Pose(129.62, 59.75, Math.toRadians(40));
+        public static final Pose pushLever = new Pose(132.95, 60.09, Math.toRadians(41));
+        public static final Pose reTake = new Pose(131.6, 58.3, Math.toRadians(41));
         public static class BASIC_POSE_NEAR {
-            public static final Pose startPose = new Pose(127.03, 111.97);
-            public static final Pose scorePose = new Pose(95.92, 95.56);
+            public static final Pose startPose = new Pose(127.07, 119.48, Math.toRadians(217));
+            public static final Pose scorePose1 = new Pose(95.92, 95.56);
+            public static final Pose scorePose2 = new Pose(85.67, 84.09);
             public static final Pose endPose = new Pose(105.95, 83.11);
         }
 
