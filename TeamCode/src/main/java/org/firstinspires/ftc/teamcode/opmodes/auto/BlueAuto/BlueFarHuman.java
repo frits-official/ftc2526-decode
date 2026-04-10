@@ -31,22 +31,20 @@ public class BlueFarHuman extends OpMode {
                         .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                         .build());
                 Robot.setPathState(1);
+                time.reset();
                 break;
             case 1:
-                time.reset();
-                if (!robot.follower.isBusy()) {
-                    if (time.seconds() < 1.5) {
-                        robot.shoot();
-                    } else {
-                        robot.stopShoot();
-                        Robot.setPathState(2);
-                    }
+                if ((!robot.follower.isBusy() && (time.seconds() < 1.5))) {
+                    time.reset();
+                    robot.shoot();
+                    Robot.setPathState(2);
                 }
                 break;
 
             //Score
             case 2:
-                if (!robot.isShooting) {
+                if (!(time.seconds() < 1.5)) {
+                    robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.BLUE.PICKUP_POSE.pickupHuman))
@@ -66,25 +64,22 @@ public class BlueFarHuman extends OpMode {
                 }
                 break;
             case 4:
-                time.reset();
                 if (!robot.follower.isBusy()) {
-                   if (time.seconds() < 1.5) {
-                       robot.shoot();
-                   } else {
-                       robot.stopShoot();
-                       if (reTakeTurn < loopTime) {
-                           reTakeTurn += 1;
-                           Robot.setPathState(2);
-                       } else {
-                           Robot.setPathState(5);
-                       }
-                   }
+                  time.reset();
+                  robot.shoot();
+                    if (reTakeTurn < loopTime) {
+                        reTakeTurn += 1;
+                        Robot.setPathState(2);
+                    } else {
+                        Robot.setPathState(5);
+                    }
                 }
                 break;
 
             //End
             case 5:
-                if (!robot.isShooting) {
+                if (!(time.seconds() < 1.5)) {
+                    robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.BLUE.BASIC_POSE_FAR.endPose))

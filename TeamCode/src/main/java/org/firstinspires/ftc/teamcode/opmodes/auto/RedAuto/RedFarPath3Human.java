@@ -33,22 +33,20 @@ public class RedFarPath3Human extends OpMode {
                         .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                         .build());
                 Robot.setPathState(1);
+                time.reset();
                 break;
             case 1:
-                time.reset();
-                if (!robot.follower.isBusy()) {
-                    if (time.seconds() < 1.5) {
-                        robot.shoot();
-                    } else {
-                        robot.stopShoot();
-                        Robot.setPathState(2);
-                    }
+                if ((!robot.follower.isBusy()) && (time.seconds() < 1.5)) {
+                    time.reset();
+                    robot.shoot();
+                    Robot.setPathState(2);
                 }
                 break;
 
             //Stage 1
             case 2:
-                if (!robot.isShooting) {
+                if (!(time.seconds() < 1.5)) {
+                    robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierCurve(robot.follower.getPose(),
                                     new Pose(90.06, 39.05),
@@ -69,21 +67,18 @@ public class RedFarPath3Human extends OpMode {
                 }
                 break;
             case 4:
-                time.reset();
                 if (!robot.follower.isBusy()) {
-                    if (time.seconds() < 1.5) {
-                        robot.shoot();
-                    } else {
-                        robot.stopShoot();
-                        Robot.setPathState(5);
-                    }
+                    time.reset();
+                    robot.shoot();
+                    Robot.setPathState(5);
                 }
                 break;
 
 
             //Stage 2 (Human)
             case 5:
-                if (!robot.isShooting) {
+                if (!(time.seconds() < 1.5)) {
+                    robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.RED.PICKUP_POSE.pickupHuman))
@@ -103,25 +98,22 @@ public class RedFarPath3Human extends OpMode {
                 }
                 break;
             case 7:
-                time.reset();
                 if (!robot.follower.isBusy()) {
-                    if (time.seconds() < 1.5) {
-                        robot.shoot();
+                    time.reset();
+                    robot.shoot();
+
+                    if (reTakeTurn < loopTime) {
+                        reTakeTurn += 1;
+                        Robot.setPathState(5);
                     } else {
-                        robot.stopShoot();
-                        if (reTakeTurn < loopTime) {
-                            reTakeTurn += 1;
-                            Robot.setPathState(5);
-                        } else {
-                            Robot.setPathState(8);
-                        }
+                        Robot.setPathState(8);
                     }
                 }
                 break;
 
             //End
             case 8:
-                if (!robot.isShooting) {
+                if (!(time.seconds() < 1.5)) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.RED.BASIC_POSE_FAR.endPose))

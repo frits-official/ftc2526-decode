@@ -30,22 +30,20 @@ public class RedGoal extends OpMode {
                         .setLinearHeadingInterpolation(Math.toRadians(217), Math.toRadians(0))
                         .build());
                 Robot.setPathState(1);
+                time.reset();
                 break;
             case 1:
-                time.reset();
-                if (!robot.follower.isBusy()) {
-                    if (time.seconds() < 1.5) {
-                        robot.shoot();
-                    } else {
-                        robot.stopShoot();
-                        Robot.setPathState(2);
-                    }
+                if ((!robot.follower.isBusy()) && (time.seconds() < 1)) {
+                    time.reset();
+                    robot.shoot();
+                    Robot.setPathState(2);
                 }
                 break;
 
             //Stage 1 (Path 2)
             case 2:
-                if (!robot.isShooting) {
+                if (!(time.seconds() < 1.5)) {
+                    robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierCurve(robot.follower.getPose(),
                                     new Pose(87.32, 59.1),
@@ -66,20 +64,17 @@ public class RedGoal extends OpMode {
                 }
                 break;
             case 4:
-                time.reset();
                 if (!robot.follower.isBusy()) {
-                    if (time.seconds() < 1.5) {
-                        robot.shoot();
-                    } else {
-                        robot.stopShoot();
-                        Robot.setPathState(5);
-                    }
+                    time.reset();
+                    robot.shoot();
+                    Robot.setPathState(5);
                 }
                 break;
 
             //Stage 2 (Retake)
             case 5:
-                if (!robot.isShooting) {
+                if (!(time.seconds() < 1.5)) {
+                    robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierCurve(robot.follower.getPose(),
                                     new Pose(107.45, 67),
@@ -90,21 +85,18 @@ public class RedGoal extends OpMode {
                 }
                 break;
             case 6:
-                time.reset();
                 if (!robot.follower.isBusy()) {
-                    if (time.milliseconds() < 500) {
-                        robot.follower.followPath(robot.follower.pathBuilder()
-                                .addPath(new BezierLine(robot.follower.getPose(),
-                                        GlobalPose.RED.reTake))
-                                .setLinearHeadingInterpolation(Math.toRadians(41), Math.toRadians(41))
-                                .build(), true);
-                    } else {
-                        Robot.setPathState(7);
-                    }
+                    robot.follower.followPath(robot.follower.pathBuilder()
+                            .addPath(new BezierLine(robot.follower.getPose(),
+                                    GlobalPose.RED.reTake))
+                            .setLinearHeadingInterpolation(Math.toRadians(41), Math.toRadians(41))
+                            .build(), true);
+                    Robot.setPathState(7);
+                    time.reset();
                 }
                 break;
             case 7:
-                if (!robot.follower.isBusy()) {
+                if ((!robot.follower.isBusy()) && (time.milliseconds() < 500)) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierCurve(robot.follower.getPose(),
                                     new Pose(107.68, 67.57),
@@ -115,25 +107,23 @@ public class RedGoal extends OpMode {
                 }
                 break;
             case 8:
-                time.reset();
                 if (!robot.follower.isBusy()) {
-                    if (time.seconds() < 1.5) {
-                        robot.shoot();
+                  time.reset();
+                  robot.shoot();
+
+                    if (reTakeTurn < loopTime) {
+                        reTakeTurn += 1;
+                        Robot.setPathState(5);
                     } else {
-                        robot.stopShoot();
-                        if (reTakeTurn < loopTime) {
-                            reTakeTurn += 1;
-                            Robot.setPathState(5);
-                        } else {
-                            Robot.setPathState(9);
-                        }
+                        Robot.setPathState(9);
                     }
                 }
                 break;
 
             //Stage 3 (Path 1)
             case 9:
-                if (!robot.isShooting) {
+                if (!(time.seconds() < 1.5)) {
+                    robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.RED.PICKUP_POSE.pickup1))
@@ -153,20 +143,17 @@ public class RedGoal extends OpMode {
                 }
                 break;
             case 11:
-                time.reset();
                 if (!robot.follower.isBusy()) {
-                    if (time.seconds() < 1.5) {
-                        robot.shoot();
-                    } else {
-                        robot.stopShoot();
-                        Robot.setPathState(12);
-                    }
+                    time.reset();
+                    robot.shoot();
+                    Robot.setPathState(12);
                 }
                 break;
 
             //End
             case 12:
-                if (!robot.isShooting) {
+                if (!(time.seconds() < 1.5)) {
+                    robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.RED.BASIC_POSE_NEAR.endPose))
