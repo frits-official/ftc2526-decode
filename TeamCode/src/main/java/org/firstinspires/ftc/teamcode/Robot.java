@@ -44,17 +44,12 @@ public class Robot {
     public static Constants.ALLIANCE alliance;
     TimerEx relocalizeTimer = new TimerEx(60);
     public boolean isShooting = false;
-    public double vel = 0;
-    public double angle = 0;
-    public double heading = 0;
+    public double vel = 0, angle = 0, heading = 0;
     List<LynxModule> allHubs;
     ElapsedTime updateTime = new ElapsedTime();
     private boolean firstRelocalization = true;
-    Gamepad currentGamepad1 = new Gamepad();
-    Gamepad currentGamepad2 = new Gamepad();
-
-    Gamepad previousGamepad1 = new Gamepad();
-    Gamepad previousGamepad2 = new Gamepad();
+    Gamepad currentGamepad1 = new Gamepad(), currentGamepad2 = new Gamepad();
+    Gamepad previousGamepad1 = new Gamepad(), previousGamepad2 = new Gamepad();
     public VoltageSensor batteryVoltage;
     static double currentVoltage = 12.5;
     public static int pathState;

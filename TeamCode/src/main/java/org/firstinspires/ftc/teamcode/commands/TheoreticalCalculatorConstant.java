@@ -10,6 +10,5 @@ public class TheoreticalCalculatorConstant {
     public static double flywheelMinSpeed = 0;
     public static double flywheelMaxSpeed = 2000;
     public static double flywheelOffset = 0;
-    public static double slope = 0;
-    public static double static_friction  = 0;
+    public static double slope = 2.23;
 }

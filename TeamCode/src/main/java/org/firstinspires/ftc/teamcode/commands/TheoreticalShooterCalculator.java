@@ -50,11 +50,11 @@ public class TheoreticalShooterCalculator {
 
         flywheelSpeed = Math.sqrt(g * Math.pow(ndr, 2) / (2 * Math.pow(Math.cos(hoodAngle), 2) * (ndr * Math.tan(hoodAngle) - y)));
 
-        double turretVelComOffset = Math.atan2(ivr, perpendicularComponent);
-        double turretAngle = Math.toDegrees(robotToGoalVector.getTheta() - follower.getHeading() + turretVelComOffset);
+        double turretVelComOffset = Math.atan2(perpendicularComponent, ivr);
+        double turretAngle = robotToGoalVector.getTheta() - follower.getHeading() + turretVelComOffset;
 
-        turretAngle = Math.IEEEremainder(turretAngle, 360);
+        turretAngle = Math.IEEEremainder(turretAngle, 2 * Math.PI);
 
-        return new ShooterState(flywheelSpeed, Math.toDegrees(hoodAngle), turretAngle);
+        return new ShooterState(ShootingMath.getTickFromVel(flywheelSpeed), Math.toDegrees(hoodAngle), Math.toDegrees(turretAngle));
     }
 }

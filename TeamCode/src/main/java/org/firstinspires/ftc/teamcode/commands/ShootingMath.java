@@ -14,7 +14,7 @@ public class ShootingMath {
      */
     public static double getTickFromVel(double velocity){
         // this will use an interpLUT to get the tick value instead of this crap
-        return MathFunctions.clamp(TheoreticalCalculatorConstant.slope * velocity - TheoreticalCalculatorConstant.static_friction + TheoreticalCalculatorConstant.flywheelOffset,
+        return MathFunctions.clamp(TheoreticalCalculatorConstant.slope * velocity + TheoreticalCalculatorConstant.flywheelOffset,
                 TheoreticalCalculatorConstant.flywheelMinSpeed, TheoreticalCalculatorConstant.flywheelMaxSpeed);
     }
 
@@ -46,9 +46,7 @@ public class ShootingMath {
      * @return degree
      **/
     public static double getTurretHeadingFromOdometry(Pose pose, Vector goal) {
-        Vector bot = new Vector(1, pose.getHeading());
-
-        double angle = goal.getTheta() - bot.getTheta();
+        double angle = goal.getTheta() - pose.getHeading();
         return Math.toDegrees(Math.IEEEremainder(angle, 2 * Math.PI));
     }
 }
