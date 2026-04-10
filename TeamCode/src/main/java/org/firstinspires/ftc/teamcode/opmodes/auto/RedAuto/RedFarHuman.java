@@ -5,6 +5,7 @@ import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.geometry.BezierLine;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.skeletonarmy.marrow.TimerEx;
 
 import org.firstinspires.ftc.teamcode.Constants;
@@ -19,6 +20,7 @@ public class RedFarHuman extends OpMode {
     int reTakeTurn;
     int loopTime = 5;
     TelemetryManager telemetryM;
+    ElapsedTime time = new ElapsedTime();
 
     public void autonomousPathUpdate() {
         switch (Robot.pathState) {
@@ -30,9 +32,11 @@ public class RedFarHuman extends OpMode {
                         .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
                         .build());
                 Robot.setPathState(1);
+                time.reset();
                 break;
             case 1:
-                if (!robot.follower.isBusy()) {
+                if ((!robot.follower.isBusy()) && (time.seconds() < 1.5)) {
+                    time.reset();
                     robot.shoot();
                     Robot.setPathState(2);
                 }
@@ -40,7 +44,8 @@ public class RedFarHuman extends OpMode {
 
             //Score
             case 2:
-                if (!robot.isShooting) {
+                if (!(time.seconds() < 1.5)) {
+                    robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.RED.PICKUP_POSE.pickupHuman))
@@ -61,20 +66,21 @@ public class RedFarHuman extends OpMode {
                 break;
             case 4:
                 if (!robot.follower.isBusy()) {
+                    time.reset();
                     robot.shoot();
-                    reTakeTurn += 1;
-
                     if (reTakeTurn < loopTime) {
+                        reTakeTurn += 1;
                         Robot.setPathState(2);
                     } else {
                         Robot.setPathState(5);
-                    }
+                        }
                 }
                 break;
 
             //End
             case 5:
-                if (!robot.isShooting) {
+                if (!(time.seconds() < 1.5)) {
+                    robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.RED.BASIC_POSE_FAR.endPose))
@@ -87,6 +93,7 @@ public class RedFarHuman extends OpMode {
                 if (!robot.follower.isBusy()) {
                     Robot.setPathState(-1);
                 }
+                break;
         }
     }
 
@@ -99,6 +106,7 @@ public class RedFarHuman extends OpMode {
 
         Robot.setPathState(0);
         reTakeTurn = 0;
+        time.reset();
 
         robot.turret.resetEncoder();
         telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();

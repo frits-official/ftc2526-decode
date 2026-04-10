@@ -46,7 +46,7 @@ public class DriveConstants {
             .xVelocity(76.58)
             .yVelocity(61.41);
 
-    public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 0.71, 1);
+    public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 0.85, 1);
     public static Follower createFollower(HardwareMap hardwareMap) {
         return new FollowerBuilder(followerConstants, hardwareMap)
                 .pathConstraints(pathConstraints)

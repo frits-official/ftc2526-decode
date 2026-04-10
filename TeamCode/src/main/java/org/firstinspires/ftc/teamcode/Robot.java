@@ -99,6 +99,7 @@ public class Robot {
     }
 
     public void init_loop() {
+        intakeRoller.setState(IntakeRoller.INTAKE_STATE.STOP);
         aimShoot(false, false);
         update();
     }
