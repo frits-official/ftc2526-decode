@@ -15,12 +15,12 @@ public class GlobalPose {
     }
 
     public static class BLUE {
-        public static final Pose pushLever = new Pose(13.21, 60.69, Math.toRadians(140));
-        public static final Pose reTake = new Pose(9.04, 53.67, Math.toRadians(130));
+        public static final Pose pushLever = new Pose(13.73, 59.9, Math.toRadians(140));
+        public static final Pose reTake = new Pose(10.12, 56.11, Math.toRadians(130));
         public static class BASIC_POSE_NEAR {
             public static final Pose startPose = new Pose(17.44, 121.01, Math.toRadians(322));
             public static final Pose scorePose1 = new Pose(48.08, 95.56, Math.toRadians(180));
-            public static final Pose scorePose2 = new Pose(58.33, 84.09, Math.toRadians(180));
+            public static final Pose scorePose2 = new Pose(58.35, 77.25, Math.toRadians(180));
             public static final Pose endPose = new Pose(38.05, 83.11, Math.toRadians(180));
 
         }
@@ -32,8 +32,8 @@ public class GlobalPose {
         }
 
         public static class PICKUP_POSE {
-            public static final Pose pickup1 = new Pose(16.87, 83.93, Math.toRadians(180));
-            public static final Pose pickup2 = new Pose(15.17, 59.73, Math.toRadians(180));
+            public static final Pose pickup1 = new Pose(21.44, 84.2, Math.toRadians(180));
+            public static final Pose pickup2 = new Pose(14.88, 59.46, Math.toRadians(180));
             public static final Pose pickup3 = new Pose(16.79, 35.88, Math.toRadians(180));
             public static final Pose pickupHuman = new Pose(11.97, 7.32, Math.toRadians(180));
         }
