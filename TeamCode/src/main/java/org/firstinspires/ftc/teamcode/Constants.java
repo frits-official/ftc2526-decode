@@ -37,7 +37,7 @@ public class Constants {
 
     @Configurable
     public static class TURRET {
-        public static double p = 0.003; // 0.005 if using tick
+        public static double p = 0.001; // 0.005 if using tick
         public static double i = 0;
         public static double d = 0;
         public static double f = 0.16;
