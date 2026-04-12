@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 
 public class IntakeRoller {
-    private DcMotorEx intake;
+    public DcMotorEx intake;
     public enum INTAKE_STATE { INTAKE, GOAL_SHOOTING, FAR_SHOOTING, STOP }
     public INTAKE_STATE currentState;
 

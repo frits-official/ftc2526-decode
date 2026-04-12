@@ -5,7 +5,7 @@ import com.bylazar.configurables.annotations.Configurable;
 @Configurable
 public class TheoreticalCalculatorConstant {
     public static double scoreHeight = 31.5 * 2.54;
-    public static double scoreAngle = Math.toRadians(-30);
+    public static double scoreAngle = 20;
     public static double passThroughPoint = 5 * 2.54;
     public static double flywheelMinSpeed = 0;
     public static double flywheelMaxSpeed = 2000;

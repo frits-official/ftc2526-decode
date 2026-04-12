@@ -24,7 +24,7 @@ public class TheoreticalShooterCalculator {
         double x = robotToGoalVector.getMagnitude() - TheoreticalCalculatorConstant.passThroughPoint;
         if (x < 0.1) x = 0.1;
         double y = TheoreticalCalculatorConstant.scoreHeight;
-        double a = TheoreticalCalculatorConstant.scoreAngle;
+        double a = Math.toRadians(-TheoreticalCalculatorConstant.scoreAngle);
 
         double hoodAngle = MathFunctions.clamp(Math.atan((2 * y / x) - Math.tan(a)), Math.toRadians(Constants.HOOD.minAngle), Math.toRadians(Constants.HOOD.maxAngle));
 
@@ -51,10 +51,10 @@ public class TheoreticalShooterCalculator {
         flywheelSpeed = Math.sqrt(g * Math.pow(ndr, 2) / (2 * Math.pow(Math.cos(hoodAngle), 2) * (ndr * Math.tan(hoodAngle) - y)));
 
         double turretVelComOffset = Math.atan2(perpendicularComponent, ivr);
-        double turretAngle = robotToGoalVector.getTheta() - follower.getHeading() + turretVelComOffset;
+        double turretAngle = robotToGoalVector.getTheta() - follower.getHeading() - turretVelComOffset;
 
         turretAngle = Math.IEEEremainder(turretAngle, 2 * Math.PI);
 
-        return new ShooterState(ShootingMath.getTickFromVel(flywheelSpeed), Math.toDegrees(hoodAngle), Math.toDegrees(turretAngle));
+        return new ShooterState(ShootingMath.getTickFromVel(flywheelSpeed), 90 - Math.toDegrees(hoodAngle), Math.toDegrees(turretAngle));
     }
 }

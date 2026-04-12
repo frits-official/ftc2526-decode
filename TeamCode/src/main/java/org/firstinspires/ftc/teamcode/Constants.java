@@ -22,7 +22,7 @@ public class Constants {
         public static double i = 0;
         public static double d = 0;
         public static double v = 0.00039;
-        public static double s = 0.04;
+        public static double s = 0.05;
         public static double shootingIncrement = 0;
     }
 
@@ -57,8 +57,8 @@ public class Constants {
     @Configurable
     public static class INTAKE {
         public static double normal = .7;
-        public static double goalShooting = .95;
-        public static double farShooting = .95;
+        public static double goalShooting = .99;
+        public static double farShooting = .99;
         public static double zoneThreshold = 250;
     }
 

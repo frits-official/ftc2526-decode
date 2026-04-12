@@ -4,6 +4,7 @@ import com.bylazar.configurables.annotations.IgnoreConfigurable;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.telemetry.SelectableOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.opmodes.auto.BlueAuto.BlueFarHuman;
@@ -15,7 +16,7 @@ import org.firstinspires.ftc.teamcode.opmodes.auto.RedAuto.RedGoal;
 
 import java.util.List;
 
-@TeleOp(group = "auto")
+@Autonomous(group = "auto")
 public class AutoPrompter extends SelectableOpMode {
 
     @IgnoreConfigurable

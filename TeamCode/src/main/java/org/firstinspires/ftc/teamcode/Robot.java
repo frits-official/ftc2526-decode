@@ -14,6 +14,7 @@ import com.seattlesolvers.solverslib.util.InterpLUT;
 import com.skeletonarmy.marrow.TimerEx;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.commands.InterpLUTShooterCalculator;
 import org.firstinspires.ftc.teamcode.commands.ShootingMath;
 import org.firstinspires.ftc.teamcode.misc.GlobalPose;
@@ -125,6 +126,7 @@ public class Robot {
         robotZone.setPosition(follower.getPose().getX(), follower.getPose().getY());
         robotZone.setRotation(follower.getPose().getHeading());
 
+        /*
         if (relocalizeTimer.isDone() || firstRelocalization) {
             boolean success = relocalize();
             if (success) {
@@ -132,6 +134,7 @@ public class Robot {
                 relocalizeTimer.restart();
             }
         }
+         */
 
         intakeRoller.update();
 
@@ -175,6 +178,7 @@ public class Robot {
             telemetryM.debug("shoot velocity:" + shooter.getVelocity());
             telemetryM.debug("shoot target:" + shooter.getTarget());
             telemetryM.debug("shoot power:" + shooter.power);
+            telemetryM.debug("shoot amp: " + shooter.shoot1.getCurrent(CurrentUnit.AMPS));
 
             //hood
             telemetryM.debug("hood angle:" + hood.getCurrentAngle());
@@ -184,6 +188,7 @@ public class Robot {
             telemetryM.debug("turret angle: " + turret.getDegreeFromTick(turret.getCurrentPosition()));
             telemetryM.debug("turret target: " + turret.getTarget());
             telemetryM.debug("turret power: " + turret.getPower());
+            telemetryM.debug("turret amp: " + turret.turret.getCurrent(CurrentUnit.AMPS));
             telemetryM.debug("turret is in tolerance: " + turret.controlSystem.isWithinTolerance(new KineticState(Constants.TURRET.tolerance)));
             telemetryM.debug("turret tick: " + turret.getCurrentPosition());
             telemetryM.addLine("");
@@ -193,6 +198,7 @@ public class Robot {
             //intake
             telemetryM.debug("intake velocity:" + intakeRoller.getVelocity());
             telemetryM.debug("intake power:" + intakeRoller.getPower());
+            telemetryM.debug("intake amp:" + intakeRoller.intake.getCurrent(CurrentUnit.AMPS));
 
             //door
             telemetryM.debug("door is block:" + outtakeDoor.isBlocked());
@@ -244,6 +250,9 @@ public class Robot {
     }
 
     public void teleOpControl() {
+        if (currentGamepad1.left_trigger > 0.1 || currentGamepad1.right_trigger > 0.1)
+            intakeRoller.setState(IntakeRoller.INTAKE_STATE.STOP);
+        else if (!isShooting) intakeRoller.setState(IntakeRoller.INTAKE_STATE.INTAKE);
         if (currentGamepad1.left_bumper || currentGamepad1.dpad_up) {
             isShooting = true;
         } else isShooting = false;
@@ -279,8 +288,13 @@ public class Robot {
         if (!follower.getTeleopDrive()) {
             follower.startTeleopDrive();
         }
+        // just a dumbass, pls don't care
         isFieldCentric = !isRobotCentric;
-        follower.setTeleOpDrive(straight, strafe, rotate * Constants.DRIVE.turnSpeedMultiplier, isRobotCentric, teleOpFieldFaceAngle);
+
+        if (isRobotCentric)
+            follower.setTeleOpDrive(straight, strafe, rotate * Constants.DRIVE.turnSpeedMultiplier, true, 0);
+        else
+            follower.setTeleOpDrive(straight, strafe, rotate * Constants.DRIVE.turnSpeedMultiplier, false, teleOpFieldFaceAngle);
     }
 
     public static void setPathState(int pState) {
