@@ -24,34 +24,31 @@ public class BlueGoal extends OpMode {
         switch (Robot.pathState) {
             //Start
             case 0:
+                robot.follower.setMaxPower(1);
                 robot.follower.followPath(robot.follower.pathBuilder()
                         .addPath(new BezierLine(GlobalPose.BLUE.BASIC_POSE_NEAR.startPose,
-                                GlobalPose.BLUE.BASIC_POSE_NEAR.scorePose2))
-                        .setLinearHeadingInterpolation(Math.toRadians(322), Math.toRadians(180))
+                                GlobalPose.BLUE.BASIC_POSE_NEAR.scorePose1))
+                        .setLinearHeadingInterpolation(Math.toRadians(322), Math.toRadians(322))
                         .build());
                 Robot.setPathState(1);
                 break;
             case 1:
                 if (!robot.follower.isBusy()) {
-                    if (time.seconds() > .75) {
-                        time.reset();
-                        robot.shoot();
-                        Robot.setPathState(2);
-                    }
-                } else {
                     time.reset();
+                    robot.shoot();
+                    Robot.setPathState(2);
                 }
                 break;
 
             //Stage 1 (Path 2)
             case 2:
-                if (!(time.seconds() < 1.5)) {
+                if (!(time.seconds() < .6)) {
                     robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierCurve(robot.follower.getPose(),
                                     new Pose(49.85, 54.46),
                                     GlobalPose.BLUE.PICKUP_POSE.pickup2))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
+                            .setConstantHeadingInterpolation(Math.toRadians(180))
                             .build(), true);
                     Robot.setPathState(3);
                 }
@@ -76,27 +73,43 @@ public class BlueGoal extends OpMode {
 
             //Stage 2 (Retake)
             case 5:
-                if (!(time.seconds() < 1.5)) {
+                if (!(time.seconds() < .6)) {
                     robot.stopShoot();
+                    robot.follower.setMaxPower(.9);
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.BLUE.pushLever))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(140))
-                            .addPath(new BezierLine(robot.follower.getPose(),
-                                    GlobalPose.BLUE.reTake))
-                                    .setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(130))
+                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(153))
                             .build(), true);
-                    Robot.setPathState(6);
+                    Robot.setPathState(55);
                 }
                 break;
+            case 55:
+                if (!robot.follower.isBusy()) {
+                    if (time.seconds() > .5) {
+                        robot.follower.followPath(robot.follower.pathBuilder()
+                                .addPath(new BezierLine(robot.follower.getPose(),
+                                        GlobalPose.BLUE.reTake))
+                                .setLinearHeadingInterpolation(Math.toRadians(153), Math.toRadians(111))
+                                .build(), true);
+                        Robot.setPathState(6);
+                    }
+                }else {
+                    time.reset();
+                }
             case 6:
                 if (!robot.follower.isBusy()) {
-                    robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(),
-                                    GlobalPose.BLUE.BASIC_POSE_NEAR.scorePose2))
-                            .setLinearHeadingInterpolation(Math.toRadians(130), Math.toRadians(180))
-                            .build(), true);
-                    Robot.setPathState(7);
+                    robot.follower.setMaxPower(1);
+                    if (time.seconds() > .65) {
+                        robot.follower.followPath(robot.follower.pathBuilder()
+                                .addPath(new BezierLine(robot.follower.getPose(),
+                                        GlobalPose.BLUE.BASIC_POSE_NEAR.scorePose2))
+                                .setLinearHeadingInterpolation(Math.toRadians(111), Math.toRadians(180))
+                                .build(), true);
+                        Robot.setPathState(7);
+                    }
+                } else {
+                    time.reset();
                 }
                 break;
             case 7:
@@ -114,10 +127,12 @@ public class BlueGoal extends OpMode {
 
             //Stage 3 (Path 1)
             case 8:
-                if (!(time.seconds() < 1.5)) {
+                if (!(time.seconds() < .6)) {
                     robot.stopShoot();
+                    robot.follower.setMaxPower(1);
                     robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(),
+                            .addPath(new BezierCurve(robot.follower.getPose(),
+                                    new Pose(36.19, 86.31),
                                     GlobalPose.BLUE.PICKUP_POSE.pickup1))
                             .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                             .build(), true);
@@ -128,7 +143,7 @@ public class BlueGoal extends OpMode {
                 if (!robot.follower.isBusy()) {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
-                                GlobalPose.BLUE.BASIC_POSE_NEAR.scorePose2))
+                                    GlobalPose.BLUE.BASIC_POSE_NEAR.endPose))
                             .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                             .build(), true);
                     Robot.setPathState(10);
@@ -144,18 +159,8 @@ public class BlueGoal extends OpMode {
 
             //End
             case 11:
-                if (!(time.seconds() < 1.5)) {
+                if (!(time.seconds() < 6)) {
                     robot.stopShoot();
-                    robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(),
-                                    GlobalPose.BLUE.BASIC_POSE_NEAR.endPose))
-                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
-                            .build(), true);
-                    Robot.setPathState(12);
-                }
-                break;
-            case 12:
-                if (!robot.follower.isBusy()) {
                     Robot.setPathState(-1);
                 }
                 break;

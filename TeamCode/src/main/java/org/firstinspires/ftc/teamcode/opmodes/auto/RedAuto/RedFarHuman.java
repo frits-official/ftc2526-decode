@@ -35,11 +35,13 @@ public class RedFarHuman extends OpMode {
                 time.reset();
                 break;
             case 1:
-                if ((!robot.follower.isBusy()) && (time.seconds() < 1.5)) {
-                    time.reset();
+                if (!robot.follower.isBusy()) {
+                    if (time.seconds() > 1){
+                        time.reset();
                     robot.shoot();
                     Robot.setPathState(2);
-                }
+                    }
+                } time.reset();
                 break;
 
             //Score

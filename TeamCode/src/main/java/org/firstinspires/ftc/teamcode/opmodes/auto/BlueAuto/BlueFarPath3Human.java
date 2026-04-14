@@ -32,13 +32,16 @@ public class BlueFarPath3Human extends OpMode {
                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                        .build());
                Robot.setPathState(1);
-               time.reset();
                break;
             case 1:
-                if ((!robot.follower.isBusy()) && (time.seconds() < 1.5)) {
+                if (!robot.follower.isBusy()) {
+                    if (time.seconds() > 1) {
+                        time.reset();
+                        robot.shoot();
+                        Robot.setPathState(2);
+                    }
+                } else {
                     time.reset();
-                    robot.shoot();
-                    Robot.setPathState(2);
                 }
                 break;
 
