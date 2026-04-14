@@ -20,6 +20,8 @@ import org.firstinspires.ftc.teamcode.commands.ShootingMath;
 import org.firstinspires.ftc.teamcode.misc.GlobalPose;
 import org.firstinspires.ftc.teamcode.misc.ShooterState;
 import org.firstinspires.ftc.teamcode.subsystems.Camera;
+import org.firstinspires.ftc.teamcode.subsystems.PoseStorage;
+import org.firstinspires.ftc.teamcode.subsystems.drive.Drawing;
 import org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.subsystems.intake.IntakeRoller;
 import org.firstinspires.ftc.teamcode.subsystems.intake.OuttakeDoor;
@@ -97,6 +99,9 @@ public class Robot {
         angleLUT.createLUT();
 
         intakeRoller.setState(IntakeRoller.INTAKE_STATE.STOP);
+
+        Drawing.init();
+        PoseStorage.init();
     }
 
     public void init_loop() {
@@ -120,7 +125,7 @@ public class Robot {
         currentGamepad2 = opMode.gamepad2;
 
         follower.update();
-        GlobalPose.lastPose = follower.getPose();
+        PoseStorage.setPose(follower.getPose());
 
         // marrow spatial
         robotZone.setPosition(follower.getPose().getX(), follower.getPose().getY());
@@ -163,7 +168,7 @@ public class Robot {
     public void setPose(Pose pose) {
         follower.setPose(pose);
         follower.update();
-        GlobalPose.lastPose = follower.getPose();
+        PoseStorage.setPose(follower.getPose());
         robotZone.setPosition(follower.getPose().getX(), follower.getPose().getY());
         robotZone.setRotation(follower.getPose().getHeading());
     }
@@ -219,6 +224,8 @@ public class Robot {
             telemetryM.debug(" pure turret target: ", ShootingMath.getTurretHeadingFromOdometry(follower.getPose(), ShootingMath.getStaticGoalVector(follower.getPose())));
             telemetryM.debug("distance from tag odo: ", ShootingMath.getStaticGoalVector(follower.getPose()).getMagnitude());
             telemetryM.addLine("");
+
+            Drawing.drawDebug(follower);
         }
 
         if (getCamera) {

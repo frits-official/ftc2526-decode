@@ -1,13 +1,12 @@
 package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
 import com.pedropathing.geometry.Pose;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
-import org.firstinspires.ftc.teamcode.misc.GlobalPose;
+import org.firstinspires.ftc.teamcode.subsystems.PoseStorage;
 
 @TeleOp(group = "A-teleop")
 public class AimRedTeleOpControl extends OpMode {
@@ -18,7 +17,7 @@ public class AimRedTeleOpControl extends OpMode {
     public void init() {
 
         robot.init(this, Constants.ALLIANCE.RED);
-        robot.setPose((GlobalPose.lastPose != null) ? GlobalPose.lastPose : new Pose(72, 72, Math.toRadians(0)));
+        robot.setPose(PoseStorage.getPose());
         robot.aimShoot(false, true);
     }
 

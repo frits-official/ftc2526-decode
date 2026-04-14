@@ -6,7 +6,6 @@ import com.skeletonarmy.marrow.zones.PolygonZone;
 
 
 public class GlobalPose {
-    public static Pose lastPose = new Pose(72, 72, Math.toRadians(0));
     public static class ZONES {
         public static final PolygonZone closeLaunchZone = new PolygonZone(new Point(144, 144), new Point(72, 72), new Point(0, 144));
         public static final PolygonZone farLaunchZone = new PolygonZone(new Point(48, 0), new Point(72, 24), new Point(96, 0));

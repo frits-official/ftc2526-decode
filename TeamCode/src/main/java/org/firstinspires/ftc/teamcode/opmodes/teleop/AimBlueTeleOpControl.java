@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
-import org.firstinspires.ftc.teamcode.misc.GlobalPose;
+import org.firstinspires.ftc.teamcode.subsystems.PoseStorage;
 
 @TeleOp(group = "A-teleop")
 public class AimBlueTeleOpControl extends OpMode {
@@ -16,7 +16,7 @@ public class AimBlueTeleOpControl extends OpMode {
     @Override
     public void init() {
         robot.init(this, Constants.ALLIANCE.BLUE);
-        robot.setPose((GlobalPose.lastPose != null) ? GlobalPose.lastPose : new Pose(72, 72, Math.toRadians(0)));
+        robot.setPose(PoseStorage.getPose());
         robot.aimShoot(false, true);
     }
 
