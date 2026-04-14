@@ -20,8 +20,9 @@ import org.firstinspires.ftc.teamcode.commands.ShootingMath;
 import org.firstinspires.ftc.teamcode.misc.GlobalPose;
 import org.firstinspires.ftc.teamcode.misc.ShooterState;
 import org.firstinspires.ftc.teamcode.subsystems.Camera;
+import org.firstinspires.ftc.teamcode.subsystems.LEDIndicator;
 import org.firstinspires.ftc.teamcode.subsystems.PoseStorage;
-import org.firstinspires.ftc.teamcode.subsystems.drive.Drawing;
+import org.firstinspires.ftc.teamcode.subsystems.Drawing;
 import org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.subsystems.intake.IntakeRoller;
 import org.firstinspires.ftc.teamcode.subsystems.intake.OuttakeDoor;
@@ -41,6 +42,7 @@ public class Robot {
     public Shooter shooter = new Shooter();
     public Hood hood = new Hood();
     public Turret turret = new Turret();
+    public LEDIndicator ledIndicator;
     public TelemetryManager telemetryM;
     private boolean isFieldCentric;
     public Camera camera = new Camera();
@@ -102,6 +104,9 @@ public class Robot {
 
         Drawing.init();
         PoseStorage.init();
+
+        ledIndicator = new LEDIndicator(this.opMode);
+        ledIndicator.set(false);
     }
 
     public void init_loop() {
@@ -230,6 +235,7 @@ public class Robot {
 
         if (getCamera) {
             LLStatus status = camera.getStatus();
+            ledIndicator.set(status.getFps() > 0);
             telemetryM.debug("pipeline number: " + status.getPipelineIndex());
             telemetryM.debug("temp: " + status.getTemp() + "; fps: " + (int)status.getFps());
             telemetryM.debug("pose: " + camera.getAprilTagPose(Math.toDegrees(follower.getPose().getHeading())).toString());

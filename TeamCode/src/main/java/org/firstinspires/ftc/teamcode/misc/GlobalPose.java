@@ -15,7 +15,7 @@ public class GlobalPose {
 
     public static class BLUE {
         public static final Pose pushLever = new Pose(13.25, 60.86, Math.toRadians(153));
-        public static final Pose reTake = new Pose(9.38, 55.61, Math.toRadians(111));
+        public static final Pose reTake = new Pose(9.38, 54.81, Math.toRadians(111));
         public static class BASIC_POSE_NEAR {
             public static final Pose startPose = new Pose(17.44, 121.01, Math.toRadians(322));
             public static final Pose scorePose1 = new Pose(58.35, 77.25, Math.toRadians(322));
