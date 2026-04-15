@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.Constants;
 public class Camera {
     HardwareMap hardwareMap;
     Limelight3A limelight;
-    private final TimerEx relocalizeTimer = new TimerEx(60);
+    boolean isDetect = false;
 
     public void init(HardwareMap _hardwareMap, Constants.ALLIANCE alliance) {
         hardwareMap = _hardwareMap;
@@ -35,8 +35,12 @@ public class Camera {
     public LLResult getLastestResult() {
         LLResult result = limelight.getLatestResult();
         if (result != null && result.isValid()) {
+            isDetect = true;
             return result;
-        } else return null;
+        } else {
+            isDetect = false;
+            return null;
+        }
     }
 
     public LLStatus getStatus() {
@@ -54,6 +58,7 @@ public class Camera {
             Pose3D botPose = result.getBotpose_MT2();
 
             if (botPose != null) {
+                isDetect = true;
                 double x = botPose.getPosition().x;
                 double y = botPose.getPosition().y;
                 double heading = botPose.getOrientation().getYaw(AngleUnit.RADIANS);
@@ -63,7 +68,11 @@ public class Camera {
                 return FTCCoordinates.INSTANCE.convertToPedro(standardFTCPose);
             }
         }
-
+        isDetect = false;
         return new Pose();
+    }
+
+    public boolean getDetect() {
+        return isDetect;
     }
 }
