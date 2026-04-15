@@ -28,11 +28,7 @@ public class TestAimWithoutRobot extends OpMode {
         follower = DriveConstants.createFollower(this.hardwareMap);
         follower.setStartingPose(new Pose(72, 72, 0));
 
-        Robot.velocityLUT = new InterpLUT(Constants.SHOOTER_CALCULATION.distanceThresh, Constants.SHOOTER_CALCULATION.targetVelocity);
-        Robot.angleLUT = new InterpLUT(Constants.SHOOTER_CALCULATION.distanceThresh, Constants.SHOOTER_CALCULATION.targetAngle);
-
-        Robot.velocityLUT.createLUT();
-        Robot.angleLUT.createLUT();
+        InterpLUTShooterCalculator.init();
 
         Robot.alliance = Constants.ALLIANCE.BLUE;
 

@@ -31,6 +31,7 @@ import org.firstinspires.ftc.teamcode.subsystems.shooter.Shooter;
 import org.firstinspires.ftc.teamcode.subsystems.shooter.Turret;
 
 import java.util.List;
+import java.util.Objects;
 
 import dev.nextftc.control.KineticState;
 
@@ -60,7 +61,6 @@ public class Robot {
     public static int pathState;
     double teleOpFieldFaceAngle;
     PolygonZone robotZone = new PolygonZone(13, 13);
-    public static InterpLUT velocityLUT, angleLUT;
 
     public void init(OpMode _opmode, Constants.ALLIANCE alliance) {
         opMode = _opmode;
@@ -94,11 +94,7 @@ public class Robot {
             teleOpFieldFaceAngle = 0;
         }
 
-        velocityLUT = new InterpLUT(Constants.SHOOTER_CALCULATION.distanceThresh, Constants.SHOOTER_CALCULATION.targetVelocity);
-        angleLUT = new InterpLUT(Constants.SHOOTER_CALCULATION.distanceThresh, Constants.SHOOTER_CALCULATION.targetAngle);
-
-        velocityLUT.createLUT();
-        angleLUT.createLUT();
+        InterpLUTShooterCalculator.init();
 
         intakeRoller.setState(IntakeRoller.INTAKE_STATE.STOP);
 
@@ -150,7 +146,7 @@ public class Robot {
 
         if (isShooting) {
             outtakeDoor.block(false);
-            if (robotZone.isInside(GlobalPose.ZONES.closeLaunchZone) || currentGamepad1.dpad_up ) {
+            if (robotZone.isInside(GlobalPose.ZONES.closeLaunchZone)) {
                 intakeRoller.setState(IntakeRoller.INTAKE_STATE.GOAL_SHOOTING);
             } else intakeRoller.setState(IntakeRoller.INTAKE_STATE.FAR_SHOOTING);
         } else {
@@ -235,10 +231,11 @@ public class Robot {
 
         if (getCamera) {
             LLStatus status = camera.getStatus();
-            ledIndicator.set(status.getFps() > 0);
+            Pose aprilTagPose = camera.getAprilTagPose(Math.toDegrees(follower.getPose().getHeading()));
+            ledIndicator.set(!Objects.equals(aprilTagPose, new Pose()));
             telemetryM.debug("pipeline number: " + status.getPipelineIndex());
             telemetryM.debug("temp: " + status.getTemp() + "; fps: " + (int)status.getFps());
-            telemetryM.debug("pose: " + camera.getAprilTagPose(Math.toDegrees(follower.getPose().getHeading())).toString());
+            telemetryM.debug("pose: " + aprilTagPose.toString());
             telemetryM.addLine("");
         }
 
@@ -263,14 +260,14 @@ public class Robot {
     }
 
     public void teleOpControl() {
-        if (currentGamepad1.left_trigger > 0.1 || currentGamepad1.right_trigger > 0.1)
+        if (currentGamepad1.right_trigger > 0.1)
             intakeRoller.setState(IntakeRoller.INTAKE_STATE.STOP);
         else if (!isShooting) intakeRoller.setState(IntakeRoller.INTAKE_STATE.INTAKE);
-        if (currentGamepad1.left_bumper || currentGamepad1.dpad_up) {
+        if (currentGamepad1.left_bumper) {
             isShooting = true;
         } else isShooting = false;
 
-        if (currentGamepad1.left_stick_button) {
+        if (currentGamepad1.leftStickButtonWasPressed()) {
              boolean success = relocalize();
              if (!success) currentGamepad1.rumble(300);
         }

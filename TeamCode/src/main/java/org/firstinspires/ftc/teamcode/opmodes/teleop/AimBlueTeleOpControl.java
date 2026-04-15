@@ -35,7 +35,7 @@ public class AimBlueTeleOpControl extends OpMode {
 
     @Override
     public void loop() {
-        if (gamepad1.back || gamepad1.share) isRobotCentric = !isRobotCentric;
+        if (gamepad1.shareWasPressed()) isRobotCentric = !isRobotCentric;
         robot.driveTeleOpControl(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, isRobotCentric);
 
         robot.aimShoot(true, true);

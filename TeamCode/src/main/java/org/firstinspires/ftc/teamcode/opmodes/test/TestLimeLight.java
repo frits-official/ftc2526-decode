@@ -16,7 +16,7 @@ public class TestLimeLight extends OpMode {
 
     @Override
     public void init() {
-        robot.init(this, Constants.ALLIANCE.BLUE);
+        robot.init(this, Constants.ALLIANCE.RED);
         robot.setPose(new Pose(72, 72, 0));
     }
 
