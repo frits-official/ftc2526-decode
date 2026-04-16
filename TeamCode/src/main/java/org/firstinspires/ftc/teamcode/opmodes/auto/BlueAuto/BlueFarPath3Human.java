@@ -47,11 +47,12 @@ public class BlueFarPath3Human extends OpMode {
 
             //Stage 1
             case 2:
-                if (!(time.seconds() < 1.5)) {
+                if (!(time.seconds() < 1)) {
                     robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierCurve(robot.follower.getPose(),
-                                    new Pose(53.94, 39.05),
+                                    new Pose(58.57, 46.37),
+                                    new Pose(39.93, 32.81),
                                     GlobalPose.BLUE.PICKUP_POSE.pickup3))
                             .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                             .build(), true);
@@ -79,7 +80,7 @@ public class BlueFarPath3Human extends OpMode {
 
             //Stage 2 (Human)
             case 5:
-                if (!(time.seconds() < 1.5)) {
+                if (!(time.seconds() < 1)) {
                     robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
@@ -103,9 +104,9 @@ public class BlueFarPath3Human extends OpMode {
                 if (!robot.follower.isBusy()) {
                     time.reset();
                     robot.shoot();
+                    reTakeTurn += 1;
 
                     if (reTakeTurn < loopTime) {
-                        reTakeTurn += 1;
                         Robot.setPathState(5);
                     } else {
                         Robot.setPathState(8);
@@ -115,7 +116,7 @@ public class BlueFarPath3Human extends OpMode {
 
             //End
             case 8:
-                if (!(time.seconds() < 1.5)) {
+                if (!(time.seconds() < 1)) {
                     robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
@@ -162,14 +163,14 @@ public class BlueFarPath3Human extends OpMode {
 
         while (!timer.isDone()) {
             robot.update();
-            robot.aimShoot(false, false);
+            robot.aimShoot(true, false);
         }
     }
 
     @Override
     public void loop() {
         robot.update();
-        robot.aimShoot(false, false);
+        robot.aimShoot(true, true);
         autonomousPathUpdate();
 
         robot.updateTelemetry(true, true, true, true, true);

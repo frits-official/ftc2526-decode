@@ -101,8 +101,8 @@ public class Robot {
         Drawing.init();
         PoseStorage.init();
 
-        ledIndicator = new LEDIndicator(this.opMode);
-        ledIndicator.set(false);
+        //ledIndicator = new LEDIndicator(this.opMode);
+        //ledIndicator.set(false);
     }
 
     public void init_loop() {
@@ -232,7 +232,7 @@ public class Robot {
         if (getCamera) {
             LLStatus status = camera.getStatus();
             Pose aprilTagPose = camera.getAprilTagPose(Math.toDegrees(follower.getPose().getHeading()));
-            ledIndicator.set(camera.getDetect());
+            //ledIndicator.set(camera.getDetect());
             telemetryM.debug("pipeline number: " + status.getPipelineIndex());
             telemetryM.debug("temp: " + status.getTemp() + "; fps: " + (int)status.getFps());
             telemetryM.debug("pose: " + aprilTagPose.toString());

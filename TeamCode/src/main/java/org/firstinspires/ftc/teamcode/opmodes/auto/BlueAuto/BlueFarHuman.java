@@ -46,7 +46,7 @@ public class BlueFarHuman extends OpMode {
 
             //Score
             case 2:
-                if (!(time.seconds() < 1.5)) {
+                if (!(time.seconds() < 1)) {
                     robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
@@ -70,8 +70,8 @@ public class BlueFarHuman extends OpMode {
                 if (!robot.follower.isBusy()) {
                   time.reset();
                   robot.shoot();
+                    reTakeTurn += 1;
                     if (reTakeTurn < loopTime) {
-                        reTakeTurn += 1;
                         Robot.setPathState(2);
                     } else {
                         Robot.setPathState(5);
@@ -81,7 +81,7 @@ public class BlueFarHuman extends OpMode {
 
             //End
             case 5:
-                if (!(time.seconds() < 1.5)) {
+                if (!(time.seconds() < 1)) {
                     robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
@@ -128,14 +128,14 @@ public class BlueFarHuman extends OpMode {
 
         while (!timer.isDone()) {
             robot.update();
-            robot.aimShoot(false, false);
+            robot.aimShoot(true, false);
         }
     }
 
     @Override
     public void loop() {
         robot.update();
-        robot.aimShoot(false, false);
+        robot.aimShoot(true, true);
         autonomousPathUpdate();
 
         robot.updateTelemetry(true, true, true, true, true);
