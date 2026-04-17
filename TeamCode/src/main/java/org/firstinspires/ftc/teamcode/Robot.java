@@ -101,8 +101,8 @@ public class Robot {
         Drawing.init();
         PoseStorage.init();
 
-        //ledIndicator = new LEDIndicator(this.opMode);
-        //ledIndicator.set(false);
+        ledIndicator = new LEDIndicator(this.opMode);
+        ledIndicator.set(false);
     }
 
     public void init_loop() {
@@ -150,7 +150,6 @@ public class Robot {
                 intakeRoller.setState(IntakeRoller.INTAKE_STATE.GOAL_SHOOTING);
             } else intakeRoller.setState(IntakeRoller.INTAKE_STATE.FAR_SHOOTING);
         } else {
-            intakeRoller.setState(IntakeRoller.INTAKE_STATE.INTAKE);
             outtakeDoor.block(true);
         }
 
@@ -164,6 +163,7 @@ public class Robot {
 
     public void stop() {
         camera.stop();
+        ledIndicator.set(false);
     }
 
     public void setPose(Pose pose) {
@@ -232,7 +232,7 @@ public class Robot {
         if (getCamera) {
             LLStatus status = camera.getStatus();
             Pose aprilTagPose = camera.getAprilTagPose(Math.toDegrees(follower.getPose().getHeading()));
-            //ledIndicator.set(camera.getDetect());
+            ledIndicator.set(camera.getDetect());
             telemetryM.debug("pipeline number: " + status.getPipelineIndex());
             telemetryM.debug("temp: " + status.getTemp() + "; fps: " + (int)status.getFps());
             telemetryM.debug("pose: " + aprilTagPose.toString());
@@ -279,6 +279,7 @@ public class Robot {
     }
     public void stopShoot() {
         isShooting = false;
+        intakeRoller.setState(IntakeRoller.INTAKE_STATE.INTAKE);
     }
 
     public boolean relocalize() {
