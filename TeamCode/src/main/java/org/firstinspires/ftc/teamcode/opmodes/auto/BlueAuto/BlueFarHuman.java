@@ -25,22 +25,11 @@ public class BlueFarHuman extends OpMode {
         switch (Robot.pathState) {
             //Start
             case 0:
-                robot.follower.followPath(robot.follower.pathBuilder()
-                        .addPath(new BezierLine(GlobalPose.BLUE.BASIC_POSE_FAR.startPose,
-                                GlobalPose.BLUE.BASIC_POSE_FAR.scorePose))
-                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
-                        .build());
-                Robot.setPathState(1);
-                break;
-            case 1:
-                if (!robot.follower.isBusy()) {
-                    if (time.seconds() > 1) {
+                if (time.seconds() > 1) {
                         time.reset();
                         robot.shoot();
                         Robot.setPathState(2);
-                    }
-                } else {
-                    time.reset();
+
                 }
                 break;
 
@@ -128,8 +117,9 @@ public class BlueFarHuman extends OpMode {
 
         while (!timer.isDone()) {
             robot.update();
-            robot.aimShoot(true, false);
+            robot.aimShoot(true, true);
         }
+        time.reset();
     }
 
     @Override
