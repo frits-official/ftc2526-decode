@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.misc.GlobalPose;
+import org.firstinspires.ftc.teamcode.subsystems.PoseStorage;
 import org.firstinspires.ftc.teamcode.subsystems.intake.IntakeRoller;
 
 @Autonomous
@@ -162,6 +163,8 @@ public class BlueGoalPath2_1 extends OpMode {
     @Override
     public void init() {
         robot.init(this, Constants.ALLIANCE.BLUE);
+        PoseStorage.init();
+
         robot.setPose(GlobalPose.BLUE.BASIC_POSE_NEAR.startPose);
         robot.aimShoot(false, false);
 

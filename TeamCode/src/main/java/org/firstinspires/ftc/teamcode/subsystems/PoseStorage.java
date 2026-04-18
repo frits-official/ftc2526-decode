@@ -28,6 +28,7 @@ public class PoseStorage {
     }
 
     public static void setPose(Pose pose) {
+        if (pose.getX() == 0 && pose.getY() == 0 && pose.getHeading() == 0) return;
         PoseStorage.lastPose = pose;
         try {
             fileWriter.write(pose.getX() + " " + pose.getY() + " " + pose.getHeading());
