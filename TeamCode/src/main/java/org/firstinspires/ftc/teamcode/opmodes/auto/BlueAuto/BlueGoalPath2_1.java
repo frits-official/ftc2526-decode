@@ -75,7 +75,7 @@ public class BlueGoalPath2_1 extends OpMode {
 
             //Stage 2 (Retake)
             case 5:
-                if (!(timeShoot.seconds() < .6)) {
+                if (!(timeShoot.seconds() < .7)) {
                     robot.stopShoot();
                     robot.follower.setMaxPower(1);
                     robot.follower.followPath(robot.follower.pathBuilder()
@@ -89,7 +89,7 @@ public class BlueGoalPath2_1 extends OpMode {
             case 7:
                 if (!robot.follower.isBusy()) {
                     robot.follower.setMaxPower(1);
-                    if (timeCase.seconds() > .25) {
+                    if (timeCase.seconds() > .2) {
                         robot.follower.followPath(robot.follower.pathBuilder()
                                 .addPath(new BezierLine(robot.follower.getPose(),
                                         GlobalPose.BLUE.BASIC_POSE_NEAR.scorePosePath))
@@ -117,7 +117,7 @@ public class BlueGoalPath2_1 extends OpMode {
 
             //Stage 3 (Path 1)
             case 9:
-                if (!(timeShoot.seconds() < .6)) {
+                if (!(timeShoot.seconds() < .7)) {
                     robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierCurve(robot.follower.getPose(),
@@ -148,7 +148,7 @@ public class BlueGoalPath2_1 extends OpMode {
 
             //End
             case 12:
-                if (!(timeShoot.seconds() < .6)) {
+                if (!(timeShoot.seconds() < .7)) {
                     robot.stopShoot();
                     Robot.setPathState(-1);
                 }

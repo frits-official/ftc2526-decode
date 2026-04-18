@@ -6,6 +6,10 @@ import com.skeletonarmy.marrow.zones.PolygonZone;
 
 
 public class GlobalPose {
+    public static class TEST_POSE {
+        public static final Pose startPose = new Pose(0, 0, Math.toRadians(180));
+        public static final Pose endPose = new Pose(0, 0, Math.toRadians(180));
+    }
     public static class ZONES {
         public static final PolygonZone closeLaunchZone = new PolygonZone(new Point(144, 144), new Point(72, 72), new Point(0, 144));
         public static final PolygonZone farLaunchZone = new PolygonZone(new Point(48, 0), new Point(72, 24), new Point(96, 0));
@@ -15,7 +19,7 @@ public class GlobalPose {
 
     public static class BLUE {
         public static class RETAKE_POSE {
-            public static final Pose pushLever = new Pose(10.13, 58.6, Math.toRadians(148));
+            public static final Pose pushLever = new Pose(10.6, 59.75, Math.toRadians(160));
             public static final Pose reTake1 = new Pose(11.44, 57.18, Math.toRadians(130));
             public static final Pose reTake2 = new Pose(9, 52.78, Math.toRadians(107));
             public static final Pose reTake3 = new Pose(8.33, 60.6, Math.toRadians(100));
@@ -25,7 +29,6 @@ public class GlobalPose {
             public static final Pose startPose = new Pose(18.28, 121.71, Math.toRadians(322));
             public static final Pose scorePoseStart = new Pose(   58.35, 78.25, Math.toRadians(322));
             public static final Pose scorePosePath = new Pose(58.35, 77.25, Math.toRadians(225));
-            public static final Pose scorePoseRetake = new Pose(58.35, 77.25, Math.toRadians(45));
             public static final Pose endPose = new Pose(51.25, 113.97, Math.toRadians(180));
 
         }
