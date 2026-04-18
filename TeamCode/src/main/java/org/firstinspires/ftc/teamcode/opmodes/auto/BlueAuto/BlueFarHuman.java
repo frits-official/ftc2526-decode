@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode.opmodes.auto.BlueAuto;
 
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
+import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -18,7 +20,7 @@ public class BlueFarHuman extends OpMode {
     Robot robot = new Robot();
     TimerEx timer = new TimerEx(2);
     int reTakeTurn;
-    int loopTime = 5;
+    int loopTime = 6;
     TelemetryManager telemetryM;
     ElapsedTime time = new ElapsedTime();
 
