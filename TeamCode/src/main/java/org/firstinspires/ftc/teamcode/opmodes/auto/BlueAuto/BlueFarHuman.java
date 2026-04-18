@@ -11,6 +11,7 @@ import com.skeletonarmy.marrow.TimerEx;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.misc.GlobalPose;
+import org.firstinspires.ftc.teamcode.subsystems.PoseStorage;
 
 @Autonomous
 public class BlueFarHuman extends OpMode {
@@ -92,6 +93,8 @@ public class BlueFarHuman extends OpMode {
     @Override
     public void init() {
         robot.init(this, Constants.ALLIANCE.BLUE);
+        PoseStorage.init();
+
         robot.setPose(GlobalPose.BLUE.BASIC_POSE_FAR.startPose);
         robot.aimShoot(false, false);
 

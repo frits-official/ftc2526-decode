@@ -99,7 +99,6 @@ public class Robot {
         intakeRoller.setState(IntakeRoller.INTAKE_STATE.STOP);
 
         Drawing.init();
-        PoseStorage.init();
 
         ledIndicator = new LEDIndicator(this.opMode);
         ledIndicator.set(false);

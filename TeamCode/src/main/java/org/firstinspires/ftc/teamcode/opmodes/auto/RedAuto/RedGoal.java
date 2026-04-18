@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.misc.GlobalPose;
+import org.firstinspires.ftc.teamcode.subsystems.PoseStorage;
 
 @Autonomous
 public class RedGoal extends OpMode {
@@ -174,6 +175,8 @@ public class RedGoal extends OpMode {
     @Override
     public void init() {
         robot.init(this, Constants.ALLIANCE.RED);
+        PoseStorage.init();
+
         robot.setPose(GlobalPose.RED.BASIC_POSE_NEAR.startPose);
         robot.aimShoot(false, false);
 
