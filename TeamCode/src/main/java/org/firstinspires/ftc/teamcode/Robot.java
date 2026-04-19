@@ -247,11 +247,26 @@ public class Robot {
         turret.setTarget(turretHeading);
     }
 
+    boolean unJamTurret = false;
+
     public void aimShoot(boolean aimVelAndAngle, boolean aimHeading) {
         ShooterState shooterState = InterpLUTShooterCalculator.calcShoot(follower.getPose());
         if (aimVelAndAngle) {
             vel = shooterState.getVelocity();
-            angle = shooterState.getAngle();
+            if (!unJamTurret) angle = shooterState.getAngle();
+            else angle = 60;
+        }
+        if (aimHeading) {
+            heading = shooterState.getHeading();
+        }
+    }
+
+    public void aimShootMoving(boolean aimVelAndAngle, boolean aimHeading) {
+        ShooterState shooterState = InterpLUTShooterCalculator.calcShootOnMoving(follower);
+        if (aimVelAndAngle) {
+            vel = shooterState.getVelocity();
+            if (!unJamTurret) angle = shooterState.getAngle();
+            else angle = 60;
         }
         if (aimHeading) {
             heading = shooterState.getHeading();
@@ -259,6 +274,9 @@ public class Robot {
     }
 
     public void teleOpControl() {
+        if (currentGamepad2.xWasPressed()) {
+            unJamTurret = true;
+        } else unJamTurret = false;
         if (currentGamepad1.right_trigger > 0.1)
             intakeRoller.setState(IntakeRoller.INTAKE_STATE.STOP);
         else if (!isShooting) intakeRoller.setState(IntakeRoller.INTAKE_STATE.INTAKE);

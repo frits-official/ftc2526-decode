@@ -33,7 +33,6 @@ public class TestLimeLight extends OpMode {
 
     @Override
     public void loop() {
-        robot.teleOpControl();
         robot.update();
         robot.updateTelemetry(true, false, false,true, false);
     }

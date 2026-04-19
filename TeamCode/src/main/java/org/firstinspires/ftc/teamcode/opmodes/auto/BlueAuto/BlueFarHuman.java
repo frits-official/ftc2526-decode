@@ -15,7 +15,6 @@ import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.misc.GlobalPose;
 import org.firstinspires.ftc.teamcode.subsystems.PoseStorage;
 
-@Autonomous
 public class BlueFarHuman extends OpMode {
     Robot robot = new Robot();
     TimerEx timer = new TimerEx(2);
@@ -41,7 +40,7 @@ public class BlueFarHuman extends OpMode {
                 if (!(time.seconds() < 1)) {
                     robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(),
+                            .addPath(new BezierLine(GlobalPose.BLUE.BASIC_POSE_FAR.startPose,
                                     GlobalPose.BLUE.PICKUP_POSE.pickupHuman))
                             .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                             .build(), true);

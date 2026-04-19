@@ -16,10 +16,9 @@ import org.firstinspires.ftc.teamcode.subsystems.PoseStorage;
 @Autonomous
 public class RedFarHuman extends OpMode {
     Robot robot = new Robot();
-    private int pathState;
     TimerEx timer = new TimerEx(2);
     int reTakeTurn;
-    int loopTime = 5;
+    int loopTime = 6;
     TelemetryManager telemetryM;
     ElapsedTime time = new ElapsedTime();
 
@@ -27,32 +26,22 @@ public class RedFarHuman extends OpMode {
         switch (Robot.pathState) {
             //Start
             case 0:
-                robot.follower.followPath(robot.follower.pathBuilder()
-                        .addPath(new BezierLine(GlobalPose.RED.BASIC_POSE_FAR.startPose,
-                                GlobalPose.RED.BASIC_POSE_FAR.scorePose))
-                        .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
-                        .build());
-                Robot.setPathState(1);
-                time.reset();
-                break;
-            case 1:
-                if (!robot.follower.isBusy()) {
-                    if (time.seconds() > 1){
+                if (time.seconds() > 1) {
                         time.reset();
-                    robot.shoot();
-                    Robot.setPathState(2);
-                    }
-                } time.reset();
+                        robot.shoot();
+                        Robot.setPathState(2);
+
+                }
                 break;
 
             //Score
             case 2:
-                if (!(time.seconds() < 1.5)) {
+                if (!(time.seconds() < 1)) {
                     robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
-                            .addPath(new BezierLine(robot.follower.getPose(),
+                            .addPath(new BezierLine(GlobalPose.RED.BASIC_POSE_FAR.startPose,
                                     GlobalPose.RED.PICKUP_POSE.pickupHuman))
-                            .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
+                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                             .build(), true);
                     Robot.setPathState(3);
                 }
@@ -62,32 +51,32 @@ public class RedFarHuman extends OpMode {
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.RED.BASIC_POSE_FAR.scorePose))
-                            .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
+                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                             .build(), true);
                     Robot.setPathState(4);
                 }
                 break;
             case 4:
                 if (!robot.follower.isBusy()) {
-                    time.reset();
-                    robot.shoot();
+                  time.reset();
+                  robot.shoot();
+                    reTakeTurn += 1;
                     if (reTakeTurn < loopTime) {
-                        reTakeTurn += 1;
                         Robot.setPathState(2);
                     } else {
                         Robot.setPathState(5);
-                        }
+                    }
                 }
                 break;
 
             //End
             case 5:
-                if (!(time.seconds() < 1.5)) {
+                if (!(time.seconds() < 1)) {
                     robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.RED.BASIC_POSE_FAR.endPose))
-                            .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
+                            .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                             .build(), true);
                     Robot.setPathState(6);
                 }
@@ -121,7 +110,7 @@ public class RedFarHuman extends OpMode {
     public void init_loop() {
         robot.init_loop();
         telemetryM.debug("This program will run automatically at RED FAR ZONE " +
-                "and only pick up artifact at HUMAN ZONE");
+                "and only pick up artifacts at HUMAN ZONE");
         telemetryM.update(telemetry);
     }
 
@@ -131,14 +120,15 @@ public class RedFarHuman extends OpMode {
 
         while (!timer.isDone()) {
             robot.update();
-            robot.aimShoot(false, false);
+            robot.aimShoot(true, true);
         }
+        time.reset();
     }
 
     @Override
     public void loop() {
         robot.update();
-        robot.aimShoot(false, false);
+        robot.aimShoot(true, true);
         autonomousPathUpdate();
 
         robot.updateTelemetry(true, true, true, true, true);

@@ -15,12 +15,9 @@ import org.firstinspires.ftc.teamcode.misc.GlobalPose;
 import org.firstinspires.ftc.teamcode.subsystems.PoseStorage;
 import org.firstinspires.ftc.teamcode.subsystems.intake.IntakeRoller;
 
-@Autonomous
 public class BlueGoalPath2_1 extends OpMode {
     Robot robot = new Robot();
     TelemetryManager telemetryM;
-    int reTakeTurn;
-    int loopTime = 3;
     ElapsedTime time = new ElapsedTime();
     public void autonomousPathUpdate() {
         switch (Robot.pathState) {
@@ -90,7 +87,7 @@ public class BlueGoalPath2_1 extends OpMode {
             case 6:
                 if (!robot.follower.isBusy()) {
                     robot.follower.setMaxPower(1);
-                    if (time.seconds() > .3) {
+                    if (time.seconds() > .4) {
                         robot.follower.followPath(robot.follower.pathBuilder()
                                 .addPath(new BezierLine(robot.follower.getPose(),
                                         GlobalPose.BLUE.BASIC_POSE_NEAR.scorePosePath))
