@@ -21,6 +21,7 @@ public class Constants {
         public static double v = 0.00039;
         public static double s = 0.05;
         public static double shootingIncrement = 0;
+        public static double timeCoef = 1;
     }
 
     @Configurable

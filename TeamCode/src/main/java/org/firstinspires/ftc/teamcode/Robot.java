@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.hardware.lynx.LynxModule;
@@ -273,6 +274,8 @@ public class Robot {
         }
     }
 
+    boolean isAutonomous = false;
+
     public void teleOpControl() {
         if (currentGamepad2.xWasPressed()) {
             unJamTurret = true;
@@ -287,6 +290,38 @@ public class Robot {
         if (currentGamepad1.leftStickButtonWasPressed()) {
              boolean success = relocalize();
              if (!success) currentGamepad1.rumble(300);
+        }
+
+        if (currentGamepad1.leftTriggerWasPressed()) {
+            follower.holdPoint(follower.getPose());
+            isAutonomous = true;
+        } else {
+            if (isAutonomous) {
+                follower.breakFollowing();
+                isAutonomous = false;
+            }
+        }
+
+        if (currentGamepad1.rightBumperWasPressed()) {
+            if (alliance == Constants.ALLIANCE.BLUE) {
+                follower.followPath(follower.pathBuilder()
+                        .addPath(new BezierLine(follower.getPose(),
+                                GlobalPose.BLUE.RETAKE_POSE.pushLever))
+                        .setLinearHeadingInterpolation(follower.getHeading(), Math.toRadians(160))
+                        .build(), true);
+            } else if (alliance == Constants.ALLIANCE.RED) {
+                follower.followPath(follower.pathBuilder()
+                        .addPath(new BezierLine(follower.getPose(),
+                                GlobalPose.RED.pushLever))
+                        .setLinearHeadingInterpolation(follower.getHeading(), Math.toRadians(20.5))
+                        .build(), true);
+            }
+            isAutonomous = true;
+        } else {
+            if (isAutonomous) {
+                follower.breakFollowing();
+                isAutonomous = false;
+            }
         }
     }
 
@@ -313,7 +348,7 @@ public class Robot {
     }
 
     public void driveTeleOpControl(double straight, double strafe, double rotate, boolean isRobotCentric) {
-        if (!follower.getTeleopDrive()) {
+        if (!isAutonomous) {
             follower.startTeleopDrive();
         }
         // just a dumbass, pls don't care
