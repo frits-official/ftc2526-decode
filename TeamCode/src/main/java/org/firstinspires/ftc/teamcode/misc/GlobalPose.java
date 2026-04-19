@@ -24,9 +24,9 @@ public class GlobalPose {
             public static final Pose pushLever = new Pose(12.44, 60.75, Math.toRadians(160));
         }
         public static class BASIC_POSE_NEAR {
-            public static final Pose startPose = new Pose(18.28, 121.71, Math.toRadians(322));
-            public static final Pose scorePoseStart = new Pose(58.35, 78.25, Math.toRadians(322));
-            public static final Pose scorePosePath = new Pose(58.35, 77.25, Math.toRadians(225));
+            public static final Pose startPose = new Pose(22.09, 126.75, Math.toRadians(-43));
+            public static final Pose scorePoseStart = new Pose(58.67, 92.66, Math.toRadians(-43));
+            public static final Pose scorePosePath = new Pose(60.35, 79.25, Math.toRadians(225));
             public static final Pose endPose = new Pose(51.25, 113.97, Math.toRadians(180));
 
         }
@@ -46,11 +46,11 @@ public class GlobalPose {
     }
 
     public static class RED {
-        public static final Pose pushLever = new Pose(130.06, 61.55, Math.toRadians(20));
+        public static final Pose pushLever = new Pose(128.76, 61.35, Math.toRadians(20.5));
         public static class BASIC_POSE_NEAR {
-            public static final Pose startPose = new Pose(126.84, 121.3, Math.toRadians(-140));
-            public static final Pose scorePoseStart = new Pose(83.15, 78.25, Math.toRadians(-142));
-            public static final Pose scorePosePath = new Pose(83.15, 77.25, Math.toRadians(-45));
+            public static final Pose startPose = new Pose(119.06, 129.29, Math.toRadians(-135));
+            public static final Pose scorePoseStart = new Pose(87.74, 96.83, Math.toRadians(-135));
+            public static final Pose scorePosePath = new Pose(81.15, 79.25, Math.toRadians(-45));
             public static final Pose endPose = new Pose(94.87, 121.14);
         }
 

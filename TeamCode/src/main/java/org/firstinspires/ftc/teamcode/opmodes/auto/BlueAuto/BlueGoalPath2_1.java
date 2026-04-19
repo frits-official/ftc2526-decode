@@ -27,7 +27,7 @@ public class BlueGoalPath2_1 extends OpMode {
                 robot.follower.followPath(robot.follower.pathBuilder()
                         .addPath(new BezierLine(GlobalPose.BLUE.BASIC_POSE_NEAR.startPose,
                                 GlobalPose.BLUE.BASIC_POSE_NEAR.scorePoseStart))
-                        .setConstantHeadingInterpolation(Math.toRadians(323))
+                        .setConstantHeadingInterpolation(Math.toRadians(-43))
                         .build());
                 Robot.setPathState(1);
                 break;
