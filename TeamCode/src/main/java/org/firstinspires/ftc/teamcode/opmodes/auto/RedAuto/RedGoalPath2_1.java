@@ -243,7 +243,7 @@ public class RedGoalPath2_1 extends OpMode {
         robot.aimShoot(true, true);
         autonomousPathUpdate();
 
-        robot.updateTelemetry(true, true, true, true, true);
+        robot.updateTelemetry(false, false, false, true, true);
     }
 
     @Override

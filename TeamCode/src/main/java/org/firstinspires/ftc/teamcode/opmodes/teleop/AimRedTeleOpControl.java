@@ -32,7 +32,7 @@ public class AimRedTeleOpControl extends OpMode {
     @Override
     public void start() {
         robot.start();
-        robot.follower.startTeleopDrive();
+        robot.follower.startTeleopDrive(true);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class AimRedTeleOpControl extends OpMode {
         robot.update();
 
         //Telemetry
-        robot.updateTelemetry(true, true, true, true, false);
+        robot.updateTelemetry(false, false, false, false, false);
     }
 
     @Override

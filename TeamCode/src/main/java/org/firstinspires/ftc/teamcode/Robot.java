@@ -82,7 +82,7 @@ public class Robot {
 
         allHubs = opMode.hardwareMap.getAll(LynxModule.class);
         for (LynxModule hub : allHubs) {
-            hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
+            hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
         }
 
         telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
@@ -117,6 +117,10 @@ public class Robot {
     }
 
     public void update() {
+        for (LynxModule hub : allHubs) {
+            hub.clearBulkCache();
+        }
+
         currentVoltage = batteryVoltage.getVoltage();
 
         previousGamepad1.copy(currentGamepad1);
@@ -287,7 +291,7 @@ public class Robot {
             isShooting = true;
         } else isShooting = false;
 
-        if (currentGamepad1.leftStickButtonWasPressed()) {
+        if (currentGamepad1.optionsWasPressed()) {
              boolean success = relocalize();
              if (!success) currentGamepad1.rumble(300);
         }
@@ -315,7 +319,7 @@ public class Robot {
         }
 
         if (isAutonomous && (currentGamepad1.leftTriggerWasReleased() || currentGamepad1.rightBumperWasReleased() || !follower.isBusy())) {
-            follower.startTeleopDrive();
+            follower.startTeleopDrive(true);
             isAutonomous = false;
         }
     }

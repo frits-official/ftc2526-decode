@@ -25,13 +25,13 @@ public class AimBlueTeleOpControl extends OpMode {
         robot.init_loop();
         telemetry.addLine("This program will open test TELEOP program of BLUE ALLIANCE, which will only track AprilTag 20 (BLUE GOAL AprilTag).");
 
-        robot.updateTelemetry(true, false, false, false, false);
+        robot.updateTelemetry(false, false, false, false, false);
     }
 
     @Override
     public void start() {
         robot.start();
-        robot.follower.startTeleopDrive();
+        robot.follower.startTeleopDrive(true);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class AimBlueTeleOpControl extends OpMode {
         robot.update();
 
         //Telemetry
-        robot.updateTelemetry(true, true, true, true, false);
+        robot.updateTelemetry(false, false, false, false, false);
     }
 
     @Override
