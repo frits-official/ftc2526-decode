@@ -24,7 +24,7 @@ public class GlobalPose {
             public static final Pose pushLever = new Pose(12.44, 60.75, Math.toRadians(160));
         }
         public static class BASIC_POSE_NEAR {
-            public static final Pose startPose = new Pose(22.09, 126.75, Math.toRadians(-43));
+            public static final Pose startPose = new Pose(23.77, 128.4, Math.toRadians(-43));
             public static final Pose scorePoseStart = new Pose(58.67, 92.66, Math.toRadians(-43));
             public static final Pose scorePosePath = new Pose(60.35, 79.25, Math.toRadians(225));
             public static final Pose endPose = new Pose(51.25, 113.97, Math.toRadians(180));
@@ -39,7 +39,7 @@ public class GlobalPose {
 
         public static class PICKUP_POSE {
             public static final Pose pickup1 = new Pose(11.44, 83.47, Math.toRadians(180));
-            public static final Pose pickup2 = new Pose(14.45, 59.64, Math.toRadians(180));
+            public static final Pose pickup2 = new Pose(19.52, 58.93, Math.toRadians(180));
             public static final Pose pickup3 = new Pose(12.79, 35.88, Math.toRadians(180));
             public static final Pose pickupHuman = new Pose(12.38, 9.07, Math.toRadians(180));
         }

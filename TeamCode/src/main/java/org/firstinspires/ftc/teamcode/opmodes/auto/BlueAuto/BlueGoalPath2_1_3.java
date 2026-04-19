@@ -19,6 +19,7 @@ public class BlueGoalPath2_1_3 extends OpMode {
     Robot robot = new Robot();
     TelemetryManager telemetryM;
     ElapsedTime time = new ElapsedTime();
+    ElapsedTime scoreEndTime = new ElapsedTime();
     public void autonomousPathUpdate() {
         switch (Robot.pathState) {
             //Start
@@ -198,17 +199,9 @@ public class BlueGoalPath2_1_3 extends OpMode {
                 }
                 break;
             case 16:
-                if (!robot.follower.isBusy()) {
+                if (!robot.follower.isBusy() || scoreEndTime.seconds() > 29.5) {
                     time.reset();
                     robot.shoot();
-                    Robot.setPathState(17);
-                }
-                break;
-
-            //End
-            case 17:
-                if (!(time.seconds() < .6)) {
-                    robot.stopShoot();
                     Robot.setPathState(-1);
                 }
                 break;
@@ -239,6 +232,7 @@ public class BlueGoalPath2_1_3 extends OpMode {
         telemetryM.debug("This program will run automatically at BLUE NEAR ZONE, " +
                 "pick up artifact at PATH 2, RETAKE, PATH 1");
         telemetryM.update(telemetry);
+        scoreEndTime.reset();
     }
 
     @Override
