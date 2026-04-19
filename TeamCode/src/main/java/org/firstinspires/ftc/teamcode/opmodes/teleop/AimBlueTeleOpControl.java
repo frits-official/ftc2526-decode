@@ -31,6 +31,7 @@ public class AimBlueTeleOpControl extends OpMode {
     @Override
     public void start() {
         robot.start();
+        robot.follower.startTeleopDrive();
     }
 
     @Override

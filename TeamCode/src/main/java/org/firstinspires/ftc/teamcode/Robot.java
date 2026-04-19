@@ -295,11 +295,6 @@ public class Robot {
         if (currentGamepad1.leftTriggerWasPressed()) {
             follower.holdPoint(follower.getPose());
             isAutonomous = true;
-        } else {
-            if (isAutonomous) {
-                follower.breakFollowing();
-                isAutonomous = false;
-            }
         }
 
         if (currentGamepad1.rightBumperWasPressed()) {
@@ -317,11 +312,11 @@ public class Robot {
                         .build(), true);
             }
             isAutonomous = true;
-        } else {
-            if (isAutonomous) {
-                follower.breakFollowing();
-                isAutonomous = false;
-            }
+        }
+
+        if (isAutonomous && (currentGamepad1.leftTriggerWasReleased() || currentGamepad1.rightBumperWasReleased() || !follower.isBusy())) {
+            follower.startTeleopDrive();
+            isAutonomous = false;
         }
     }
 
@@ -348,16 +343,15 @@ public class Robot {
     }
 
     public void driveTeleOpControl(double straight, double strafe, double rotate, boolean isRobotCentric) {
-        if (!isAutonomous) {
-            follower.startTeleopDrive();
-        }
         // just a dumbass, pls don't care
         isFieldCentric = !isRobotCentric;
 
-        if (isRobotCentric)
-            follower.setTeleOpDrive(straight, strafe, rotate * Constants.DRIVE.turnSpeedMultiplier, true, 0);
-        else
-            follower.setTeleOpDrive(straight, strafe, rotate * Constants.DRIVE.turnSpeedMultiplier, false, teleOpFieldFaceAngle);
+        if (!isAutonomous) {
+            if (isRobotCentric)
+                follower.setTeleOpDrive(straight, strafe, rotate * Constants.DRIVE.turnSpeedMultiplier, true, 0);
+            else
+                follower.setTeleOpDrive(straight, strafe, rotate * Constants.DRIVE.turnSpeedMultiplier, false, teleOpFieldFaceAngle);
+        }
     }
 
     public static void setPathState(int pState) {
