@@ -46,9 +46,6 @@ public class Turret {
     public double getDegreeFromTick(int tick) {
         return tick * (360.0 / 575.0);
     }
-    public long getTickFromDegree(double degree) {
-        return Math.round(degree * (575.0 / 360.0));
-    }
 
     public void setTarget(double target) {
         // convert heading from calculator (-180 -> 180 range, counterclockwise)
@@ -56,7 +53,6 @@ public class Turret {
         if (target >= 0) target = -target;
         else target = -360 - target;
 
-        // convert to tick it's more accurate
         controlSystem.setGoal(new KineticState(MathUtils.clamp(target,
                                                                 Constants.TURRET.minAngle,
                                                                 Constants.TURRET.maxAngle)));

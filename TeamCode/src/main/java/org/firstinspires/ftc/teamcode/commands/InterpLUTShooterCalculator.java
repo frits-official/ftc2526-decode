@@ -6,6 +6,7 @@ import com.pedropathing.math.Vector;
 import com.seattlesolvers.solverslib.util.InterpLUT;
 
 
+import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.misc.ShooterState;
 
 import java.util.Arrays;
@@ -25,6 +26,10 @@ public class InterpLUTShooterCalculator {
 
         velocityLUT.createLUT();
         angleLUT.createLUT();
+
+        timeLUT = new InterpLUT(Arrays.asList(81.2, 136.2, 237.0, 334.5, 375.0),
+                                Arrays.asList(0.51, 0.64, 0.8, 0.88, 1.07));
+        timeLUT.createLUT();
     }
 
     public static ShooterState calcShoot(Pose pose) {
@@ -39,7 +44,7 @@ public class InterpLUTShooterCalculator {
         // calc the static one
         Vector staticGoal = ShootingMath.getStaticGoalVector(follower.getPose());
 
-        double time = timeLUT.get(staticGoal.getMagnitude());
+        double time = timeLUT.get(staticGoal.getMagnitude()) * Constants.SHOOTER.timeCoef;
 
         Vector robotVel = follower.getVelocity();
         Vector offset = new Vector(robotVel.getMagnitude() * time, robotVel.getTheta());
