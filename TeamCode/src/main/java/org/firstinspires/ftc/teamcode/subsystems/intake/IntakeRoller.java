@@ -18,8 +18,12 @@ public class IntakeRoller {
         setState(INTAKE_STATE.STOP);
     }
 
+    double lastPower = 0;
     public void setPower(double power) {
-        intake.setPower(power * Robot.getVolFeedforward());
+        if (Math.abs(power - lastPower) > 0.05) {
+            intake.setPower(power * Robot.getVolFeedforward());
+            lastPower = power;
+        }
     }
 
     public double getVelocity() {

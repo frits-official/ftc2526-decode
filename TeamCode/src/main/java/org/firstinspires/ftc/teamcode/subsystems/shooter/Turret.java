@@ -73,8 +73,12 @@ public class Turret {
         }
     }
 
+    double lastPower = 0;
     public void setPower(double power) {
-        turret.setPower(power * Robot.getVolFeedforward());
+        if (Math.abs(power - lastPower) > .17) {
+            turret.setPower(power * Robot.getVolFeedforward());
+            lastPower = power;
+        }
     }
 
     public int getCurrentPosition() {

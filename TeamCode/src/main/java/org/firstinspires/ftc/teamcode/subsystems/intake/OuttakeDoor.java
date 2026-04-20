@@ -20,11 +20,20 @@ public class OuttakeDoor {
 
     public void block(boolean state) {
         if (state) {
-            door.setPosition(Constants.DOOR.block);
+            setPosition(Constants.DOOR.block);
         } else {
-            door.setPosition(Constants.DOOR.unblock);
+            setPosition(Constants.DOOR.unblock);
         }
     }
+
+    double lastPos = 0;
+    public void setPosition(double position) {
+        if (Math.abs(position - lastPos) > 0.05) {
+            door.setPosition(position);
+            lastPos = position;
+        }
+    }
+
 
     public boolean isBlocked() {
         return door.getPosition() == Constants.DOOR.block;

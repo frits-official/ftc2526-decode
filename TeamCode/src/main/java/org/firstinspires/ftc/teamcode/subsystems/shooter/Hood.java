@@ -27,9 +27,16 @@ public class Hood {
 
     public void update() {
         targetPos = calcAngle(target);
-        hood.setPosition(targetPos);
+        setPosition(targetPos);
     }
 
+    double lastPos = 0;
+    public void setPosition(double position) {
+        if (Math.abs(position - lastPos) > 0.005) {
+            hood.setPosition(position);
+            lastPos = position;
+        }
+    }
     public void setTargetAngle(double angle) {
         this.target = MathUtils.clamp(angle, Constants.HOOD.minAngle, Constants.HOOD.maxAngle);
     }

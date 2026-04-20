@@ -64,10 +64,13 @@ public class Shooter {
                 .build();
     }
 
+    double lastPower = 0;
     public void setPower(double power) {
-        shoot1.setPower(power * Robot.getVolFeedforward());
-        shoot2.setPower(power * Robot.getVolFeedforward());
-        
+        if (Math.abs(power - lastPower) > 0.06) {
+            shoot1.setPower(power * Robot.getVolFeedforward());
+            shoot2.setPower(power * Robot.getVolFeedforward());
+            lastPower = power;
+        }
     }
 
     public double getVelocity() { //tick

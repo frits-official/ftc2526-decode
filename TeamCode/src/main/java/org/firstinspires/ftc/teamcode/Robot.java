@@ -284,17 +284,19 @@ public class Robot {
         if (currentGamepad2.xWasPressed()) {
             unJamTurret = true;
         } else unJamTurret = false;
+
         if (currentGamepad1.right_trigger > 0.1)
             intakeRoller.setState(IntakeRoller.INTAKE_STATE.STOP);
         else if (!isShooting) intakeRoller.setState(IntakeRoller.INTAKE_STATE.INTAKE);
+
         if (currentGamepad1.left_bumper) {
             isShooting = true;
         } else isShooting = false;
 
         if (currentGamepad1.optionsWasPressed()) {
-             boolean success = relocalize();
-             if (!success) currentGamepad1.rumble(300);
-        }
+            boolean success = relocalize();
+            if (success) ledIndicator.set(true);
+        } else ledIndicator.set(false);
 
         if (currentGamepad1.leftTriggerWasPressed()) {
             follower.holdPoint(follower.getPose());
@@ -307,18 +309,18 @@ public class Robot {
                         .addPath(new BezierLine(follower.getPose(),
                                 GlobalPose.BLUE.RETAKE_POSE.pushLever))
                         .setLinearHeadingInterpolation(follower.getHeading(), Math.toRadians(160))
-                        .build(), true);
+                        .build());
             } else if (alliance == Constants.ALLIANCE.RED) {
                 follower.followPath(follower.pathBuilder()
                         .addPath(new BezierLine(follower.getPose(),
                                 GlobalPose.RED.pushLever))
                         .setLinearHeadingInterpolation(follower.getHeading(), Math.toRadians(20.5))
-                        .build(), true);
+                        .build());
             }
             isAutonomous = true;
         }
 
-        if (isAutonomous && (currentGamepad1.leftTriggerWasReleased() || currentGamepad1.rightBumperWasReleased() || !follower.isBusy())) {
+        if (isAutonomous && (Utils.joyStickIsMoving(currentGamepad1, .3))) {
             follower.startTeleopDrive(true);
             isAutonomous = false;
         }
