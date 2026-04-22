@@ -21,7 +21,7 @@ public class GlobalPose {
 
     public static class BLUE {
         public static class RETAKE_POSE {
-            public static final Pose pushLever = new Pose(12.44, 60.75, Math.toRadians(160));
+            public static final Pose pushLever = new Pose(12.44, 59.95, Math.toRadians(160));
         }
         public static class BASIC_POSE_NEAR {
             public static final Pose startPose = new Pose(23.77, 128.4, Math.toRadians(-43));
@@ -38,7 +38,7 @@ public class GlobalPose {
         }
 
         public static class PICKUP_POSE {
-            public static final Pose pickup1 = new Pose(11.44, 83.47, Math.toRadians(180));
+            public static final Pose pickup1 = new Pose(10.44, 83.47, Math.toRadians(180));
             public static final Pose pickup2 = new Pose(19.52, 58.93, Math.toRadians(180));
             public static final Pose pickup3 = new Pose(12.79, 35.88, Math.toRadians(180));
             public static final Pose pickupHuman = new Pose(12.38, 9.07, Math.toRadians(180));
