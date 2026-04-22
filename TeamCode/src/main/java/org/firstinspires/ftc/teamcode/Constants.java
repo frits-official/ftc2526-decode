@@ -38,7 +38,7 @@ public class Constants {
         public static double p = 0.001; // 0.005 if using tick
         public static double i = 0;
         public static double d = 0;
-        public static double f = 0.16;
+        public static double f = 0.18;
         public static double tolerance = 0.5;
         public static double maxAngle = 5;
         public static double minAngle = -365;

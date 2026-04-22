@@ -24,7 +24,6 @@ public class RedGoalPath2_1 extends OpMode {
         switch (Robot.pathState) {
             //Start
             case 0:
-                robot.follower.setMaxPower(1);
                 robot.follower.followPath(robot.follower.pathBuilder()
                         .addPath(new BezierLine(GlobalPose.RED.BASIC_POSE_NEAR.startPose,
                                 GlobalPose.RED.BASIC_POSE_NEAR.scorePoseStart))
@@ -76,19 +75,17 @@ public class RedGoalPath2_1 extends OpMode {
             case 5:
                 if (!(time.seconds() < .6)) {
                     robot.stopShoot();
-                    robot.follower.setMaxPower(1);
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.RED.pushLever))
                             .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(21))
                             .build(), true);
                     Robot.setPathState(6);
+                    time.reset();
                 }
                 break;
             case 6:
-                if (!robot.follower.isBusy()) {
-                    robot.follower.setMaxPower(1);
-                    if (time.seconds() > .8) {
+                if (!(time.seconds() < .6)) {
                         robot.follower.followPath(robot.follower.pathBuilder()
                                 .addPath(new BezierLine(robot.follower.getPose(),
                                         GlobalPose.RED.BASIC_POSE_NEAR.scorePosePath))
@@ -96,10 +93,6 @@ public class RedGoalPath2_1 extends OpMode {
                                 .build(), true);
                         Robot.setPathState(7);
                     }
-                } else {
-                    time.reset();
-                }
-                break;
             case 7:
                 if (!robot.follower.isBusy()) {
                     time.reset();
@@ -111,19 +104,17 @@ public class RedGoalPath2_1 extends OpMode {
             case 8:
                 if (!(time.seconds() < .6)) {
                     robot.stopShoot();
-                    robot.follower.setMaxPower(1);
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.RED.pushLever))
                             .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(21))
                             .build(), true);
                     Robot.setPathState(9);
+                    time.reset();
                 }
                 break;
             case 9:
-                if (!robot.follower.isBusy()) {
-                    robot.follower.setMaxPower(1);
-                    if (time.seconds() > 1.2) {
+                if (!(time.seconds() < 1.2)) {
                         robot.follower.followPath(robot.follower.pathBuilder()
                                 .addPath(new BezierLine(robot.follower.getPose(),
                                         GlobalPose.RED.BASIC_POSE_NEAR.scorePosePath))
@@ -131,9 +122,6 @@ public class RedGoalPath2_1 extends OpMode {
                                 .build(), true);
                         Robot.setPathState(10);
                     }
-                } else {
-                    time.reset();
-                }
                 break;
             case 10:
                 if (!robot.follower.isBusy()) {
@@ -146,19 +134,17 @@ public class RedGoalPath2_1 extends OpMode {
             case 11:
                 if (!(time.seconds() < .6)) {
                     robot.stopShoot();
-                    robot.follower.setMaxPower(1);
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.RED.pushLever))
                             .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(21))
                             .build(), true);
                     Robot.setPathState(12);
+                    time.reset();
                 }
                 break;
             case 12:
-                if (!robot.follower.isBusy()) {
-                    robot.follower.setMaxPower(1);
-                    if (time.seconds() > 1) {
+                if (!(time.seconds() < 1)) {
                         robot.follower.followPath(robot.follower.pathBuilder()
                                 .addPath(new BezierLine(robot.follower.getPose(),
                                         GlobalPose.RED.BASIC_POSE_NEAR.scorePosePath))
@@ -166,9 +152,6 @@ public class RedGoalPath2_1 extends OpMode {
                                 .build(), true);
                         Robot.setPathState(13);
                     }
-                } else {
-                    time.reset();
-                }
                 break;
             case 13:
                 if (!robot.follower.isBusy()) {
