@@ -188,8 +188,7 @@ public class Robot {
             telemetryM.debug("shoot velocity:" + shooter.getVelocity());
             telemetryM.debug("shoot target:" + shooter.getTarget());
             telemetryM.debug("shoot power:" + shooter.power);
-            telemetryM.debug("shoot 1 amp: " + shooter.shoot1.getCurrent(CurrentUnit.AMPS));
-            telemetryM.debug("shoot 2 amp: " + shooter.shoot2.getCurrent(CurrentUnit.AMPS));
+            telemetryM.debug("shoot amp: " + shooter.shoot1.getCurrent(CurrentUnit.AMPS));
 
             //hood
             telemetryM.debug("hood angle:" + hood.getCurrentAngle());
