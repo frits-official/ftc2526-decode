@@ -17,7 +17,6 @@ import org.firstinspires.ftc.teamcode.subsystems.intake.IntakeRoller;
 
 import java.util.EventListener;
 
-@Autonomous
 public class RedGoalPath2_1_3 extends OpMode {
     Robot robot = new Robot();
     TelemetryManager telemetryM;

@@ -4,6 +4,7 @@ import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.util.InterpLUT;
@@ -16,6 +17,7 @@ import org.firstinspires.ftc.teamcode.commands.InterpLUTShooterCalculator;
 import org.firstinspires.ftc.teamcode.commands.TheoreticalShooterCalculator;
 import org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants;
 
+@Disabled
 @TeleOp(group = "test")
 public class TestAimWithoutRobot extends OpMode {
     TelemetryManager telemetryM;

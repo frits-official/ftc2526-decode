@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.test;
 
 import com.pedropathing.geometry.Pose;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.commands.TheoreticalShooterCalculator;
 import org.firstinspires.ftc.teamcode.misc.ShooterState;
 
+@Disabled
 @TeleOp(group = "test")
 public class TestShootTheoretical extends OpMode {
     Robot robot = new Robot();

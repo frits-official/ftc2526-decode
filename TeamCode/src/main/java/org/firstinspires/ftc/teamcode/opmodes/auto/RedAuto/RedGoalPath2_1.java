@@ -13,8 +13,8 @@ import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.misc.GlobalPose;
 import org.firstinspires.ftc.teamcode.subsystems.PoseStorage;
+import org.firstinspires.ftc.teamcode.subsystems.intake.IntakeRoller;
 
-@Autonomous
 public class RedGoalPath2_1 extends OpMode {
     Robot robot = new Robot();
     TelemetryManager telemetryM;
@@ -98,6 +98,7 @@ public class RedGoalPath2_1 extends OpMode {
                 break;
             case 6:
                 if  (time.seconds() > .9) {
+                    robot.intakeRoller.setState(IntakeRoller.INTAKE_STATE.STOP);
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.RED.BASIC_POSE_NEAR.scorePosePath))
@@ -128,6 +129,7 @@ public class RedGoalPath2_1 extends OpMode {
                 break;
             case 9:
                 if (time.seconds() > 3.8) {
+                    robot.intakeRoller.setState(IntakeRoller.INTAKE_STATE.STOP);
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.RED.BASIC_POSE_NEAR.scorePosePath))
@@ -158,6 +160,7 @@ public class RedGoalPath2_1 extends OpMode {
                 break;
             case 115:
                 if (time.seconds() > 3.8) {
+                    robot.intakeRoller.setState(IntakeRoller.INTAKE_STATE.STOP);
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.RED.BASIC_POSE_NEAR.scorePosePath))

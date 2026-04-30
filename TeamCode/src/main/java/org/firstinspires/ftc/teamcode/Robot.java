@@ -116,6 +116,11 @@ public class Robot {
         intakeRoller.setState(IntakeRoller.INTAKE_STATE.INTAKE);
     }
 
+    boolean stopIntakeInAutononous = false;
+    public void setStopIntakeInAutononous(boolean stop) {
+        stopIntakeInAutononous = stop;
+    }
+
     public void update() {
         for (LynxModule hub : allHubs) {
             hub.clearBulkCache();
@@ -136,6 +141,8 @@ public class Robot {
         robotZone.setPosition(follower.getPose().getX(), follower.getPose().getY());
         robotZone.setRotation(follower.getPose().getHeading());
 
+        camera.limelight.updateRobotOrientation(Math.toDegrees(follower.getPose().getHeading()) + Constants.CAMERA.fieldFaceAngle);
+
         /*
         if (relocalizeTimer.isDone() || firstRelocalization) {
             boolean success = relocalize();
@@ -155,6 +162,7 @@ public class Robot {
             } else intakeRoller.setState(IntakeRoller.INTAKE_STATE.FAR_SHOOTING);
         } else {
             outtakeDoor.block(true);
+            if (stopIntakeInAutononous) intakeRoller.setState(IntakeRoller.INTAKE_STATE.STOP);
         }
 
         if (!isShooting) setShooterTarget(vel, angle, heading);
@@ -188,7 +196,8 @@ public class Robot {
             telemetryM.debug("shoot velocity:" + shooter.getVelocity());
             telemetryM.debug("shoot target:" + shooter.getTarget());
             telemetryM.debug("shoot power:" + shooter.power);
-            telemetryM.debug("shoot amp: " + shooter.shoot1.getCurrent(CurrentUnit.AMPS));
+            telemetryM.debug("shoot1 amp: " + shooter.shoot1.getCurrent(CurrentUnit.AMPS));
+            telemetryM.debug("shoot2 amp: " + shooter.shoot2.getCurrent(CurrentUnit.AMPS));
 
             //hood
             telemetryM.debug("hood angle:" + hood.getCurrentAngle());
@@ -235,7 +244,7 @@ public class Robot {
 
         if (getCamera) {
             LLStatus status = camera.getStatus();
-            Pose aprilTagPose = camera.getAprilTagPose(Math.toDegrees(follower.getPose().getHeading()));
+            Pose aprilTagPose = camera.getAprilTagPose();
             ledIndicator.set(camera.getDetect());
             telemetryM.debug("pipeline number: " + status.getPipelineIndex());
             telemetryM.debug("temp: " + status.getTemp() + "; fps: " + (int)status.getFps());
@@ -298,7 +307,7 @@ public class Robot {
             if (success) ledIndicator.set(true);
         } else ledIndicator.set(false);
 
-        if (currentGamepad1.leftTriggerWasPressed()) {
+        if (currentGamepad1.left_trigger > 0) {
             follower.holdPoint(follower.getPose());
             isAutonomous = true;
         }
@@ -340,7 +349,7 @@ public class Robot {
         double angularVelocity = follower.getAngularVelocity();
         if (Math.abs(velocity) > .2 || Math.abs(angularVelocity) > .2) return false;
 
-        Pose tagPose = camera.getAprilTagPose(Math.toDegrees(follower.getPose().getHeading()));
+        Pose tagPose = camera.getAprilTagPose();
         if (tagPose.roughlyEquals(new Pose(), 0.001)) return false;
 
         setPose(tagPose);

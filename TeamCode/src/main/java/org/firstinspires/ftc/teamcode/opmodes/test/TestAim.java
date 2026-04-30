@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.opmodes.test;
 
 import com.pedropathing.geometry.Pose;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 
+@Disabled
 @TeleOp(group = "test")
 public class TestAim extends OpMode {
     Robot robot = new Robot();

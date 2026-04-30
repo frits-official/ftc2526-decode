@@ -13,7 +13,6 @@ import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.misc.GlobalPose;
 import org.firstinspires.ftc.teamcode.subsystems.PoseStorage;
 
-@Autonomous
 public class RedFarHuman extends OpMode {
     Robot robot = new Robot();
     TimerEx timer = new TimerEx(2);

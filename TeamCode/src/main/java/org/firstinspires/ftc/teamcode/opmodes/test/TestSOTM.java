@@ -44,7 +44,7 @@ public class TestSOTM extends OpMode {
         robot.update();
 
         //Telemetry
-        robot.updateTelemetry(false, false, false, false, false);
+        robot.updateTelemetry(true, true, false, true, false);
     }
 
     @Override

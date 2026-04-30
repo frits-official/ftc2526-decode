@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Constants;
 
 public class Camera {
     HardwareMap hardwareMap;
-    Limelight3A limelight;
+    public Limelight3A limelight;
     boolean isDetect = false;
 
     public void init(HardwareMap _hardwareMap, Constants.ALLIANCE alliance) {
@@ -51,8 +51,7 @@ public class Camera {
         limelight.stop();
     }
 
-    public Pose getAprilTagPose(double robotYaw) {
-        limelight.updateRobotOrientation(robotYaw + Constants.CAMERA.fieldFaceAngle);
+    public Pose getAprilTagPose() {
         LLResult result = limelight.getLatestResult();
         if (result != null && result.isValid()) {
             Pose3D botPose = result.getBotpose_MT2();

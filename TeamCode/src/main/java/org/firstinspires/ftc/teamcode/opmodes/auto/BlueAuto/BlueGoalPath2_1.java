@@ -86,7 +86,6 @@ public class BlueGoalPath2_1 extends OpMode {
                 break;
             case 55:
                 if (!(time.seconds() < 2)) {
-                    robot.stopShoot();
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.BLUE.RETAKE_POSE.reTake))
@@ -98,6 +97,7 @@ public class BlueGoalPath2_1 extends OpMode {
                 break;
             case 6:
                 if  (time.seconds() > .9) {
+                    robot.intakeRoller.setState(IntakeRoller.INTAKE_STATE.STOP);
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.BLUE.BASIC_POSE_NEAR.scorePosePath))
@@ -128,6 +128,7 @@ public class BlueGoalPath2_1 extends OpMode {
                 break;
             case 9:
                 if (time.seconds() > 3.8) {
+                    robot.intakeRoller.setState(IntakeRoller.INTAKE_STATE.STOP);
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.BLUE.BASIC_POSE_NEAR.scorePosePath))
@@ -158,6 +159,7 @@ public class BlueGoalPath2_1 extends OpMode {
                 break;
             case 115:
                 if (time.seconds() > 3.8) {
+                    robot.intakeRoller.setState(IntakeRoller.INTAKE_STATE.STOP);
                     robot.follower.followPath(robot.follower.pathBuilder()
                             .addPath(new BezierLine(robot.follower.getPose(),
                                     GlobalPose.BLUE.BASIC_POSE_NEAR.scorePosePath))
